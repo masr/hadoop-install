@@ -28,3 +28,6 @@ class Topology:
                 if group_name == 'default':
                     hosts.append(host)
         return hosts
+
+    def get_all_hosts(self):
+        return self.inventory_hosts.keys()
