@@ -19,3 +19,6 @@
     - {name: "spark"}
     - {name: "oozie"}
     - {name: "hive"}
+
+- name: set ulimit
+  copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
