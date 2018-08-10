@@ -1,0 +1,66 @@
+config_groups:
+  hadoop:
+    - normal
+inventory:
+    smao-dev-1-1999775.slc07.dev.ebayc3.com:
+        roles:
+          - namenode
+          - zkfc
+          - journal_node
+          - resource_manager
+          - hbase_master
+          - hive_metastore
+          - zookeeper_server
+        topology: /slc/smao_dev
+    smao-dev-2-1999780.slc07.dev.ebayc3.com:
+        roles:
+          - namenode
+          - zkfc
+          - journal_node
+          - resource_manager
+          - hbase_master
+          - hive_metastore
+          - zookeeper_server
+          - spark_history_server
+        topology: /slc/smao_dev
+    smao-dev-3-1999786.slc07.dev.ebayc3.com:
+        roles:
+          - journal_node
+          - zookeeper_server
+          - datanode
+          - nodemanager
+          - regionserver
+        topology: /slc/smao_dev
+        config_groups:
+          hadoop: normal
+    smao-dev-4-1999787.slc07.dev.ebayc3.com:
+        roles:
+          - zookeeper_server
+          - datanode
+          - nodemanager
+          - regionserver
+        topology: /slc/smao_dev
+        config_groups:
+          hadoop: normal
+    smao-dev-5-1999788.slc07.dev.ebayc3.com:
+        roles:
+          - zookeeper_server
+          - datanode
+          - nodemanager
+          - regionserver
+        topology: /slc/smao_dev
+        config_groups:
+          hadoop: normal
+    smao-dev-6-1999789.slc07.dev.ebayc3.com:
+        roles:
+          - zookeeper_server
+          - datanode
+          - nodemanager
+          - regionserver
+          - spark_cli
+          - hbase_cli
+          - hadoop_cli
+          - zookeeper_cli
+        topology: /slc/smao_dev
+        config_groups:
+          hadoop: normal

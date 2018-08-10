@@ -1,0 +1,3 @@
+yarn.nodemanager.address: 0.0.0.0:{%nodemanager_port%}
+yarn.nodemanager.localizer.address: 0.0.0.0:{%nodemanager_localizer_port%}
+yarn.nodemanager.webapp.address: 0.0.0.0:{%nodemanager_webapp_port%}

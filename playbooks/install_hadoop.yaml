@@ -1,0 +1,19 @@
+- name: Install hadoop
+  hosts: "{{ variable_hosts | default('all') }}"
+  include_vars:
+    file: "{{vars_file | default('vars/default.yaml')}}"
+  tasks:
+    - name: sync hadoop release
+      unarchive: src=releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
+
+    - name: hadoop soft link
+      file: src=releases/{{ hadoop_release_version }} path={{ install_base_dir }}/hadoop state=link
+
+    - name: create hadoop confs dir
+      file: path={{ install_base_dir }}/confs/hadoop state=directory mode=0755 owner=root group=hadoop recursive=yes
+
+    - name: sync hadoop conf
+      synchronize: src={{ group_conf_dir }} dest={{ install_base_dir }}/confs/hadoop/conf mode=0755 owner=root group=hadoop
+
+    - name: create conf soft link
+      file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes

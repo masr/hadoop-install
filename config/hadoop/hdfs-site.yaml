@@ -1,0 +1,19 @@
+dfs.ha.automatic-failover.enabled: "true"
+dfs.permissions.superusergroup: hadoop
+dfs.replication: 3
+dfs.namenode.handler.count: 32
+dfs.namenode.service.handler.count: 32
+dfs.namenode.safemode.threshold-pct: 1.0f
+
+dfs.datanode.failed.volumes.tolerated: 2
+dfs.datanode.data.dir.perm: 700
+dfs.datanode.address: 0.0.0.0:{%datanode_port%}
+dfs.datanode.ipc.address: "0.0.0.0:{%datanode_ipc_port%}"
+dfs.datanode.http.address: "0.0.0.0:{%datanode_http_port%}"
+dfs.block.local-path-access.user: hdfs hadoop
+dfs.domain.socket.path: /var/run/hadoop-hdfs/dn
+
+dfs.hosts: "{%install_base_dir%}/confs/hadoop/conf/hdfs-include"
+dfs.hosts.exclude: "{%install_base_dir%}/confs/hadoop/conf/hdfs-exclude"
+
+dfs.client.read.shortcircuit: "true"

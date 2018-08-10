@@ -1,0 +1,6 @@
+/__pycache__
+/.virtualenv
+/.idea
+*.pyc
+.confs
+.ansible

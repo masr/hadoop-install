@@ -1,0 +1,3 @@
+install_base_dir: /apache
+java_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
+java_release_version:

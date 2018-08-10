@@ -1,0 +1,26 @@
+- name: Prepare node
+  hosts: "{{ variable_hosts | default('all') }}"
+  include_vars:
+    file: "{{vars_file | default('vars/default.yaml')}}"
+  tasks:
+    - name: create {{ install_base_dir }}
+      file: path={{ install_base_dir }} state=directory mode=0755 owner=root group=root
+    - name: create {{ install_base_dir }}/releases
+      file: path={{ install_base_dir }}/releases state=directory mode=0755 owner=root group=root
+    - name: create {{ install_base_dir }}/releases
+      file: path={{ install_base_dir }}/confs state=directory mode=0755 owner=root group=root
+
+    - name: add hadoop group
+      group: name=hadoop
+
+    - name: add hadoop users
+      user: name={{ item.name }} groups=hadoop append=yes
+      with_items:
+        - {name: "zookeeper"}
+        - {name: "hdfs"}
+        - {name: "yarn"}
+        - {name: "mapred"}
+        - {name: "hbase"}
+        - {name: "spark"}
+        - {name: "oozie"}
+        - {name: "hive"}

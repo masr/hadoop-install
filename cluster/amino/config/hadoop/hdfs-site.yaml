@@ -1,0 +1,11 @@
+default:
+  updates:
+    dfs.namenode.name.dir: /data/hdfs/namenode
+    dfs.journalnode.edits.dir: /data/hdfs/journalnode
+    dfs.datanode.du.reserved: 10737418240
+  deletes:
+normal:
+  updates:
+    dfs.datanode.data.dir: /data/hdfs/datanode
+  deletes:
+
