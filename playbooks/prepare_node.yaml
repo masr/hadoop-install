@@ -1,17 +1,20 @@
-- name: add hadoop group
-  group: name=hadoop
+- name: Prepare node
+  hosts: "{{ variable_hosts | default('all') }}"
+  tasks:
+    - name: add hadoop group
+      group: name=hadoop
 
-- name: add hadoop users
-  user: name={{ item.name }} groups=hadoop append=yes
-  with_items:
-    - {name: "zookeeper"}
-    - {name: "hdfs"}
-    - {name: "yarn"}
-    - {name: "mapred"}
-    - {name: "hbase"}
-    - {name: "spark"}
-    - {name: "oozie"}
-    - {name: "hive"}
+    - name: add hadoop users
+      user: name={{ item.name }} groups=hadoop append=yes
+      with_items:
+        - {name: "zookeeper"}
+        - {name: "hdfs"}
+        - {name: "yarn"}
+        - {name: "mapred"}
+        - {name: "hbase"}
+        - {name: "spark"}
+        - {name: "oozie"}
+        - {name: "hive"}
 
-- name: set ulimit
-  copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
+    - name: set ulimit
+      copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
