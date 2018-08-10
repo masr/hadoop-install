@@ -34,4 +34,4 @@ nodemanager_port: 0
 nodemanager_localizer_port: 8040
 
 hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
-hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
+hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT
