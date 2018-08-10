@@ -113,6 +113,8 @@ class AbstractProcess:
         for group_name in self.config_group_names:
             params = self.get_merged_basic_configuration_by_group(group_name)
             with open(target_path + "/vars/" + group_name + ".yaml", "w") as tmp_file:
+                params[
+                    'group_conf_dir'] = 'cluster/' + self.cluster_name + '/.confs/' + self.service_name + '/' + group_name
                 content = yaml.dump(params, default_flow_style=False)
                 tmp_file.write(content)
             includes.append(
