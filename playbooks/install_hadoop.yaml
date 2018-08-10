@@ -1,7 +1,5 @@
 - name: Install hadoop
   hosts: "{{ variable_hosts | default('all') }}"
-  include_vars:
-    file: "{{vars_file | default('vars/default.yaml')}}"
   tasks:
     - name: load vars
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
