@@ -1,0 +1,8 @@
+- name: create {{ install_base_dir }}
+  file: path={{ install_base_dir }} state=directory mode=0755 owner=root group=root
+
+- name: create {{ install_base_dir }}/releases
+  file: path={{ install_base_dir }}/releases state=directory mode=0755 owner=root group=root
+
+- name: create {{ install_base_dir }}/releases
+  file: path={{ install_base_dir }}/confs state=directory mode=0755 owner=root group=root
