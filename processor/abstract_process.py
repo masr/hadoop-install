@@ -120,7 +120,7 @@ class AbstractProcess:
                     'include': '../../../../playbooks/install_' + self.service_name + '.yaml',
                     'vars': {
                         'variable_hosts': group_name,
-                        'vars_file': 'vars/' + group_name + '.yaml'
+                        'vars_file': '../cluster/' + self.cluster_name + '/.ansible/' + self.service_name + '/vars/' + group_name + '.yaml'
                     }
                 }
             )

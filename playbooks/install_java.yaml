@@ -1,6 +1,5 @@
 - name: Install java
   hosts: "{{ variable_hosts | default('all') }}"
-
   tasks:
     - name: load vars
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
