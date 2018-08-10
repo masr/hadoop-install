@@ -3,6 +3,8 @@
   include_vars:
     file: "{{vars_file | default('vars/default.yaml')}}"
   tasks:
+    - name: prepare node
+      include: prepare_node.yaml
     - name: sync hadoop release
       unarchive: src=releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
 
