@@ -1,10 +1,9 @@
 - name: Install java
   hosts: "{{ variable_hosts | default('all') }}"
-  include_vars:
-    file: "{{vars_file | default('vars/default.yaml')}}"
   tasks:
     - name: prepare node
       include: prepare_node.yaml
+
     - name: sync java release
       unarchive: src=releases/{{ java_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
 
