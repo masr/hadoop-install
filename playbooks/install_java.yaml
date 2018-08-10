@@ -3,8 +3,8 @@
 
   tasks:
     - name: load vars
-      include_vars: file="{{vars_file}} | default('vars/default.yaml')"
-      
+      include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
+
     - name: prepare node
       include: prepare_node.yaml
 
