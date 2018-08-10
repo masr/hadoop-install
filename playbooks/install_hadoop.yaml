@@ -26,6 +26,6 @@
         - hdfs-site.xml
         - hadoop-env.sh
         - yarn-env.sh
-        
+
     - name: create conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes

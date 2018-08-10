@@ -14,8 +14,8 @@ class AbstractProcess:
         self.service_name = str(service_type.name).lower()
         self.topology_data = topology_data
         self.topology = Topology(topology_data)
-        if 'config_groups' in topology_data and 'hadoop' in topology_data['config_groups']:
-            self.config_group_names = set(topology_data['config_groups']['hadoop'])
+        if 'config_groups' in topology_data and self.service_name in topology_data['config_groups']:
+            self.config_group_names = set(topology_data['config_groups'][self.service_name])
         else:
             self.config_group_names = set()
         self.config_group_names.add("default")
@@ -90,9 +90,10 @@ class AbstractProcess:
             group_content_dict[group_name] = self.get_all_parsed_configs(group_name)
         check_and_create_dir(self.confs_base_dir)
         clean_and_create_dir(self.service_confs_base_dir)
-        target_path = self.service_confs_base_dir + "/" + group_name
-        clean_and_create_dir(target_path)
+
         for group_name, content_dict in group_content_dict.items():
+            target_path = self.service_confs_base_dir + "/" + group_name
+            clean_and_create_dir(target_path)
             for file_name, content in content_dict.items():
                 with open(target_path + "/" + file_name, "w") as tmp_file:
                     tmp_file.write(content)
