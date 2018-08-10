@@ -116,7 +116,6 @@ class AbstractProcess:
                 content = yaml.dump(params, default_flow_style=False)
                 tmp_file.write(content)
             includes.append({'include': '../../../../playbooks/install_' + self.service_name + '.yaml',
-                             'include_vars': 'vars/' + group_name + '.yaml',
                              'vars': {'variable_hosts': group_name}})
         with open(target_path + "/install.yaml", "w") as tmp_file:
             content = yaml.dump(includes, default_flow_style=False)
