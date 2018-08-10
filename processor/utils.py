@@ -26,6 +26,13 @@ def replace_params(content, params):
 def check_and_create_dir(dir_path):
     if os.path.exists(dir_path) and not os.path.isdir(dir_path):
         raise Exception(dir_path + " should be a directory")
+    if not os.path.exists(dir_path):
+        os.mkdir(dir_path)
+
+
+def clean_and_create_dir(dir_path):
+    if os.path.exists(dir_path) and not os.path.isdir(dir_path):
+        raise Exception(dir_path + " should be a directory")
     if os.path.exists(dir_path):
         shutil.rmtree(dir_path)
         os.mkdir(dir_path)

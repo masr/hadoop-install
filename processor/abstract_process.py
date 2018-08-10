@@ -1,7 +1,7 @@
 import yaml
 
 from processor.config_group import ConfigGroup
-from processor.utils import check_and_create_dir
+from processor.utils import check_and_create_dir, clean_and_create_dir
 from processor.topology import Topology
 import os
 
@@ -84,9 +84,9 @@ class AbstractProcess:
             group_content_dict[group_name] = self.get_all_parsed_configs(group_name)
         tmp_path = "cluster/" + self.cluster_name + "/.confs"
         check_and_create_dir(tmp_path)
-        check_and_create_dir(tmp_path + "/" + self.service_name)
+        clean_and_create_dir(tmp_path + "/" + self.service_name)
         target_path = tmp_path + "/" + self.service_name + "/" + group_name
-        check_and_create_dir(target_path)
+        clean_and_create_dir(target_path)
         for group_name, content_dict in group_content_dict.items():
             for file_name, content in content_dict.items():
                 with open(target_path + "/" + file_name, "w") as tmp_file:
@@ -96,7 +96,7 @@ class AbstractProcess:
         tmp_path = "cluster/" + self.cluster_name + "/.ansible"
         check_and_create_dir(tmp_path)
         target_path = tmp_path + '/' + self.service_name
-        check_and_create_dir(target_path)
+        clean_and_create_dir(target_path)
 
         inventory_content = ""
         for role in self.roles:
@@ -109,7 +109,7 @@ class AbstractProcess:
             tmp_file.write(inventory_content)
 
         includes = []
-        check_and_create_dir(target_path + "/vars")
+        clean_and_create_dir(target_path + "/vars")
         for group_name in self.config_group_names:
             params = self.get_merged_basic_configuration_by_group(group_name)
             with open(target_path + "/vars/" + group_name + ".yaml", "w") as tmp_file:
