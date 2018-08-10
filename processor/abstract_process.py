@@ -115,7 +115,7 @@ class AbstractProcess:
             with open(target_path + "/vars/" + group_name + ".yaml", "w") as tmp_file:
                 content = yaml.dump(params, default_flow_style=False)
                 tmp_file.write(content)
-            includes.append({'include': '../../../../../playbooks/install_hadoop.yaml',
+            includes.append({'include': '../../../../../playbooks/install_' + self.service_name + '.yaml',
                              'include_vars': 'vars/' + group_name + '.yaml',
                              'vars': {'variable_hosts': group_name}})
         with open(target_path + "/install.yaml", "w") as tmp_file:
@@ -123,4 +123,4 @@ class AbstractProcess:
             tmp_file.write(content)
 
     def get_all_parsed_configs(self, group_name):
-        pass
+        return {}

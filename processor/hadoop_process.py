@@ -6,7 +6,7 @@ from processor.utils import trans_dict_to_xml, replace_params
 class HadoopProcess(AbstractProcess):
     def __init__(self, cluster_name, topology_data):
         AbstractProcess.__init__(self, cluster_name, SERVICE.HADOOP, topology_data
-                                 , ['namenode', 'datanode', 'journal_node', 'zkfc', 'resource_manager', 'nodemanager'])
+                                 , set(['namenode', 'datanode', 'journal_node', 'zkfc', 'resource_manager', 'nodemanager']))
 
     def get_all_parsed_configs(self, group_name):
         params = self.get_merged_basic_configuration_by_group(group_name)

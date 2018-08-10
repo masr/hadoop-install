@@ -3,6 +3,7 @@
 import argparse
 import yaml
 from processor.hadoop_process import HadoopProcess
+from processor.java_process import JavaProcess
 from processor.topology import Topology
 from constants import SERVICE
 
@@ -26,6 +27,9 @@ with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     tmp_file.write('\n'.join(topology.get_all_hosts()))
 for name, value in SERVICE.__members__.items():
     if value == SERVICE.HADOOP:
+        java_process = JavaProcess(cluster, topology_data)
+        java_process.generate_configs()
+        java_process.generate_ansible()
         hadoop_process = HadoopProcess(cluster, topology_data)
         hadoop_process.generate_configs()
         hadoop_process.generate_ansible()
