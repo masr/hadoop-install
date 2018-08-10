@@ -8,7 +8,7 @@ import os
 
 class AbstractProcess:
 
-    def __init__(self, cluster_name, service_type, topology_data, roles):
+    def __init__(self, cluster_name, service_type, topology_data, roles=set()):
         self.cluster_name = cluster_name
         self.service_type = service_type
         self.service_name = str(service_type.name).lower()
