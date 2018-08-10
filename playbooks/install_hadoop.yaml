@@ -6,7 +6,7 @@
     - name: prepare node
       include: prepare_node.yaml
     - name: sync hadoop release
-      unarchive: src=releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
+      unarchive: src=../releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
 
     - name: hadoop soft link
       file: src=releases/{{ hadoop_release_version }} path={{ install_base_dir }}/hadoop state=link
