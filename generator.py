@@ -26,6 +26,6 @@ with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     tmp_file.write('\n'.join(topology.get_all_hosts()))
 for name, value in SERVICE.__members__.items():
     if value == SERVICE.HADOOP:
-        hadoop_process = HadoopProcess(cluster, topology)
+        hadoop_process = HadoopProcess(cluster, topology_data)
         hadoop_process.generate_configs()
         hadoop_process.generate_ansible()
