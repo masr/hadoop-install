@@ -62,27 +62,27 @@
 
     - name: create namenode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
-      with_items: {{dfs_namenode_name_dir}}
+      with_items: "{{dfs_namenode_name_dir}}"
       when: '"namenode" in group_names'
 
     - name: create datanode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
-      with_items: {{dfs_datanode_data_dir}}
+      with_items: "{{dfs_datanode_data_dir}}"
       when: '"datanode" in group_names'
 
     - name: create nodemanager log dirs
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: {{yarn_nodemanager_log_dirs}}
+      with_items: "{{yarn_nodemanager_log_dirs}}"
       when: '"node_manager" in group_names'
 
     - name: create nodemanager local dir
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: {{yarn_nodemanager_local_dirs}}
+      with_items: "{{yarn_nodemanager_local_dirs}}"
       when: '"node_manager" in group_names'
 
     - name: create journal node dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
       with_items:
-        - {{dfs.journalnode.edits.dir}}
+        - "{{dfs.journalnode.edits.dir}}"
       when: '"journal_node" in group_names'
 
