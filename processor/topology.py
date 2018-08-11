@@ -10,7 +10,7 @@ class Topology:
             if 'roles' in data:
                 if role_name in data['roles']:
                     hosts.append(host)
-        return hosts
+        return sorted(hosts)
 
     def get_hosts_of_group(self, service_type, group_name):
         hosts = []
@@ -27,7 +27,7 @@ class Topology:
             else:
                 if group_name == 'default':
                     hosts.append(host)
-        return hosts
+        return sorted(hosts)
 
     def get_all_hosts(self):
         return self.inventory_hosts.keys()

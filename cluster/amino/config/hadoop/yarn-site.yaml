@@ -1,0 +1,4 @@
+default:
+  yarn.nodemanager.resource.memory-mb: 10240
+  yarn.nodemanager.log-dirs: /data/yarn/nodemanager/log
+  yarn.nodemanager.local-dirs: /data/yarn/nodemanager/local

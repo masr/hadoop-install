@@ -1,19 +1,41 @@
+fs.defaultFS: hdfs://{% default_nameservice %}
+dfs.nameservices: "{% default_nameservice %}"
+dfs.ha.namenodes.{% default_nameservice %}: nn1,nn2
+dfs.namenode.rpc-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_client_rpc_port %}"
+dfs.namenode.rpc-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_client_rpc_port %}"
+dfs.namenode.servicerpc-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_service_rpc_port %}"
+dfs.namenode.servicerpc-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_service_rpc_port %}"
+dfs.namenode.https-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_http_port %}"
+dfs.namenode.https-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_http_port %}"
+dfs.namenode.http-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_http_port %}"
+dfs.namenode.http-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_http_port %}"
+
 dfs.ha.automatic-failover.enabled: "true"
 dfs.permissions.superusergroup: hadoop
+dfs.permissions.enabled: "true"
 dfs.replication: 3
+dfs.http.policy: "{% http_policy %}"
+
 dfs.namenode.handler.count: 32
 dfs.namenode.service.handler.count: 32
 dfs.namenode.safemode.threshold-pct: 1.0f
+dfs.namenode.name.dir: file://${hadoop.tmp.dir}/namenode
+dfs.namenode.edits.dir: ${dfs.namenode.name.dir}
+dfs.datanode.data.dir: file://${hadoop.tmp.dir}/datanode
 
 dfs.datanode.failed.volumes.tolerated: 2
 dfs.datanode.data.dir.perm: 700
-dfs.datanode.address: 0.0.0.0:{%datanode_port%}
-dfs.datanode.ipc.address: "0.0.0.0:{%datanode_ipc_port%}"
-dfs.datanode.http.address: "0.0.0.0:{%datanode_http_port%}"
-dfs.block.local-path-access.user: hdfs hadoop
-dfs.domain.socket.path: /var/run/hadoop-hdfs/dn
+dfs.datanode.address: 0.0.0.0:{% datanode_port %}
+dfs.datanode.ipc.address: "0.0.0.0:{% datanode_ipc_port %}"
+dfs.datanode.http.address: "0.0.0.0:{% datanode_http_port %}"
+dfs.datanode.du.reserved: 1073741824
 
-dfs.hosts: "{%install_base_dir%}/confs/hadoop/conf/hdfs-include"
-dfs.hosts.exclude: "{%install_base_dir%}/confs/hadoop/conf/hdfs-exclude"
+dfs.block.local-path-access.user: hdfs hadoop
+dfs.domain.socket.path: "{% install_base_dir %}/run/hdfs/domain_socket"
+
+dfs.hosts: "{% install_base_dir %}/confs/hadoop/conf/hdfs-include"
+dfs.hosts.exclude: "{% install_base_dir %}/confs/hadoop/conf/hdfs-exclude"
 
 dfs.client.read.shortcircuit: "true"
+dfs.cluster.administrators: hdfs
+dfs.client.failover.proxy.provider.{% default_nameservice %}: org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider

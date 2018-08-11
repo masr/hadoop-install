@@ -1,3 +1,70 @@
 yarn.nodemanager.address: 0.0.0.0:{%nodemanager_port%}
 yarn.nodemanager.localizer.address: 0.0.0.0:{%nodemanager_localizer_port%}
 yarn.nodemanager.webapp.address: 0.0.0.0:{%nodemanager_webapp_port%}
+yarn.nodemanager.log-aggregation.compression-type: gz
+yarn.nodemanager.delete.debug-delay-sec: 3600
+yarn.nodemanager.vmem-check-enabled: "false"
+yarn.nodemanager.resource.memory-mb: 8192
+yarn.nodemanager.resource.cpu-vcores: 8
+yarn.nodemanager.remote-app-log-dir: /app-logs
+yarn.nodemanager.aux-services: spark_shuffle
+yarn.nodemanager.aux-services.spark_shuffle.class: org.apache.spark.network.yarn.YarnShuffleService
+yarn.nodemanager.linux-container-executor.group: hadoop
+yarn.nodemanager.remote-app-log-dir-suffix: logs
+yarn.nodemanager.log-dirs: ${hadoop.tmp.dir}/nodemanager-logs
+yarn.nodemanager.local-dirs: ${hadoop.tmp.dir}/nodemanager-locals
+yarn.nodemanager.health-checker.interval-ms: 60000
+yarn.nodemanager.health-checker.script.timeout-ms: 60000
+yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage: 99
+yarn.nodemanager.disk-health-checker.min-healthy-disks: 0.25
+yarn.nodemanager.disk-health-checker.interval-ms: 600000
+yarn.nodemanager.disk-health-checker.min-free-space-per-disk-mb: 1024
+yarn.nodemanager.sleep-delay-before-sigkill.ms: 1000
+
+
+yarn.resourcemanager.ha.id: "{% default_nameservice %}"
+yarn.resourcemanager.cluster-id: "{% default_nameservice %}"
+yarn.resourcemanager.ha.rm-ids: rm1,rm2
+yarn.resourcemanager.zk-address: "{% zookeeper_quorum %}"
+yarn.resourcemanager.ha.enabled: "true"
+yarn.resourcemanager.store.class: org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore
+yarn.resourcemanager.zk-acl: world:anyone:rwcda
+yarn.resourcemanager.state-store.max-completed-applications: 500
+yarn.resourcemanager.max-completed-applications: 10000
+yarn.resourcemanager.ha.automatic-failover.zk-base-path: /yarn-leader-election-{% default_nameservice %}
+yarn.resourcemanager.zk-state-store.parent-path: /rmstore-{% default_nameservice %}
+yarn.resourcemanager.zk-timeout-ms: 30000
+yarn.resourcemanager.recovery.enabled: "true"
+yarn.resourcemanager.nodes.exclude-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-exclude"
+yarn.resourcemanager.nodes.exclude-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-include"
+yarn.resourcemanager.am.max-attempts: 2
+yarn.resourcemanager.scheduler.class: org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
+yarn.resourcemanager.ha.automatic-failover.enabled: "true"
+yarn.resourcemanager.hostname.rm1: "{% resource_manager1 %}"
+yarn.resourcemanager.hostname.rm2: "{% resource_manager2 %}"
+yarn.resourcemanager.webapp.https.address.{% default_nameservice %}.rm1: "{% resource_manager1 %}:{% resource_manager_webapp_port %}"
+yarn.resourcemanager.webapp.https.address.{% default_nameservice %}.rm2: "{% resource_manager2 %}:{% resource_manager_webapp_port %}"
+yarn.resourcemanager.webapp.address.{% default_nameservice %}.rm1: "{% resource_manager1 %}:{% resource_manager_webapp_port %}"
+yarn.resourcemanager.webapp.address.{% default_nameservice %}.rm2: "{% resource_manager2 %}:{% resource_manager_webapp_port %}"
+yarn.resourcemanager.address.rm1: "{% resource_manager1 %}:{% resource_manager_port %}"
+yarn.resourcemanager.address.rm2: "{% resource_manager2 %}:{% resource_manager_port %}"
+yarn.resourcemanager.scheduler.address.rm1': "{% resource_manager1 %}:{% resource_manager_scheduler_port %}"
+yarn.resourcemanager.scheduler.address.rm2': "{% resource_manager2 %}:{% resource_manager_scheduler_port %}"
+yarn.resourcemanager.resource-tracker.address.rm1: "{% resource_manager1 %}:{% resource_manager_resource_tracker_port %}"
+yarn.resourcemanager.resource-tracker.address.rm2: "{% resource_manager2 %}:{% resource_manager_resource_tracker_port %}"
+yarn.resourcemanager.admin.address.rm1: "{% resource_manager1 %}:{% resource_manager_admin_port %}"
+yarn.resourcemanager.admin.address.rm2: "{% resource_manager2 %}:{% resource_manager_admin_port %}"
+yarn.resourcemanager.nodemanagers.heartbeat-interval-ms: 5000
+yarn.resourcemanager.max-containers: 10000000
+
+yarn.log-aggregation-enable: "true"
+yarn.log-aggregation.retain-seconds: 2592000
+yarn.scheduler.maximum-allocation-vcores: 32
+yarn.scheduler.minimum-allocation-vcores: 1
+yarn.scheduler.minimum-allocation-mb: 256
+yarn.scheduler.maximum-allocation-mb: 10240
+yarn.application.classpath: "{% install_base_dir %}/confs/hadoop/conf:{% install_base_dir %}/hadoop/share/hadoop/common/lib/*:{% install_base_dir %}/hadoop/share/hadoop/common/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/lib/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/lib/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/lib/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/*"
+
+yarn.client.failover-proxy-provider: org.apache.hadoop.yarn.client.ConfiguredRMFailoverProxyProvider
+
+yarn.http.policy: "{% http_policy %}"

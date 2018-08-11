@@ -4,22 +4,36 @@ import os
 import shutil
 
 
-def trans_dict_to_xml(data, params):
+def trans_dict_to_xml(data):
     values = []
     for k in sorted(data.keys()):
         v = data.get(k)
-        if isinstance(v, str):
-            v = replace_params(v, params)
         values.append("<property><name>{key}</name><value>{value}</value></property>".format(key=k, value=v))
     content = '<configuration>{}</configuration>'.format(''.join(values))
     return xml.dom.minidom.parseString(content).toprettyxml()
 
 
+def replace_keys_in_dict(obj, params):
+    result = {}
+    for k, v in obj.items():
+        k = replace_params(str(k), params)
+        result[k] = v
+    return result
+
+
+def replace_values_in_dict(obj, params):
+    result = {}
+    for k, v in obj.items():
+        v = replace_params(str(v), params)
+        result[k] = v
+    return result
+
+
 def replace_params(content, params):
-    m = re.findall(r'{%\s*(.*?)\s*%}', content)
+    m = re.findall(r'({%\s*(.*?)\s*%})', content)
     if len(m) > 0:
         for i in m:
-            content = content.replace("{%" + str(i) + "%}", str(params[i]))
+            content = content.replace(i[0], str(params[i[1]]))
     return content
 
 

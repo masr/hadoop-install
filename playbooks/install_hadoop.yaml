@@ -18,14 +18,66 @@
       with_items:
         - "{{ install_base_dir }}/confs/hadoop"
         - "{{ install_base_dir }}/confs/hadoop/conf"
+        - "{{ install_base_dir }}/run"
+
+    - name: create runtime dir for hdfs
+      file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
+      with_items:
+        - "{{ install_base_dir }}/run/hdfs"
+
+    - name: create runtime dir for yarn
+      file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
+      with_items:
+        - "{{ install_base_dir }}/run/yarn"
+
+    - name: create hadoop pid dir
+      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+      with_items:
+        - "{{ install_base_dir }}/run/pids"
 
     - name: sync hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - core-site.xml
         - hdfs-site.xml
+        - yarn-site.xml
         - hadoop-env.sh
         - yarn-env.sh
+        - log4j.properties
+
+      - name: sync hadoop confs
+        copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
+        with_items:
+          - container-executor.cfg
+
 
     - name: create conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
+
+    - name: create hadoop log dir
+      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+      with_items:
+        - "{{hadoop_log_dir}}"
+      ignore_errors: yes
+
+    - name: create namenode dir:
+      file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
+      with_items: {{dfs_namenode_name_dir}}
+
+    - name: create datanode dir
+      file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
+      with_items: {{dfs_datanode_data_dir}}
+
+    - name: create nodemanager log dirs
+      file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
+      with_items: {{yarn_nodemanager_log_dirs}}
+
+    - name: create nodemanager local dir
+      file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
+      with_items: {{yarn_nodemanager_local_dirs}}
+
+    - name: create journal node dir
+      file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
+      with_items:
+        - {{dfs.journalnode.edits.dir}}
+

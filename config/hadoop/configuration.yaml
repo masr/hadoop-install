@@ -1,8 +1,11 @@
+default_nameservice: my_cluster
+
 install_base_dir: /apache
-kerberos: false
+kerberos_enable: false
+https_enable: false
 
 hadoop_log_dir: /var/log/hadoop
-hadoop_pid_dir: /var/run/hadoop_pids
+hadoop_pid_dir: "{% install_base_dir %}/run/pids"
 
 namenode_heap: 4g
 namenode_young_heap: 512m
@@ -24,14 +27,14 @@ datanode_http_port: 50075
 datanode_port: 50010
 
 resource_manager_port: 8032
-resource_manager_scheduler_port: 8030
+resource_manager_scheduler_port: 8034
 resource_manager_webapp_port: 50030
 resource_manager_resource_tracker_port: 8031
 resource_manager_admin_port: 8033
 
 nodemanager_webapp_port: 50060
-nodemanager_port: 0
-nodemanager_localizer_port: 8040
+nodemanager_port: 45454
+nodemanager_localizer_port: 45455
 
 hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
 hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT

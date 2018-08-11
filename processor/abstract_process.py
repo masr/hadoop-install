@@ -4,6 +4,7 @@ from processor.config_group import ConfigGroup
 from processor.utils import check_and_create_dir, clean_and_create_dir
 from processor.topology import Topology
 import os
+from processor.utils import replace_keys_in_dict, replace_params
 
 
 class AbstractProcess:
@@ -21,6 +22,7 @@ class AbstractProcess:
         self.config_group_names.add("default")
         self.roles = roles
 
+        self.cluster_base_dir = os.path.join('cluster', cluster_name)
         self.ansible_base_dir = os.path.join('cluster', cluster_name, '.ansible')
         self.confs_base_dir = os.path.join('cluster', cluster_name, '.confs')
         self.service_ansible_base_dir = os.path.join(self.ansible_base_dir, self.service_name)
@@ -31,24 +33,28 @@ class AbstractProcess:
     def get_merged_basic_configuration_by_group(self, group_name):
         result = self.get_configuration(self.service_config_dir + "/configuration.yaml")
         cluster_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
+        if 'default' in cluster_result:
+            result.update(cluster_result['default'])
         if group_name in cluster_result:
             result.update(cluster_result[group_name])
         return result
 
     def get_merged_service_configuration_by_group(self, file_name, group_name):
+        def merge_helper(group):
+            if group in config_group_dict:
+                updates = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
+                result.update(updates)
+                deletes = [replace_params(item, basic_config) for item in config_group_dict[group].deletes]
+                for delete_key in deletes:
+                    if delete_key in result:
+                        del result[delete_key]
+
+        basic_config = self.get_merged_basic_configuration_by_group(group_name)
         result = self.get_configuration(self.service_config_dir + "/" + file_name)
-        config_group_dict = self.get_cluster_config_details(file_name)
-        if 'default' in config_group_dict:
-            result.update(config_group_dict['default'].updates)
-            for delete_key in config_group_dict['default'].deletes:
-                if delete_key in result:
-                    del result[delete_key]
-        if group_name in config_group_dict:
-            config_group = config_group_dict[group_name]
-            result.update(config_group.updates)
-            for delete_key in config_group.deletes:
-                if delete_key in result:
-                    del result[delete_key]
+        result = replace_keys_in_dict(result, basic_config)
+        config_group_dict = self.get_cluster_config_groups(file_name)
+        merge_helper('default')
+        merge_helper(group_name)
         return result
 
     def get_configuration(self, config_file_path):
@@ -70,7 +76,7 @@ class AbstractProcess:
                 result = file2.read()
         return result
 
-    def get_cluster_config_details(self, file_name):
+    def get_cluster_config_groups(self, file_name):
         config_detail_path = self.cluster_service_config_dir + "/" + file_name
         if not os.path.exists(config_detail_path):
             return {}
@@ -116,6 +122,7 @@ class AbstractProcess:
         clean_and_create_dir(self.service_ansible_base_dir + "/vars")
         for group_name in self.config_group_names:
             params = self.get_merged_basic_configuration_by_group(group_name)
+            params.update(self.get_all_kv_from_config(group_name))
             with open(self.service_ansible_base_dir + "/vars/" + group_name + ".yaml", "w") as tmp_file:
                 params[
                     'group_conf_dir'] = '../' + self.service_confs_base_dir + '/' + group_name
@@ -134,5 +141,16 @@ class AbstractProcess:
             content = yaml.dump(includes, default_flow_style=False)
             tmp_file.write(content)
 
+    def get_other_service_configuration(self, service_type):
+        service_name = str(service_type.name).lower()
+        result = self.get_configuration('config/' + service_name + "/configuration.yaml")
+        cluster_result = self.get_configuration(os.path.join(self.cluster_base_dir, service_name, "configuration.yaml"))
+        if 'default' in cluster_result:
+            result.update(cluster_result['default'])
+        return result
+
     def get_all_parsed_configs(self, group_name):
+        return {}
+
+    def get_all_kv_from_config(self, group_name):
         return {}

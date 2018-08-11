@@ -35,7 +35,6 @@ inventory:
           hadoop: normal
     smao-dev-4-1999787.slc07.dev.ebayc3.com:
         roles:
-          - zookeeper_server
           - datanode
           - nodemanager
           - regionserver
@@ -44,7 +43,6 @@ inventory:
           hadoop: normal
     smao-dev-5-1999788.slc07.dev.ebayc3.com:
         roles:
-          - zookeeper_server
           - datanode
           - nodemanager
           - regionserver
@@ -53,7 +51,6 @@ inventory:
           hadoop: normal
     smao-dev-6-1999789.slc07.dev.ebayc3.com:
         roles:
-          - zookeeper_server
           - datanode
           - nodemanager
           - regionserver
