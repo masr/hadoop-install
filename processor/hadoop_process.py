@@ -86,17 +86,20 @@ class HadoopProcess(AbstractProcess):
 
     def get_all_kv_from_config(self, group_name):
         mapping = self.parse_configs(group_name)
-        result = mapping['core-site.xml'].copy()
-        result.update(mapping['hdfs-site.xml'])
-        result.update(mapping['yarn-site.xml'])
+        config = mapping['core-site.xml'].copy()
+        config.update(mapping['hdfs-site.xml'])
+        config.update(mapping['yarn-site.xml'])
+        result = {}
 
-        if 'yarn.nodemanager.log-dirs' in result:
-            result['yarn_nodemanager_log_dirs'] = result['yarn.nodemanager.log-dirs'].split(',')
-        if 'yarn.nodemanager.local-dirs' in result:
-            result['yarn_nodemanager_local_dirs'] = result['yarn.nodemanager.local-dirs'].split(',')
-        if 'dfs.datanode.data.dir' in result:
-            result['dfs_datanode_data_dir'] = result['dfs.datanode.data.dir'].split(',')
-        if 'dfs.namenode.name.dir' in result:
-            result['dfs_namenode_name_dir'] = result['dfs.namenode.name.dir'].split(',')
+        if 'yarn.nodemanager.log-dirs' in config:
+            result['yarn_nodemanager_log_dirs'] = config['yarn.nodemanager.log-dirs'].split(',')
+        if 'yarn.nodemanager.local-dirs' in config:
+            result['yarn_nodemanager_local_dirs'] = config['yarn.nodemanager.local-dirs'].split(',')
+        if 'dfs.datanode.data.dir' in config:
+            result['dfs_datanode_data_dir'] = config['dfs.datanode.data.dir'].split(',')
+        if 'dfs.namenode.name.dir' in config:
+            result['dfs_namenode_name_dir'] = config['dfs.namenode.name.dir'].split(',')
+        if 'dfs.journalnode.edits.dir' in config:
+            result['dfs_journalnode_edits_dir'] = config['dfs.journalnode.edits.dir']
 
         return result

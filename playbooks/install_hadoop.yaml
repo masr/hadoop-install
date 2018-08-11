@@ -46,7 +46,7 @@
         - yarn-env.sh
         - log4j.properties
 
-    - name: sync hadoop confs
+    - name: sync container-executor.cfg
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
       with_items:
         - container-executor.cfg
@@ -86,6 +86,6 @@
     - name: create journal node dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop recurse=yes
       with_items:
-        - "{{dfs.journalnode.edits.dir}}"
+        - "{{dfs_journalnode_edits_dir}}"
       when: '"journal_node" in group_names'
 

@@ -1,9 +1,4 @@
 #HDFS
 default:
   default_nameservice: amino
-
   hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
-  hbase_release_tarball: hbase-1.1.2.2.6.5.0-SNAPSHOT.tar.gz
-  spark_release_tarball: spark-2.3.0.2.6.5.0.tar.gz
-  zookeeper_release_tarball: zookeeper-3.4.6.tar.gz
-
