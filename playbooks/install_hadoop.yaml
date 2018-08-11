@@ -60,7 +60,7 @@
         - "{{hadoop_log_dir}}"
       ignore_errors: yes
 
-    - name: create namenode dir:
+    - name: create namenode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
       with_items: {{dfs_namenode_name_dir}}
       when: '"namenode" in group_names'
