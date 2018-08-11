@@ -46,10 +46,10 @@
         - yarn-env.sh
         - log4j.properties
 
-      - name: sync hadoop confs
-        copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
-        with_items:
-          - container-executor.cfg
+    - name: sync hadoop confs
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
+      with_items:
+        - container-executor.cfg
 
     - name: create conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
