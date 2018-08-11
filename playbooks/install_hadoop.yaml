@@ -51,6 +51,9 @@
       with_items:
         - container-executor.cfg
 
+    - name: delete original  hadoop_dir/etc/hadoop
+      file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent
+
     - name: create conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
 
