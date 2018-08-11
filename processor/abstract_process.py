@@ -130,6 +130,7 @@ class AbstractProcess:
                 tmp_file.write(content)
             includes.append(
                 {
+                    'name': 'install ' + self.service_name + ' for group ' + group_name,
                     'include': '../../../../playbooks/install_' + self.service_name + '.yaml',
                     'vars': {
                         'variable_hosts': group_name,
