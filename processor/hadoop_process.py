@@ -74,6 +74,10 @@ class HadoopProcess(AbstractProcess):
         data = self.get_text_template('yarn-env.sh')
         mapping['yarn-env.sh'] = replace_params(data, basic_config)
 
+        ################# log4j.properties ###########################
+        data = self.get_text_template('log4j.properties')
+        mapping['log4j.properties'] = replace_params(data, basic_config)
+
         return mapping
 
     def get_all_kv_from_config(self, group_name):
