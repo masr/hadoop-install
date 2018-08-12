@@ -80,6 +80,10 @@ class HadoopProcess(AbstractProcess):
         data = self.get_text_template('container-executor.cfg')
         mapping['container-executor.cfg'] = replace_params(data, basic_config)
 
+        ################ topology.py ###########################
+        data = self.get_text_template('topology.py')
+        mapping['topology.py'] = replace_params(data, basic_config)
+
         ################ hdfs-include ####################################
         mapping['hdfs-include'] = '\n'.join(self.topology.get_hosts_of_role('datanode'))
 
