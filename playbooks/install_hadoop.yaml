@@ -52,6 +52,12 @@
         - hdfs-include
         - yarn-include
 
+    - name: sync hadoop exclude file
+      copy: content="" dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      with_items:
+        - hdfs-exclude
+        - yarn-exclude
+
     - name: sync container-executor.cfg
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
       with_items:
