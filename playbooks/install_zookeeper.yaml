@@ -23,7 +23,7 @@
     - name: create zookeeper log dir
       file: path={{ item }} state=directory mode=0775 owner=zookeeper group=hadoop
       with_items:
-        - "{{hadoop_log_dir}}/zookeeper"
+        - "{{ hadoop_log_dir }}/zookeeper"
 
 
     - name: create zookeeper confs dir

@@ -6,7 +6,7 @@ from processor.hadoop_process import HadoopProcess
 from processor.java_process import JavaProcess
 from processor.zookeeper_process import ZookeeperProcess
 from processor.topology import Topology
-from constants import SERVICE
+from constants import SERVICE, ALL_ROLES
 
 parser = argparse.ArgumentParser(description='Generate Configs')
 parser.add_argument('--cluster', help='cluster name', required=True)
@@ -25,7 +25,12 @@ with open("cluster/" + cluster + "/config/topology.yaml") as topology_file:
 # service_exists_dict[SERVICE.SPARK] = 'spark_clis' in topology_roles
 
 with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
+    for role in ALL_ROLES:
+        tmp_file.write("[" + role + "]\n")
+        tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')
+    tmp_file.write("[all]\n")
     tmp_file.write('\n'.join(topology.get_all_hosts()))
+
 for name, value in SERVICE.__members__.items():
     if value == SERVICE.HADOOP:
         java_process = JavaProcess(cluster, topology_data)
