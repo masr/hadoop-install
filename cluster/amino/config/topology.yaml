@@ -6,7 +6,7 @@ inventory:
         roles:
           - namenode
           - zkfc
-          - journal_node
+          - journalnode
           - resource_manager
           - hbase_master
           - hive_metastore
@@ -18,7 +18,7 @@ inventory:
         roles:
           - namenode
           - zkfc
-          - journal_node
+          - journalnode
           - resource_manager
           - hbase_master
           - hive_metastore

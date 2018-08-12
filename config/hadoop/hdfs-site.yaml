@@ -40,4 +40,4 @@ dfs.client.read.shortcircuit: "true"
 dfs.cluster.administrators: hdfs
 dfs.client.failover.proxy.provider.{% default_nameservice %}: org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
 
-dfs.journalnode.edits.dir: file://${hadoop.tmp.dir}/journal_node
+dfs.journalnode.edits.dir: file://${hadoop.tmp.dir}/journalnode

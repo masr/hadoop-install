@@ -13,7 +13,7 @@ class SERVICE(Enum):
 
 SERVICE_TO_ROLES = {
     SERVICE.JAVA: ['common'],
-    SERVICE.HADOOP: ['namenode', 'datanode', 'journal_node', 'zkfc', 'resource_manager', 'nodemanager', 'hadoop_cli'],
+    SERVICE.HADOOP: ['namenode', 'datanode', 'journalnode', 'zkfc', 'resource_manager', 'nodemanager', 'hadoop_cli'],
     SERVICE.ZOOKEEPER: ['zookeeper_server', 'zookeeper_cli']
 }
 

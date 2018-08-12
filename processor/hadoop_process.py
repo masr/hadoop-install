@@ -37,9 +37,9 @@ class HadoopProcess(AbstractProcess):
         resource_managers = self.topology.get_hosts_of_role('resource_manager')
         basic_config['resource_manager1'] = resource_managers[0]
         basic_config['resource_manager2'] = resource_managers[1]
-        journal_nodes = self.topology.get_hosts_of_role('journal_node')
+        journalnodes = self.topology.get_hosts_of_role('journalnode')
         qjournal_string = 'qjournal://' + ';'.join(
-            [host + ':' + str(basic_config['journalnode_rpc_port']) for host in journal_nodes]
+            [host + ':' + str(basic_config['journalnode_rpc_port']) for host in journalnodes]
         ) + '/' + default_nameservice
         is_kerberos = basic_config['kerberos_enable']
         https_enable = basic_config['https_enable']

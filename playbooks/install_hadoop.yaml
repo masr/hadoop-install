@@ -86,7 +86,7 @@
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop recurse=yes
       with_items:
         - "{{dfs_journalnode_edits_dir}}"
-      when: '"journal_node" in group_names'
+      when: '"journalnode" in group_names'
 
 
     - name: install datanode.service
@@ -101,9 +101,9 @@
       template: src="files/zkfc.service.j2" dest=/usr/lib/systemd/system/zkfc.service group=root owner=root mode=0644
       when: '"namenode" in group_names'
 
-    - name: install journal_node.service
-      template: src="files/journal_node.service.j2" dest=/usr/lib/systemd/system/journal_node.service group=root owner=root mode=0644
-      when: '"journal_node" in group_names'
+    - name: install journalnode.service
+      template: src="files/journalnode.service.j2" dest=/usr/lib/systemd/system/journalnode.service group=root owner=root mode=0644
+      when: '"journalnode" in group_names'
 
     - name: install nodemanager.service
       template: src="files/nodemanager.service.j2" dest=/usr/lib/systemd/system/nodemanager.service group=root owner=root mode=0644
@@ -124,9 +124,9 @@
       command: systemctl enable namenode zkfc
       when: '"namenode" in group_names'
 
-    - name: enable journal_node service
-      command: systemctl enable journal_node
-      when: '"journal_node" in group_names'
+    - name: enable journalnode service
+      command: systemctl enable journalnode
+      when: '"journalnode" in group_names'
 
     - name: enable nodemanager service
       command: systemctl enable nodemanager

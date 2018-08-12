@@ -5,4 +5,5 @@ ansible-playbook -u stack -i cluster/amino/.ansible/zookeeper/hosts cluster/amin
 ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s
 ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s -e "sync_release=no"
 
-ansible -u stack -i cluster/amino/.ansible/zookeeper/hosts zookeeper_server -m shell -a "systemctl start zookeeper_server" -s
+ansible -u stack -i cluster/amino/.ansible/hosts zookeeper_server -m shell -a "systemctl start zookeeper_server" -s
+ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -s
