@@ -1,0 +1,9 @@
+install_base_dir: /apache
+hadoop_run_dir: /apache/run
+hadoop_pid_dir: /apache/run/pids
+
+hadoop_confs_dir: /apache/confs
+hadoop_releases_dir: /apache/releases
+
+hadoop_log_dir: /var/log/hadoop
+

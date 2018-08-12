@@ -29,5 +29,13 @@ class Topology:
                     hosts.append(host)
         return sorted(hosts)
 
+    def get_vars_from_host(self, host):
+        result = {}
+        if host in self.inventory_hosts:
+            host_inventory = self.inventory_hosts[host]
+            if 'vars' in host_inventory:
+                result = host_inventory['vars']
+        return result
+
     def get_all_hosts(self):
         return self.inventory_hosts.keys()

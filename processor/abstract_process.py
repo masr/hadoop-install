@@ -31,12 +31,16 @@ class AbstractProcess:
         self.service_config_dir = os.path.join('config', self.service_name)
 
     def get_merged_basic_configuration_by_group(self, group_name):
-        result = self.get_configuration(self.service_config_dir + "/configuration.yaml")
-        cluster_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
-        if 'default' in cluster_result:
-            result.update(cluster_result['default'])
-        if group_name in cluster_result:
-            result.update(cluster_result[group_name])
+        result = self.get_configuration('config/configuration.yaml')
+        tmp_result = self.get_configuration(self.service_config_dir + "/configuration.yaml")
+        result.update(tmp_result)
+        tmp_result = self.get_configuration(self.cluster_base_dir + "/configuration.yaml")
+        result.update(tmp_result)
+        tmp_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
+        if 'default' in tmp_result:
+            result.update(tmp_result['default'])
+        if group_name in tmp_result:
+            result.update(tmp_result[group_name])
         return result
 
     def get_merged_service_configuration_by_group(self, file_name, group_name):
@@ -114,7 +118,12 @@ class AbstractProcess:
             inventory_content += "\n".join(self.topology.get_hosts_of_role(role)) + "\n\n"
         for group_name in self.config_group_names:
             inventory_content += "[" + group_name + "]\n"
-            inventory_content += "\n".join(self.topology.get_hosts_of_group(self.service_type, group_name)) + "\n\n"
+            host_lines = []
+            hosts = self.topology.get_hosts_of_group(self.service_type, group_name)
+            for host in hosts:
+                vars_dict = self.topology.get_vars_from_host(host)
+                host_lines.append(host + ' ' + ' '.join([k + '=' + str(v) for k, v in vars_dict.items()]))
+            inventory_content += "\n".join(host_lines) + "\n\n"
         with open(self.service_ansible_base_dir + "/hosts", "w") as tmp_file:
             tmp_file.write(inventory_content)
 

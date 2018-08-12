@@ -7,12 +7,12 @@ class HadoopProcess(AbstractProcess):
     def __init__(self, cluster_name, topology_data):
         AbstractProcess.__init__(self, cluster_name, SERVICE.HADOOP, topology_data
                                  , set(['namenode', 'datanode', 'journal_node'
-                                           , 'zkfc', 'resource_manager', 'nodemanager']))
+                                           , 'zkfc', 'resource_manager', 'nodemanager', 'hadoop_cli']))
 
     def get_all_parsed_configs(self, group_name):
         mapping = self.parse_configs(group_name)
 
-        ################## core-site.xml **********************************8
+        ################## core-site.xml **********************************
         mapping['core-site.xml'] = trans_dict_to_xml(mapping['core-site.xml'])
 
         ################## hdfs-site.xml **********************************
@@ -51,7 +51,7 @@ class HadoopProcess(AbstractProcess):
             basic_config['http_policy'] = 'HTTP_ONLY'
 
         mapping = {}
-        ################## core-site.xml **********************************8
+        ################## core-site.xml **********************************
         data = self.get_merged_service_configuration_by_group('core-site.yaml', group_name)
         mapping['core-site.xml'] = replace_values_in_dict(data, basic_config)
 
@@ -78,7 +78,7 @@ class HadoopProcess(AbstractProcess):
         data = self.get_text_template('log4j.properties')
         mapping['log4j.properties'] = replace_params(data, basic_config)
 
-        ################# log4j.properties ###########################
+        ################# container-executor.cfg ###########################
         data = self.get_text_template('container-executor.cfg')
         mapping['container-executor.cfg'] = replace_params(data, basic_config)
 

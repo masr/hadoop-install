@@ -12,6 +12,8 @@ inventory:
           - hive_metastore
           - zookeeper_server
         topology: /slc/smao_dev
+        vars:
+          zookeeper_myid: 1
     smao-dev-2-1999780.slc07.dev.ebayc3.com:
         roles:
           - namenode
@@ -22,6 +24,8 @@ inventory:
           - hive_metastore
           - zookeeper_server
           - spark_history_server
+        vars:
+          zookeeper_myid: 2
         topology: /slc/smao_dev
     smao-dev-3-1999786.slc07.dev.ebayc3.com:
         roles:
@@ -31,6 +35,8 @@ inventory:
           - nodemanager
           - regionserver
         topology: /slc/smao_dev
+        vars:
+          zookeeper_myid: 3
         config_groups:
           hadoop: normal
     smao-dev-4-1999787.slc07.dev.ebayc3.com:

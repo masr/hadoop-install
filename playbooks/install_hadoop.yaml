@@ -11,15 +11,13 @@
       unarchive: src=../releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=hadoop
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
-    - name: hadoop soft link
+    - name: create hadoop soft link
       file: src=releases/{{ hadoop_release_version }} path={{ install_base_dir }}/hadoop state=link
 
     - name: create hadoop confs dir
-      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
+      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop recurse=yes
       with_items:
-        - "{{ install_base_dir }}/confs/hadoop"
         - "{{ install_base_dir }}/confs/hadoop/conf"
-        - "{{ install_base_dir }}/run"
 
     - name: create runtime dir for hdfs
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
@@ -31,10 +29,15 @@
       with_items:
         - "{{ install_base_dir }}/run/yarn"
 
-    - name: create hadoop pid dir
-      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+    - name: create hdfs log dir
+      file: path={{ item }} state=directory mode=0775 owner=hdfs group=hadoop
       with_items:
-        - "{{ install_base_dir }}/run/pids"
+        - "{{hadoop_log_dir}}/hdfs"
+
+    - name: create yarn log dir
+      file: path={{ item }} state=directory mode=0775 owner=yarn group=hadoop
+      with_items:
+        - "{{hadoop_log_dir}}/yarn"
 
     - name: sync hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
@@ -54,14 +57,8 @@
     - name: delete original  hadoop_dir/etc/hadoop
       file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent
 
-    - name: create conf soft link
+    - name: create hadoop conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
-
-    - name: create hadoop log dir
-      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop recurse=yes
-      with_items:
-        - "{{hadoop_log_dir}}"
-      ignore_errors: yes
 
     - name: create namenode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop recurse=yes

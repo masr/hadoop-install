@@ -1,3 +1,2 @@
-install_base_dir: /apache
 java_release_tarball: jdk-8u181-linux-x64.tar.gz
 java_release_version: jdk1.8.0_181

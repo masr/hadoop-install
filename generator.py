@@ -4,6 +4,7 @@ import argparse
 import yaml
 from processor.hadoop_process import HadoopProcess
 from processor.java_process import JavaProcess
+from processor.zookeeper_process import ZookeeperProcess
 from processor.topology import Topology
 from constants import SERVICE
 
@@ -33,3 +34,6 @@ for name, value in SERVICE.__members__.items():
         hadoop_process = HadoopProcess(cluster, topology_data)
         hadoop_process.generate_configs()
         hadoop_process.generate_ansible()
+        zookeeper_process = ZookeeperProcess(cluster, topology_data)
+        zookeeper_process.generate_configs()
+        zookeeper_process.generate_ansible()

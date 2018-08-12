@@ -1,11 +1,7 @@
 default_nameservice: my_cluster
 
-install_base_dir: /apache
 kerberos_enable: false
 https_enable: false
-
-hadoop_log_dir: /var/log/hadoop
-hadoop_pid_dir: "{% install_base_dir %}/run/pids"
 
 namenode_heap: 4g
 namenode_young_heap: 512m

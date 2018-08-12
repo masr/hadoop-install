@@ -1,0 +1,53 @@
+- name: Install zookeeper for config group {{ config_group_name }}
+  hosts: "{{ variable_hosts | default('all') }}"
+  tasks:
+    - name: load vars
+      include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
+
+    - name: before install preparation
+      include: before_install_service.yaml
+
+    - name: sync zookeeper release
+      unarchive: src=../releases/{{ zookeeper_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=hadoop
+      when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
+
+    - name: create zookeeper soft link
+      file: src=releases/{{ zookeeper_release_version }} path={{ install_base_dir }}/zookeeper state=link
+
+    - name: create runtime dir for zookeeper
+      file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop
+      with_items:
+        - "{{ install_base_dir }}/run/zookeeper"
+
+    - name: create zookeeper log dir
+      file: path={{ item }} state=directory mode=0775 owner=zookeeper group=hadoop
+      with_items:
+            - "{{hadoop_log_dir}}/zookeeper"
+
+    - name: create zookeeper confs dir
+        file: path={{ item }} state=directory mode=0755 owner=root group=hadoop  recurse=yes
+        with_items:
+          - "{{ install_base_dir }}/confs/zookeeper/conf"
+
+    - name: sync zookeeper confs
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/zookeeper/conf/{{ item }} mode=0644 owner=root group=hadoop
+      with_items:
+        - zoo.cfg
+        - zookeeper-env.sh
+        - log4j.properties
+
+    - name: delete original zookeeper_dir/conf
+      file: path={{ install_base_dir }}/zookeeper/conf state=absent
+
+    - name: create zookeeper conf soft link
+      file: src={{ install_base_dir }}/confs/zookeeper/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
+
+    - name: create zookeeper dir
+      file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop recurse=yes
+      with_items: "{{zookeeper_storage_dir}}"
+      when: '"zookeeper_server" in group_names'
+
+    - name: create zookeeper myid file
+      file: content={{zookeeper_myid}} mode=0644 owner=zookeeper group=hadoop dest={{zookeeper_storage_dir}}/myid
+      when: '"zookeeper_server" in group_names'
+
