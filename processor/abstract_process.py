@@ -5,11 +5,12 @@ from processor.utils import check_and_create_dir, clean_and_create_dir
 from processor.topology import Topology
 import os
 from processor.utils import replace_keys_in_dict, replace_params
+from constants import SERVICE_TO_ROLES
 
 
 class AbstractProcess:
 
-    def __init__(self, cluster_name, service_type, topology_data, roles=set()):
+    def __init__(self, cluster_name, service_type, topology_data):
         self.cluster_name = cluster_name
         self.service_type = service_type
         self.service_name = str(service_type.name).lower()
@@ -20,7 +21,6 @@ class AbstractProcess:
         else:
             self.config_group_names = set()
         self.config_group_names.add("default")
-        self.roles = roles
 
         self.cluster_base_dir = os.path.join('cluster', cluster_name)
         self.ansible_base_dir = os.path.join('cluster', cluster_name, '.ansible')
@@ -113,17 +113,12 @@ class AbstractProcess:
         clean_and_create_dir(self.service_ansible_base_dir)
 
         inventory_content = ""
-        for role in self.roles:
+        for role in SERVICE_TO_ROLES[self.service_type]:
             inventory_content += "[" + role + "]\n"
             inventory_content += "\n".join(self.topology.get_hosts_of_role(role)) + "\n\n"
         for group_name in self.config_group_names:
             inventory_content += "[" + group_name + "]\n"
-            host_lines = []
-            hosts = self.topology.get_hosts_of_group(self.service_type, group_name)
-            for host in hosts:
-                vars_dict = self.topology.get_vars_from_host(host)
-                host_lines.append(host + ' ' + ' '.join([k + '=' + str(v) for k, v in vars_dict.items()]))
-            inventory_content += "\n".join(host_lines) + "\n\n"
+            inventory_content += "\n".join(self.topology.get_hosts_of_group(self.service_type, group_name)) + "\n\n"
         with open(self.service_ansible_base_dir + "/hosts", "w") as tmp_file:
             tmp_file.write(inventory_content)
 
@@ -135,6 +130,9 @@ class AbstractProcess:
             with open(self.service_ansible_base_dir + "/vars/" + group_name + ".yaml", "w") as tmp_file:
                 params[
                     'group_conf_dir'] = '../' + self.service_confs_base_dir + '/' + group_name
+                params['host_params'] = {}
+                for host in self.topology.get_hosts_of_service(self.service_type):
+                    params['host_params'][host] = self.topology.get_vars_from_host(host)
                 content = yaml.dump(params, default_flow_style=False)
                 tmp_file.write(content)
             includes.append(

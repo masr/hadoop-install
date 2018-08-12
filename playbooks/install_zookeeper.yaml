@@ -42,12 +42,12 @@
     - name: create zookeeper conf soft link
       file: src={{ install_base_dir }}/confs/zookeeper/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
 
-    - name: create zookeeper dir
+    - name: create zookeeper storage dir
       file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop recurse=yes
       with_items: "{{zookeeper_storage_dir}}"
       when: '"zookeeper_server" in group_names'
 
     - name: create zookeeper myid file
-      file: content={{zookeeper_myid}} mode=0644 owner=zookeeper group=hadoop dest={{zookeeper_storage_dir}}/myid
+      copy: content={{ hostvars[inventory_hostname]['host_params'][inventory_hostname]['zookeeper_myid'] }} mode=0644 owner=zookeeper group=hadoop dest={{zookeeper_storage_dir}}/myid
       when: '"zookeeper_server" in group_names'
 

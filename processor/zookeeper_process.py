@@ -5,8 +5,7 @@ from processor.utils import replace_params
 
 class ZookeeperProcess(AbstractProcess):
     def __init__(self, cluster_name, topology_data):
-        AbstractProcess.__init__(self, cluster_name, SERVICE.ZOOKEEPER, topology_data
-                                 , set(['zookeeper_server', 'zookeeper_cli']))
+        AbstractProcess.__init__(self, cluster_name, SERVICE.ZOOKEEPER, topology_data)
 
     def get_all_parsed_configs(self, group_name):
         mapping = self.parse_configs(group_name)
