@@ -29,7 +29,7 @@ inventory:
         topology: /slc/smao_dev
     smao-dev-3-1999786.slc07.dev.ebayc3.com:
         roles:
-          - journal_node
+          - journalnode
           - zookeeper_server
           - datanode
           - nodemanager
