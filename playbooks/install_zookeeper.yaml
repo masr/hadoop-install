@@ -56,7 +56,7 @@
 
 
     - name: install zookeeper.service
-      template: src=files/zookeeper.service.j2 dest=/usr/lib/systemd/system/zookeeper.service group=root owner=root mode=0644
+      template: src=files/zookeeper_server.service.j2 dest=/usr/lib/systemd/system/zookeeper_server.service group=root owner=root mode=0644
       when: '"zookeeper_server" in group_names'
 
     - name: load zookeeper service
