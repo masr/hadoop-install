@@ -110,7 +110,7 @@
       when: '"nodemanager" in group_names'
 
     - name: install resource_manager.service
-      template: src="files/resourcemanager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
+      template: src="files/resource_manager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
       when: '"resource_manager" in group_names'
 
     - name: reload services
