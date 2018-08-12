@@ -14,10 +14,6 @@
     - name: create hadoop soft link
       file: src=releases/{{ hadoop_release_version }} path={{ install_base_dir }}/hadoop state=link
 
-    - name: create hadoop confs dir
-      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop recurse=yes
-      with_items:
-        - "{{ install_base_dir }}/confs/hadoop/conf"
 
     - name: create runtime dir for hdfs
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
@@ -39,6 +35,11 @@
       with_items:
         - "{{hadoop_log_dir}}/yarn"
 
+    - name: create hadoop confs dir
+      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop recurse=yes
+      with_items:
+        - "{{ install_base_dir }}/confs/hadoop/conf"
+
     - name: sync hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
@@ -59,6 +60,7 @@
 
     - name: create hadoop conf soft link
       file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
+
 
     - name: create namenode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop recurse=yes
@@ -86,3 +88,50 @@
         - "{{dfs_journalnode_edits_dir}}"
       when: '"journal_node" in group_names'
 
+
+    - name: install datanode.service
+      template: src="files/datanode.service.j2" dest=/usr/lib/systemd/system/datanode.service group=root owner=root mode=0644
+      when: '"datanode" in group_names'
+
+    - name: install namenode.service
+      template: src="files/namenode.service.j2" dest=/usr/lib/systemd/system/namenode.service group=root owner=root mode=0644
+      when: '"namenode" in group_names'
+
+    - name: install zkfc.service
+      template: src="files/zkfc.service.j2" dest=/usr/lib/systemd/system/zkfc.service group=root owner=root mode=0644
+      when: '"namenode" in group_names'
+
+    - name: install journal_node.service
+      template: src="files/journal_node.service.j2" dest=/usr/lib/systemd/system/journal_node.service group=root owner=root mode=0644
+      when: '"journal_node" in group_names'
+
+    - name: install nodemanager.service
+      template: src="files/nodemanager.service.j2" dest=/usr/lib/systemd/system/nodemanager.service group=root owner=root mode=0644
+      when: '"nodemanager" in group_names'
+
+    - name: install resource_manager.service
+      template: src="files/resourcemanager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
+      when: '"resource_manager" in group_names'
+
+    - name: reload services
+      command: systemctl daemon-reload
+
+    - name: enable datanode service
+      command: systemctl enable datanode
+      when: '"datanode" in group_names'
+
+    - name: enable namenode & zkfc service
+      command: systemctl enable namenode zkfc
+      when: '"namenode" in group_names'
+
+    - name: enable journal_node service
+      command: systemctl enable journal_node
+      when: '"journal_node" in group_names'
+
+    - name: enable nodemanager service
+      command: systemctl enable nodemanager
+      when: '"nodemanager" in group_names'
+
+    - name: enable resource_manager service
+      command: systemctl enable resource_manager
+      when: '"resource_manager" in group_names'

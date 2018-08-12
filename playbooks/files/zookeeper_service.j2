@@ -1,0 +1,21 @@
+[Unit]
+Description=Apache Zookeeper
+After=network.target
+
+[Service]
+WorkingDirectory={{ install_base_dir }}/zookeeper
+Environment=ZOOKEEPER_HOME={{ install_base_dir }}/zookeeper ZOOCFGDIR={{install_base_dir}}/confs/zookeeper/conf HADOOP_CONF_DIR={{ install_base_dir }}/confs/hadoop/conf
+Environment=ZOO_LOG4J_PROP=INFO,ROLLINGFILE ZOO_LOG_FILE=zookeeper-server-%H.log
+ExecStart={{install_base_dir}}/zookeeper/bin/zkServer.sh start-foreground
+#ExecStop=
+Type=simple
+Restart=always
+RestartSec=3s
+User=zookeeper
+OOMScoreAdjust=-1000
+LimitNOFILE=infinity
+LimitNPROC=infinity
+
+
+[Install]
+WantedBy=multi-user.target
