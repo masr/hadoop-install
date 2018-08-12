@@ -80,6 +80,12 @@ class HadoopProcess(AbstractProcess):
         data = self.get_text_template('container-executor.cfg')
         mapping['container-executor.cfg'] = replace_params(data, basic_config)
 
+        ################ hdfs-include ####################################
+        mapping['hdfs-include'] = '\n'.join(self.topology.get_hosts_of_role('datanode'))
+
+        ################ yarn-include ####################################
+        mapping['yarn-include'] = '\n'.join(self.topology.get_hosts_of_role('nodemanager'))
+
         return mapping
 
     def get_all_kv_from_config(self, group_name):

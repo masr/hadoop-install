@@ -49,6 +49,8 @@
         - hadoop-env.sh
         - yarn-env.sh
         - log4j.properties
+        - hdfs-include
+        - yarn-include
 
     - name: sync container-executor.cfg
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
