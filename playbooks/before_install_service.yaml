@@ -6,13 +6,13 @@
     - "{{ install_base_dir }}/confs"
     - "{{ install_base_dir }}/run"
 
-  - name: create hadoop pid dir
-    file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
-    with_items:
-      - "{{ install_base_dir }}/run/pids"
+- name: create hadoop pid dir
+  file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+  with_items:
+    - "{{ install_base_dir }}/run/pids"
 
-  - name: create hadoop log dir
-    file: path={{ item }} state=directory mode=0775 owner=root group=hadoop recurse=yes
-    with_items:
-      - "{{hadoop_log_dir}}"
-    ignore_errors: yes
+- name: create hadoop log dir
+  file: path={{ item }} state=directory mode=0775 owner=root group=hadoop recurse=yes
+  with_items:
+    - "{{hadoop_log_dir}}"
+  ignore_errors: yes
