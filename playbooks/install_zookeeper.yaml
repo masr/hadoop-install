@@ -64,5 +64,5 @@
       when: '"zookeeper_server" in group_names'
 
     - name: enable zookeeper service
-      command: systemctl enable zookeeper
+      command: systemctl enable zookeeper_server
       when: '"zookeeper_server" in group_names'
