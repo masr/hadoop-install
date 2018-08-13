@@ -13,6 +13,13 @@ def trans_dict_to_xml(data):
     return xml.dom.minidom.parseString(content).toprettyxml()
 
 
+def trans_dict_to_conf(data, seperator="="):
+    content = ""
+    for k in sorted(data.keys()):
+        content += str(k) + seperator + str(data[k]) + "\n"
+    return content
+
+
 def replace_keys_in_dict(obj, params):
     result = {}
     for k, v in obj.items():

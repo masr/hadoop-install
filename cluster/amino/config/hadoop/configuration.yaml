@@ -1,3 +1,1 @@
 #HDFS
-default:
-  default_nameservice: amino

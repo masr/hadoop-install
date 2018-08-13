@@ -10,10 +10,8 @@
         - {name: "zookeeper"}
         - {name: "hdfs"}
         - {name: "yarn"}
-        - {name: "mapred"}
         - {name: "hbase"}
         - {name: "spark"}
-        - {name: "oozie"}
         - {name: "hive"}
 
     - name: set ulimit

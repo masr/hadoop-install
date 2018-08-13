@@ -1,11 +1,11 @@
 from processor.abstract_process import AbstractProcess
-from constants import SERVICE
+from constants import SERVICE, ROLE
 from processor.utils import trans_dict_to_xml, replace_params, replace_values_in_dict
 
 
 class HadoopProcess(AbstractProcess):
-    def __init__(self, cluster_name, topology_data):
-        AbstractProcess.__init__(self, cluster_name, SERVICE.HADOOP, topology_data)
+    def __init__(self, cluster_name, topology):
+        AbstractProcess.__init__(self, cluster_name, SERVICE.HADOOP, topology)
 
     def get_all_parsed_configs(self, group_name):
         mapping = self.parse_configs(group_name)
@@ -17,19 +17,19 @@ class HadoopProcess(AbstractProcess):
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
 
-        zookeeper_servers = self.topology.get_hosts_of_role('zookeeper_server')
+        zookeeper_servers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER_SERVER)
         zookeeper_config = self.get_other_service_configuration(SERVICE.ZOOKEEPER)
         zookeeper_port = zookeeper_config['zookeeper_server_port']
         zookeeper_quorum = ','.join([host + ':' + str(zookeeper_port) for host in zookeeper_servers])
         basic_config['zookeeper_quorum'] = zookeeper_quorum
         default_nameservice = basic_config['default_nameservice']
-        namenodes = self.topology.get_hosts_of_role('namenode')
+        namenodes = self.topology.get_hosts_of_role(ROLE.NAMENODE)
         basic_config['namenode1'] = namenodes[0]
         basic_config['namenode2'] = namenodes[1]
-        resource_managers = self.topology.get_hosts_of_role('resource_manager')
+        resource_managers = self.topology.get_hosts_of_role(ROLE.RESOURCE_MANAGER)
         basic_config['resource_manager1'] = resource_managers[0]
         basic_config['resource_manager2'] = resource_managers[1]
-        journalnodes = self.topology.get_hosts_of_role('journalnode')
+        journalnodes = self.topology.get_hosts_of_role(ROLE.JOURNALNODE)
         qjournal_string = 'qjournal://' + ';'.join(
             [host + ':' + str(basic_config['journalnode_rpc_port']) for host in journalnodes]
         ) + '/' + default_nameservice
@@ -81,10 +81,10 @@ class HadoopProcess(AbstractProcess):
         mapping['topology.py'] = replace_params(data, basic_config)
 
         ################ hdfs-include ####################################
-        mapping['hdfs-include'] = '\n'.join(self.topology.get_hosts_of_role('datanode'))
+        mapping['hdfs-include'] = '\n'.join(self.topology.get_hosts_of_role(ROLE.DATANODE))
 
         ################ yarn-include ####################################
-        mapping['yarn-include'] = '\n'.join(self.topology.get_hosts_of_role('nodemanager'))
+        mapping['yarn-include'] = '\n'.join(self.topology.get_hosts_of_role(ROLE.NODEMANAGER))
 
         return mapping
 

@@ -16,3 +16,23 @@
   with_items:
     - "{{hadoop_log_dir}}"
   ignore_errors: yes
+
+- name: create runtime dir for different services
+  file: path={{ install_base_dir }}/run/{{ item }} state=directory mode=0755 owner={{ item }} group=hadoop
+  with_items:
+    - zookeeper
+    - hdfs
+    - yarn
+    - spark
+    - hive
+    - hbase
+
+- name: create zookeeper log dir
+  file: path={{ hadoop_log_dir }}/{{ item }} state=directory mode=0775 owner={{ item }} group=hadoop
+  with_items:
+    - zookeeper
+    - hdfs
+    - yarn
+    - spark
+    - hive
+    - hbase

@@ -1,0 +1,19 @@
+[Unit]
+Description=Spark HistoryServer
+After=network.target
+
+[Service]
+WorkingDirectory={{ install_base_dir }}/spark
+ExecStart={{ install_base_dir }}/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer
+#ExecStop=
+Type=simple
+Restart=always
+RestartSec=10s
+User=spark
+OOMScoreAdjust=-1000
+LimitNOFILE=infinity
+LimitNPROC=infinity
+
+
+[Install]
+WantedBy=multi-user.target

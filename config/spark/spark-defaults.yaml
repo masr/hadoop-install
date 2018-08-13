@@ -1,0 +1,27 @@
+spark.executor.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
+spark.driver.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
+
+spark.dynamicAllocation.enabled: "true"
+spark.shuffle.service.enabled: "true"
+
+
+#For history server
+spark.yarn.historyServer.address: "{% spark_history_server %}:{% spark_history_server_port %}"
+spark.history.ui.port: "{% spark_history_server_port %}"
+
+spark.eventLog.enabled: "true"
+spark.eventLog.dir: hdfs://{% default_nameservice %}/spark-logs
+spark.history.fs.logDirectory: hdfs://{% default_nameservice %}/spark-logs
+spark.history.fs.cleaner.enabled: true
+spark.history.fs.update.interval: 20s
+spark.history.fs.numReplayThreads: 10
+spark.yarn.access.namenodes: hdfs://{% default_nameservice %}
+spark.yarn.am.memory: 2g
+spark.driver.memory: 2g
+
+spark.master: yarn
+
+# Mapping Metaspace
+spark.yarn.am.extraJavaOptions: -XX:MaxMetaspaceSize=512m -XX:ParallelGCThreads=3
+spark.executor.extraJavaOptions: -XX:MaxMetaspaceSize=512m -XX:ParallelGCThreads=3
+spark.driver.extraJavaOptions: -XX:MaxMetaspaceSize=512m -XX:ParallelGCThreads=3

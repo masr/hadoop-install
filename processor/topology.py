@@ -1,4 +1,4 @@
-from constants import SERVICE_TO_ROLES
+from constants import SERVICE_TO_ROLES, ROLE
 
 
 class Topology:
@@ -6,21 +6,21 @@ class Topology:
         self.topology_data = topology_data
         self.inventory_hosts = topology_data['inventory']
 
-    def get_hosts_of_role(self, role_name):
+    def get_hosts_of_role(self, role):
         hosts = []
-        if role_name == 'common':
+        if role == ROLE.COMMON:
             hosts = self.inventory_hosts.keys()
         else:
             for host in self.inventory_hosts:
                 data = self.inventory_hosts[host]
                 if 'roles' in data:
-                    if role_name in data['roles']:
+                    if role.value in data['roles']:
                         hosts.append(host)
         return sorted(hosts)
 
     def get_hosts_of_group(self, service_type, group_name):
         hosts = []
-        service_name = str(service_type.name).lower()
+        service_name = service_type.value
         service_hosts = self.get_hosts_of_service(service_type)
         inventory_hosts = set(service_hosts) & set(self.inventory_hosts.keys())
         for host in inventory_hosts:
@@ -54,3 +54,13 @@ class Topology:
 
     def get_all_hosts(self):
         return self.inventory_hosts.keys()
+
+    def get_config_groups(self, service_type):
+        service_name = service_type.value
+        result = set(['default'])
+        for host in self.inventory_hosts:
+            host_inventory = self.inventory_hosts[host]
+            if 'config_groups' in host_inventory:
+                if service_name in host_inventory['config_groups']:
+                    result.add(host_inventory['config_groups'][service_name])
+        return list(result)

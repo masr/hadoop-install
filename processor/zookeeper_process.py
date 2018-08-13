@@ -1,14 +1,15 @@
-from constants import SERVICE
+from constants import SERVICE, ROLE
 from processor.abstract_process import AbstractProcess
-from processor.utils import replace_params
+from processor.utils import replace_params, trans_dict_to_conf, replace_values_in_dict
 
 
 class ZookeeperProcess(AbstractProcess):
-    def __init__(self, cluster_name, topology_data):
-        AbstractProcess.__init__(self, cluster_name, SERVICE.ZOOKEEPER, topology_data)
+    def __init__(self, cluster_name, topology):
+        AbstractProcess.__init__(self, cluster_name, SERVICE.ZOOKEEPER, topology)
 
     def get_all_parsed_configs(self, group_name):
         mapping = self.parse_configs(group_name)
+        mapping['zoo.cfg'] = trans_dict_to_conf(mapping['zoo.cfg'])
         return mapping
 
     def parse_configs(self, group_name):
@@ -16,16 +17,13 @@ class ZookeeperProcess(AbstractProcess):
 
         mapping = {}
         ################## zoo.cfg **********************************
-        data = self.get_text_template('zoo.cfg')
-        zookeeper_servers = self.topology.get_hosts_of_role('zookeeper_server')
-        zookeeper_definition_content = ''
+        zookeeper_servers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER_SERVER)
+        data = self.get_merged_service_configuration_by_group('zoo.yaml', group_name)
         for zookeeper_server in zookeeper_servers:
             vars_dict = self.topology.get_vars_from_host(zookeeper_server)
-            zookeeper_definition_content += \
-                "server." + str(vars_dict['zookeeper_myid']) + '=' + zookeeper_server + ':2888:3888' + '\n'
-            basic_config['zookeeper_definition_list'] = zookeeper_definition_content
+            data["server." + str(vars_dict['zookeeper_myid'])] = zookeeper_server + ':2888:3888'
 
-        mapping['zoo.cfg'] = replace_params(data, basic_config)
+        mapping['zoo.cfg'] = replace_values_in_dict(data, basic_config)
 
         ################## zookeeper-env.sh **********************************
         data = self.get_text_template('zookeeper-env.sh')

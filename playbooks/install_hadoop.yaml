@@ -14,32 +14,12 @@
     - name: sync spark shuffle network jar file
       copy: src={{ item }} dest={{ install_base_dir }}/hadoop/share/hadoop/yarn/lib/ owner=root group=hadoop
       with_fileglob:
-        - "../releases/jars/spark-network-shuffle_*.jar"
+        - "../releases/jars/spark-network-yarn_*.jar"
       when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool)) and "nodemanager" in group_names
 
     - name: create hadoop soft link
       file: src=releases/{{ hadoop_release_version }} path={{ install_base_dir }}/hadoop state=link
 
-
-    - name: create runtime dir for hdfs
-      file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop
-      with_items:
-        - "{{ install_base_dir }}/run/hdfs"
-
-    - name: create runtime dir for yarn
-      file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items:
-        - "{{ install_base_dir }}/run/yarn"
-
-    - name: create hdfs log dir
-      file: path={{ item }} state=directory mode=0775 owner=hdfs group=hadoop
-      with_items:
-        - "{{hadoop_log_dir}}/hdfs"
-
-    - name: create yarn log dir
-      file: path={{ item }} state=directory mode=0775 owner=yarn group=hadoop
-      with_items:
-        - "{{hadoop_log_dir}}/yarn"
 
     - name: create hadoop confs dir
       file: path={{ item }} state=directory mode=0755 owner=root group=hadoop recurse=yes
@@ -79,7 +59,7 @@
       file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent
 
     - name: create hadoop conf soft link
-      file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link force=yes
+      file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link
 
 
     - name: create namenode dir

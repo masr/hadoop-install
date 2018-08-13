@@ -1,26 +1,21 @@
+import os
+
 import yaml
 
+from constants import SERVICE_TO_ROLES
 from processor.config_group import ConfigGroup
 from processor.utils import check_and_create_dir, clean_and_create_dir
-from processor.topology import Topology
-import os
 from processor.utils import replace_keys_in_dict, replace_params
-from constants import SERVICE_TO_ROLES
 
 
 class AbstractProcess:
 
-    def __init__(self, cluster_name, service_type, topology_data):
+    def __init__(self, cluster_name, service_type, topology):
         self.cluster_name = cluster_name
         self.service_type = service_type
-        self.service_name = str(service_type.name).lower()
-        self.topology_data = topology_data
-        self.topology = Topology(topology_data)
-        if 'config_groups' in topology_data and self.service_name in topology_data['config_groups']:
-            self.config_group_names = set(topology_data['config_groups'][self.service_name])
-        else:
-            self.config_group_names = set()
-        self.config_group_names.add("default")
+        self.service_name = service_type.value
+        self.topology = topology
+        self.config_group_names = topology.get_config_groups(service_type)
 
         self.cluster_base_dir = os.path.join('cluster', cluster_name)
         self.ansible_base_dir = os.path.join('cluster', cluster_name, '.ansible')
@@ -34,7 +29,7 @@ class AbstractProcess:
         result = self.get_configuration('config/configuration.yaml')
         tmp_result = self.get_configuration(self.service_config_dir + "/configuration.yaml")
         result.update(tmp_result)
-        tmp_result = self.get_configuration(self.cluster_base_dir + "/configuration.yaml")
+        tmp_result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
         result.update(tmp_result)
         tmp_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
         if 'default' in tmp_result:
@@ -56,7 +51,7 @@ class AbstractProcess:
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
         result = self.get_configuration(self.service_config_dir + "/" + file_name)
         result = replace_keys_in_dict(result, basic_config)
-        config_group_dict = self.get_cluster_config_groups(file_name)
+        config_group_dict = self.get_config_groups_of_a_file(file_name)
         merge_helper('default')
         merge_helper(group_name)
         return result
@@ -66,6 +61,8 @@ class AbstractProcess:
         if os.path.exists(config_file_path):
             with open(config_file_path) as config_file:
                 result = yaml.load(config_file.read(), Loader=yaml.Loader)
+                if result is None:
+                    result = {}
         return result
 
     def get_text_template(self, file_name):
@@ -80,7 +77,7 @@ class AbstractProcess:
                 result = file2.read()
         return result
 
-    def get_cluster_config_groups(self, file_name):
+    def get_config_groups_of_a_file(self, file_name):
         config_detail_path = self.cluster_service_config_dir + "/" + file_name
         if not os.path.exists(config_detail_path):
             return {}
@@ -88,8 +85,9 @@ class AbstractProcess:
             config_group_dict = {}
             with open(config_detail_path) as config_group_file:
                 data = yaml.load(config_group_file.read(), Loader=yaml.Loader)
+                if data is None:
+                    data = {}
                 for group_name in data:
-                    self.config_group_names.add(group_name)
                     config_group = ConfigGroup(self.service_type, file_name, group_name, data[group_name])
                     config_group_dict[group_name] = config_group
             return config_group_dict
@@ -114,7 +112,7 @@ class AbstractProcess:
 
         inventory_content = ""
         for role in SERVICE_TO_ROLES[self.service_type]:
-            inventory_content += "[" + role + "]\n"
+            inventory_content += "[" + role.value + "]\n"
             inventory_content += "\n".join(self.topology.get_hosts_of_role(role)) + "\n\n"
         for group_name in self.config_group_names:
             inventory_content += "[" + group_name + "]\n"
@@ -151,7 +149,7 @@ class AbstractProcess:
             tmp_file.write(content)
 
     def get_other_service_configuration(self, service_type):
-        service_name = str(service_type.name).lower()
+        service_name = service_type.value
         result = self.get_configuration('config/' + service_name + "/configuration.yaml")
         cluster_result = self.get_configuration(os.path.join(self.cluster_base_dir, service_name, "configuration.yaml"))
         if 'default' in cluster_result:

@@ -5,8 +5,9 @@ import yaml
 from processor.hadoop_process import HadoopProcess
 from processor.java_process import JavaProcess
 from processor.zookeeper_process import ZookeeperProcess
+from processor.spark_process import SparkProcess
 from processor.topology import Topology
-from constants import SERVICE, ALL_ROLES
+from constants import SERVICE, ROLE
 
 parser = argparse.ArgumentParser(description='Generate Configs')
 parser.add_argument('--cluster', help='cluster name', required=True)
@@ -23,22 +24,24 @@ with open("cluster/" + cluster + "/config/topology.yaml") as topology_file:
 # service_exists_dict[SERVICE.HBASE] = 'hbase_masters' in topology_roles
 # service_exists_dict[SERVICE.HIVE] = 'hive_metastores' in topology_roles
 # service_exists_dict[SERVICE.SPARK] = 'spark_clis' in topology_roles
-
+SERVICE_TO_PROCESS = {
+    SERVICE.JAVA: JavaProcess(cluster, topology),
+    SERVICE.HADOOP: HadoopProcess(cluster, topology),
+    SERVICE.ZOOKEEPER: ZookeeperProcess(cluster, topology),
+    SERVICE.SPARK: SparkProcess(cluster, topology)
+}
+required_services = set()
 with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
-    for role in ALL_ROLES:
-        tmp_file.write("[" + role + "]\n")
+    for role_name, role in ROLE.__members__.items():
+        tmp_file.write("[" + role_name + "]\n")
         tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')
     tmp_file.write("[all]\n")
     tmp_file.write('\n'.join(topology.get_all_hosts()))
 
-for name, value in SERVICE.__members__.items():
-    if value == SERVICE.HADOOP:
-        java_process = JavaProcess(cluster, topology_data)
-        java_process.generate_configs()
-        java_process.generate_ansible()
-        hadoop_process = HadoopProcess(cluster, topology_data)
-        hadoop_process.generate_configs()
-        hadoop_process.generate_ansible()
-        zookeeper_process = ZookeeperProcess(cluster, topology_data)
-        zookeeper_process.generate_configs()
-        zookeeper_process.generate_ansible()
+for _, service_type in SERVICE.__members__.items():
+    hosts = topology.get_hosts_of_service(service_type)
+    if len(hosts) > 0:
+        if service_type in SERVICE_TO_PROCESS:
+            process = SERVICE_TO_PROCESS[service_type]
+            process.generate_configs()
+            process.generate_ansible()

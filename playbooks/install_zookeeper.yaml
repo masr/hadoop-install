@@ -15,17 +15,6 @@
       file: src=releases/{{ zookeeper_release_version }} path={{ install_base_dir }}/zookeeper state=link
 
 
-    - name: create runtime dir for zookeeper
-      file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop
-      with_items:
-        - "{{ install_base_dir }}/run/zookeeper"
-
-    - name: create zookeeper log dir
-      file: path={{ item }} state=directory mode=0775 owner=zookeeper group=hadoop
-      with_items:
-        - "{{ hadoop_log_dir }}/zookeeper"
-
-
     - name: create zookeeper confs dir
       file: path={{ item }} state=directory mode=0755 owner=root group=hadoop  recurse=yes
       with_items:
@@ -42,7 +31,7 @@
       file: path={{ install_base_dir }}/zookeeper/conf state=absent
 
     - name: create zookeeper conf soft link
-      file: src={{ install_base_dir }}/confs/zookeeper/conf path={{ install_base_dir }}/zookeeper/conf state=link force=yes
+      file: src={{ install_base_dir }}/confs/zookeeper/conf path={{ install_base_dir }}/zookeeper/conf state=link
 
 
     - name: create zookeeper storage dir

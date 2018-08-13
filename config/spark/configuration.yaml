@@ -1,0 +1,5 @@
+spark_history_server_heap: 2G
+spark_history_server_port: 15600
+
+hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
+hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT

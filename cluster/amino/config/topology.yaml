@@ -1,6 +1,3 @@
-config_groups:
-  hadoop:
-    - normal
 inventory:
     smao-dev-1-1999775.slc07.dev.ebayc3.com:
         roles:
