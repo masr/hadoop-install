@@ -23,7 +23,7 @@
 
 
     - name: create hadoop confs dir
-      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop recurse=yes
+      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
       with_items:
         - "{{ install_base_dir }}/confs/hadoop/conf"
 
