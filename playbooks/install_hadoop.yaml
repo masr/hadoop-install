@@ -12,7 +12,9 @@
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: sync spark shuffle network jar file
-      copy: src=releases/jars/spark-network-shuffle_*.jar dest={{ install_base_dir }}/hadoop/share/hadoop/yarn/lib/ owner=root group=hadoop
+      copy: src={{ item }} dest={{ install_base_dir }}/hadoop/share/hadoop/yarn/lib/ owner=root group=hadoop
+      with_fileglob:
+        - "releases/jars/spark-network-shuffle_*.jar"
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool) and '"nodemanager" in group_names'
 
     - name: create hadoop soft link
