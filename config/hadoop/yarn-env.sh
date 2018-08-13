@@ -12,6 +12,9 @@ JAVA=$JAVA_HOME/bin/java
 # so that filenames w/ spaces are handled correctly in loops below
 IFS=
 
+export YARN_PID_DIR={% hadoop_pid_dir %}
+export YARN_LOG_DIR={% hadoop_log_dir %}/yarn
+
 if [ "$YARN_LOGFILE" = "" ]; then
   YARN_LOGFILE='yarn.log'
 fi
@@ -20,6 +23,15 @@ fi
 if [ "$YARN_POLICYFILE" = "" ]; then
   YARN_POLICYFILE="hadoop-policy.xml"
 fi
+
+JAVA_HEAP_MAX=-Xmx1000m
+if [ "$YARN_HEAPSIZE" != "" ]; then
+  JAVA_HEAP_MAX="-Xmx""$YARN_HEAPSIZE""m"
+fi
+
+#export YARN_RESOURCEMANAGER_HEAPSIZE=1000
+#export YARN_TIMELINESERVER_HEAPSIZE=1000
+#export YARN_NODEMANAGER_HEAPSIZE=1000
 
 # restore ordinary behaviour
 unset IFS
@@ -38,7 +50,7 @@ if [ "x$JAVA_LIBRARY_PATH" != "x" ]; then
 fi
 YARN_OPTS="$YARN_OPTS -Dyarn.policy.file=$YARN_POLICYFILE"
 
-#YARN_OPTS="$YARN_OPTS -Dzookeeper.sasl.client.username=zookeeper -Djava.security.auth.login.config=/apache/confs/hadoop/conf/yarn_jaas.conf -Dzookeeper.sasl.client=true -Dzookeeper.sasl.clientconfig=Client"
+#YARN_OPTS="$YARN_OPTS -Dzookeeper.sasl.client.username=zookeeper -Djava.security.auth.login.config={%install_base_dir%}/confs/hadoop/conf/yarn_jaas.conf -Dzookeeper.sasl.client=true -Dzookeeper.sasl.clientconfig=Client"
 
 export YARN_NODEMANAGER_OPTS="${YARN_OPTS}  -Xms{%nodemanager_heap%} -Xmx{%nodemanager_heap%} -XX:MaxMetaspaceSize=512M"
 
@@ -50,3 +62,4 @@ export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} -Xms{%resource_manager_heap%} -Xm
 -XX:ErrorFile=${YARN_LOG_DIR}/hadoop-rm-hs_err_pid.log \
 -Dyarn.rm.appsummary.logger=INFO,RMSUMMARY \
 -Djute.maxbuffer=5242880"
+
