@@ -88,63 +88,18 @@
     - name: create nodemanager log dirs
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop recurse=yes
       with_items: "{{yarn_nodemanager_log_dirs}}"
-      when: '"node_manager" in group_names'
+      when: '"nodemanager" in group_names'
 
     - name: create nodemanager local dir
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop recurse=yes
       with_items: "{{yarn_nodemanager_local_dirs}}"
-      when: '"node_manager" in group_names'
+      when: '"nodemanager" in group_names'
 
-    - name: create journal node dir
+    - name: create journalnode dir
       file: path={{ item }} state=directory mode=0755 owner=hdfs group=hadoop recurse=yes
       with_items:
         - "{{dfs_journalnode_edits_dir}}"
       when: '"journalnode" in group_names'
 
-
-    - name: install datanode.service
-      template: src="files/datanode.service.j2" dest=/usr/lib/systemd/system/datanode.service group=root owner=root mode=0644
-      when: '"datanode" in group_names'
-
-    - name: install namenode.service
-      template: src="files/namenode.service.j2" dest=/usr/lib/systemd/system/namenode.service group=root owner=root mode=0644
-      when: '"namenode" in group_names'
-
-    - name: install zkfc.service
-      template: src="files/zkfc.service.j2" dest=/usr/lib/systemd/system/zkfc.service group=root owner=root mode=0644
-      when: '"namenode" in group_names'
-
-    - name: install journalnode.service
-      template: src="files/journalnode.service.j2" dest=/usr/lib/systemd/system/journalnode.service group=root owner=root mode=0644
-      when: '"journalnode" in group_names'
-
-    - name: install nodemanager.service
-      template: src="files/nodemanager.service.j2" dest=/usr/lib/systemd/system/nodemanager.service group=root owner=root mode=0644
-      when: '"nodemanager" in group_names'
-
-    - name: install resource_manager.service
-      template: src="files/resource_manager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
-      when: '"resource_manager" in group_names'
-
-    - name: reload services
-      command: systemctl daemon-reload
-
-    - name: enable datanode service
-      command: systemctl enable datanode
-      when: '"datanode" in group_names'
-
-    - name: enable namenode & zkfc service
-      command: systemctl enable namenode zkfc
-      when: '"namenode" in group_names'
-
-    - name: enable journalnode service
-      command: systemctl enable journalnode
-      when: '"journalnode" in group_names'
-
-    - name: enable nodemanager service
-      command: systemctl enable nodemanager
-      when: '"nodemanager" in group_names'
-
-    - name: enable resource_manager service
-      command: systemctl enable resource_manager
-      when: '"resource_manager" in group_names'
+    - name: install systemd service
+      include: install_systemd_service.yml
