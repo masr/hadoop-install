@@ -9,5 +9,13 @@ ansible -u stack -i cluster/amino/.ansible/hosts zookeeper_server -m shell -a "s
 ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -s
 
 Active NN:
+sudo to hdfs
 /apache/hadoop/bin/hdfs zkfc -formatZK
 /apache/hadoop/bin/hdfs namenode -format
+sudo to root
+systemctl start zkfc
+systemctl start namenode
+
+Standby NN:
+sudo to hdfs
+/apache/hadoop/bin/hdfs namenode -bootstrapStandby
