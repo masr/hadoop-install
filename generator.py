@@ -33,7 +33,7 @@ SERVICE_TO_PROCESS = {
 required_services = set()
 with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     for role_name, role in ROLE.__members__.items():
-        tmp_file.write("[" + role_name + "]\n")
+        tmp_file.write("[" + role.value + "]\n")
         tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')
     tmp_file.write("[all]\n")
     tmp_file.write('\n'.join(topology.get_all_hosts()))
