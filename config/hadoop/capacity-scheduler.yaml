@@ -1,0 +1,2 @@
+yarn.scheduler.capacity.root.queues: default
+yarn.scheduler.capacity.root.default.capacity: 100

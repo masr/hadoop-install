@@ -10,16 +10,8 @@ class HadoopProcess(AbstractProcess):
     def get_all_parsed_configs(self, group_name):
         mapping = self.parse_configs(group_name)
 
-        ################## core-site.xml **********************************
-        mapping['core-site.xml'] = trans_dict_to_xml(mapping['core-site.xml'])
-
-        ################## hdfs-site.xml **********************************
-        mapping['hdfs-site.xml'] = trans_dict_to_xml(mapping['hdfs-site.xml'])
-
-        ################## yarn-site.xml **********************************
-        data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
-        mapping['yarn-site.xml'] = trans_dict_to_xml(mapping['yarn-site.xml'])
-
+        for i in ['core-site.xml', 'hdfs-site.xml', 'yarn-site.xml', 'capacity-scheduler.xml']:
+            mapping[i] = trans_dict_to_xml(mapping[i])
         return mapping
 
     def parse_configs(self, group_name):
@@ -63,6 +55,10 @@ class HadoopProcess(AbstractProcess):
         ################## yarn-site.xml **********************************
         data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
         mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
+
+        ################## capacity-scheduler.xml **********************************
+        data = self.get_merged_service_configuration_by_group('capacity-scheduler.yaml', group_name)
+        mapping['capacity-scheduler.xml'] = replace_values_in_dict(data, basic_config)
 
         ################## hadoop-env.sh **********************************
         data = self.get_text_template('hadoop-env.sh')
