@@ -35,6 +35,10 @@
   template: src="files/resource_manager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
   when: '"resource_manager" in group_names'
 
+- name: install spark_history_server.service
+  template: src="files/spark_history_server.service.j2" dest=/usr/lib/systemd/system/spark_history_server.service group=root owner=root mode=0644
+  when: '"spark_history_server" in group_names'
+
 - name: reload services
   command: systemctl daemon-reload
 
@@ -57,3 +61,7 @@
 - name: enable resource_manager service
   command: systemctl enable resource_manager
   when: '"resource_manager" in group_names'
+
+- name: enable spark_history_server service
+  command: systemctl enable spark_history_server
+  when: '"spark_history_server" in group_names'
