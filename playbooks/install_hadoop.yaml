@@ -15,6 +15,7 @@
       copy: src={{ item }} dest={{ install_base_dir }}/hadoop/share/hadoop/yarn/lib/ owner=root group=hadoop
       with_fileglob:
         - "../releases/jars/spark-network-yarn_*.jar"
+        - "../releases/jars/spark-network-common_*.jar"
       when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool)) and "nodemanager" in group_names
 
     - name: create hadoop soft link

@@ -27,7 +27,7 @@
     - hive
     - hbase
 
-- name: create zookeeper log dir
+- name: create log dir for different services
   file: path={{ hadoop_log_dir }}/{{ item }} state=directory mode=0775 owner={{ item }} group=hadoop
   with_items:
     - zookeeper
