@@ -22,7 +22,6 @@ yarn.nodemanager.disk-health-checker.min-free-space-per-disk-mb: 1024
 yarn.nodemanager.sleep-delay-before-sigkill.ms: 1000
 
 
-yarn.resourcemanager.ha.id: "{% default_nameservice %}"
 yarn.resourcemanager.cluster-id: "{% default_nameservice %}"
 yarn.resourcemanager.ha.rm-ids: rm1,rm2
 yarn.resourcemanager.zk-address: "{% zookeeper_quorum %}"

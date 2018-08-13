@@ -19,3 +19,5 @@ systemctl start namenode
 Standby NN:
 sudo to hdfs
 /apache/hadoop/bin/hdfs namenode -bootstrapStandby
+
+ansible -u stack -i cluster/amino/.ansible/hosts resource_manager -m shell -a "systemctl start resource_manager" -s

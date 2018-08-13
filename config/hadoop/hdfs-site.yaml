@@ -3,6 +3,7 @@ dfs.nameservices: "{% default_nameservice %}"
 dfs.ha.namenodes.{% default_nameservice %}: nn1,nn2
 dfs.ha.fencing.methods: shell(/bin/true)
 dfs.ha.automatic-failover.enabled: "true"
+ha.zookeeper.parent-znode: /hadoop-ha
 
 dfs.namenode.rpc-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_client_rpc_port %}"
 dfs.namenode.rpc-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_client_rpc_port %}"
