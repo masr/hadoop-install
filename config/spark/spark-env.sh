@@ -75,3 +75,4 @@ export SPARK_HISTORY_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSIniti
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${SPARK_LOG_DIR}/spark-history.gc.`date +'%Y%m%d%H%M'` \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"
+export HDP_VERSION={% hdp_version %}
