@@ -5,9 +5,3 @@ normal:
   updates:
     yarn.nodemanager.log-dirs: /data/yarn/nodemanager/log
     yarn.nodemanager.local-dirs: /data/yarn/nodemanager/local
-master1:
-  updates:
-    yarn.resourcemanager.ha.id: rm1
-master2:
-  updates:
-    yarn.resourcemanager.ha.id: rm2
