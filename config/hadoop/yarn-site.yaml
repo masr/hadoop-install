@@ -35,7 +35,7 @@ yarn.resourcemanager.zk-state-store.parent-path: /rmstore-{% default_nameservice
 yarn.resourcemanager.zk-timeout-ms: 30000
 yarn.resourcemanager.recovery.enabled: "true"
 yarn.resourcemanager.nodes.exclude-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-exclude"
-yarn.resourcemanager.nodes.exclude-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-include"
+yarn.resourcemanager.nodes.include-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-include"
 yarn.resourcemanager.am.max-attempts: 2
 yarn.resourcemanager.scheduler.class: org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
 yarn.resourcemanager.ha.automatic-failover.enabled: "true"
