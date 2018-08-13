@@ -54,3 +54,5 @@
       copy: content="{{ hostvars[inventory_hostname]['host_params'][inventory_hostname]['zookeeper_myid'] }}" mode=0644 owner=zookeeper group=hadoop dest={{zookeeper_storage_dir}}/myid
       when: '"zookeeper_server" in group_names'
 
+    - name: install systemd service
+      include: install_systemd_service.yml
