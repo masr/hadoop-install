@@ -13,6 +13,7 @@
     - name: create spark soft link
       file: src=releases/{{ spark_release_version }} path={{ install_base_dir }}/spark state=link
 
+
     - name: create spark confs dir
       file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
       with_items:
