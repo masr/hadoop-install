@@ -49,6 +49,7 @@
         - hadoop-env.sh
         - yarn-env.sh
         - log4j.properties
+        - capacity-scheduler.xml
         - hdfs-include
         - yarn-include
 
