@@ -20,15 +20,9 @@
     - name: sync spark confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/spark/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
-        - core-site.xml
-        - hdfs-site.xml
-        - yarn-site.xml
-        - hadoop-env.sh
-        - yarn-env.sh
         - log4j.properties
-        - capacity-scheduler.xml
-        - hdfs-include
-        - yarn-include
+        - spark-defaults.conf
+        - spark-env.sh
 
     - name: delete original  spark_dir/conf
       file: path={{ install_base_dir }}/spark/conf state=absent
@@ -36,5 +30,6 @@
     - name: create hadoop conf soft link
       file: src={{ install_base_dir }}/confs/spark/conf path={{ install_base_dir }}/spark/conf state=link
 
-
+    - name: install systemd service
+      include: install_systemd_service.yml
 
