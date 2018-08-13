@@ -7,3 +7,7 @@ ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.
 
 ansible -u stack -i cluster/amino/.ansible/hosts zookeeper_server -m shell -a "systemctl start zookeeper_server" -s
 ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -s
+
+Active NN:
+/apache/hadoop/bin/hdfs zkfc -formatZK
+/apache/hadoop/bin/hdfs namenode -format

@@ -1,6 +1,9 @@
 fs.defaultFS: hdfs://{% default_nameservice %}
 dfs.nameservices: "{% default_nameservice %}"
 dfs.ha.namenodes.{% default_nameservice %}: nn1,nn2
+dfs.ha.fencing.methods: shell(/bin/true)
+dfs.ha.automatic-failover.enabled: "true"
+
 dfs.namenode.rpc-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_client_rpc_port %}"
 dfs.namenode.rpc-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_client_rpc_port %}"
 dfs.namenode.servicerpc-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_service_rpc_port %}"
@@ -10,7 +13,6 @@ dfs.namenode.https-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% na
 dfs.namenode.http-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_http_port %}"
 dfs.namenode.http-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_http_port %}"
 
-dfs.ha.automatic-failover.enabled: "true"
 dfs.permissions.superusergroup: hadoop
 dfs.permissions.enabled: "true"
 dfs.replication: 3
