@@ -1,6 +1,8 @@
 config_groups:
   hadoop:
     - normal
+    - master1
+    - master2
 inventory:
     smao-dev-1-1999775.slc07.dev.ebayc3.com:
         roles:
@@ -14,6 +16,8 @@ inventory:
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1
+        config_group:
+          hadoop: master1
     smao-dev-2-1999780.slc07.dev.ebayc3.com:
         roles:
           - namenode
@@ -27,6 +31,8 @@ inventory:
         vars:
           zookeeper_myid: 2
         topology: /slc/smao_dev
+        config_group:
+          hadoop: master2
     smao-dev-3-1999786.slc07.dev.ebayc3.com:
         roles:
           - journalnode
