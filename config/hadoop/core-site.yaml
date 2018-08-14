@@ -3,3 +3,4 @@ net.topology.script.file.name: "{%install_base_dir%}/confs/hadoop/conf/topology.
 hadoop.security.authentication: simple
 fs.trash.interval: 1440
 ha.zookeeper.quorum: "{%zookeeper_quorum%}"
+fs.defaultFS: hdfs://{% default_nameservice %}
