@@ -9,6 +9,7 @@
 
     - name: sync spark release
       unarchive: src=../releases/{{ spark_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
+      when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: create spark soft link
       file: src=releases/{{ spark_release_version }} path={{ install_base_dir }}/spark state=link
