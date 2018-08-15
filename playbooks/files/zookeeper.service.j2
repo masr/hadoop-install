@@ -4,7 +4,6 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/zookeeper
-Environment=ZOOCFGDIR={{install_base_dir}}/confs/zookeeper/conf
 ExecStart={{ install_base_dir }}/zookeeper/bin/zkServer.sh start-foreground
 #ExecStop=
 Type=simple

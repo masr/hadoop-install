@@ -19,6 +19,11 @@ systemctl start namenode
 Standby NN:
 sudo to hdfs
 /apache/hadoop/bin/hdfs namenode -bootstrapStandby
+sudo to root
+systemctl start zkfc
+
+ansible -u stack -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -s
+
 
 ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -s
-ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start nodemanager" -s
+ansible -u stack -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -s

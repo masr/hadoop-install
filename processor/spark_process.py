@@ -15,7 +15,7 @@ class SparkProcess(AbstractProcess):
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
         spark_history_server = self.topology.get_hosts_of_role(ROLE.SPARKHISTORYSERVER)[0]
-        basic_config['spark_history_server_vip'] = spark_history_server
+        basic_config['sparkhistoryserver_vip'] = spark_history_server
 
         mapping = {}
         ################## spark-env.sh **********************************

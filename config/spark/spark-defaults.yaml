@@ -6,7 +6,7 @@ spark.shuffle.service.enabled: "true"
 
 
 #For history server
-spark.yarn.historyServer.address: "{% spark_history_server_vip %}:{% sparkhistoryserver_port %}"
+spark.yarn.historyServer.address: "{% sparkhistoryserver_vip %}:{% sparkhistoryserver_port %}"
 spark.history.ui.port: "{% sparkhistoryserver_port %}"
 
 spark.eventLog.enabled: "true"
@@ -16,8 +16,8 @@ spark.history.fs.cleaner.enabled: true
 spark.history.fs.update.interval: 20s
 spark.history.fs.numReplayThreads: 10
 spark.yarn.access.namenodes: hdfs://{% default_nameservice %}
-spark.yarn.am.memory: 2g
-spark.driver.memory: 2g
+spark.yarn.am.memory: 2048m
+spark.driver.memory: 2048m
 
 spark.master: yarn
 

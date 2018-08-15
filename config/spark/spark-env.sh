@@ -70,7 +70,7 @@ export HADOOP_CONF_DIR={% install_base_dir %}/confs/hadoop/conf
 export SPARK_CONF_DIR={% install_base_dir %}/confs/spark/conf
 export SPARK_PID_DIR={% install_base_dir %}/run/pids
 export SPARK_DAEMON_MEMORY={% sparkhistoryserver_heap %}
-export SPARK_HISTORY_OPTS="-Xms{%sparkhistoryserver_heap%} -Xmx{%sparkhistoryserver_heap%}  -XX:MaxNewSize={%sparkhistoryserver_young_heap%} -XX:NewSize={%sparkhistoryserver_young_heap%} \
+export SPARK_HISTORY_OPTS="-XX:MaxNewSize={%sparkhistoryserver_young_heap%} -XX:NewSize={%sparkhistoryserver_young_heap%} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.`date +'%Y%m%d%H%M'` \
