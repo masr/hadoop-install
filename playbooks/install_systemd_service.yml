@@ -2,15 +2,6 @@
   template: src=files/zookeeper.service.j2 dest=/usr/lib/systemd/system/zookeeper.service group=root owner=root mode=0644
   when: '"zookeeper" in group_names'
 
-- name: load zookeeper service
-  command: systemctl daemon-reload
-  when: '"zookeeper" in group_names'
-
-- name: enable zookeeper service
-  command: systemctl enable zookeeper
-  when: '"zookeeper" in group_names'
-
-
 - name: install datanode.service
   template: src="files/datanode.service.j2" dest=/usr/lib/systemd/system/datanode.service group=root owner=root mode=0644
   when: '"datanode" in group_names'
@@ -41,6 +32,10 @@
 
 - name: reload services
   command: systemctl daemon-reload
+
+- name: enable zookeeper service
+  command: systemctl enable zookeeper
+  when: '"zookeeper" in group_names'
 
 - name: enable datanode service
   command: systemctl enable datanode
