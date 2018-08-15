@@ -7,7 +7,7 @@ inventory:
           - resourcemanager
           - hbasemaster
           - hivemetastore
-          - zookeeperserver
+          - zookeeper
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1
@@ -19,7 +19,7 @@ inventory:
           - resourcemanager
           - hbasemaster
           - hivemetastore
-          - zookeeperserver
+          - zookeeper
           - sparkhistoryserver
         vars:
           zookeeper_myid: 2
@@ -27,7 +27,7 @@ inventory:
     smao-dev-3-1999786.slc07.dev.ebayc3.com:
         roles:
           - journalnode
-          - zookeeperserver
+          - zookeeper
           - datanode
           - nodemanager
           - regionserver
