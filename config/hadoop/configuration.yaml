@@ -3,15 +3,15 @@ default_nameservice: my_cluster
 kerberos_enable: false
 https_enable: false
 
-namenode_heap: 4g
+namenode_heap: 4096m
 namenode_young_heap: 512m
-resourcemanager_heap: 2g
+resourcemanager_heap: 2048m
 resourcemanager_young_heap: 512m
-datanode_heap: 2g
+datanode_heap: 2048m
 datanode_young_heap: 256m
-nodemanager_heap: 2g
+nodemanager_heap: 2048m
 nodemanager_young_heap: 256m
-journalnode_heap: 1g
+journalnode_heap: 1024m
 journalnode_young_heap: 128m
 zkfc_heap: 512m
 zkfc_young_heap: 128m

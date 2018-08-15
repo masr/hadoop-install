@@ -70,11 +70,13 @@ export HADOOP_CONF_DIR={% install_base_dir %}/confs/hadoop/conf
 export SPARK_CONF_DIR={% install_base_dir %}/confs/spark/conf
 export SPARK_PID_DIR={% install_base_dir %}/run/pids
 export SPARK_DAEMON_MEMORY={% sparkhistoryserver_heap %}
-export SPARK_HISTORY_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
+export SPARK_HISTORY_OPTS="-Xms{%sparkhistoryserver_heap%} -Xmx{%sparkhistoryserver_heap%}  -XX:MaxNewSize={%sparkhistoryserver_young_heap%} -XX:NewSize={%sparkhistoryserver_young_heap%} \
+-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.`date +'%Y%m%d%H%M'` \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -Dspark.root.logger=${SPARK_ROOT_LOGGER:-INFO,RFA} \
 -Dspark.log.dir={% hadoop_log_dir %}/spark \
 -Dspark.log.file=spark-sparkhistoryserver-%H.log"
+
 export HDP_VERSION={% hdp_version %}

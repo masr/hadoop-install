@@ -1,4 +1,5 @@
-sparkhistoryserver_heap: 2G
+sparkhistoryserver_heap: 2048m
+sparkhistoryserver_young_heap: 256m
 sparkhistoryserver_port: 15600
 
 spark_release_tarball: spark-2.3.0.2.6.5.0-SNAPSHOT.tar.gz
