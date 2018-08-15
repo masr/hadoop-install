@@ -131,14 +131,16 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 
 export YARN_NODEMANAGER_OPTS="${YARN_OPTS} \
 -Xms{%nodemanager_heap%} -Xmx{%nodemanager_heap%} -XX:MaxNewSize={%nodemanager_young_heap%} -XX:NewSize={%nodemanager_young_heap%} \
--Dhadoop.log.file=hadoop-yarn-nodemanager-%H.log \
--Dyarn.log.file=hadoop-yarn-nodemanager-%H.log \
+-Dhadoop.log.file=hadoop-yarn-nodemanager-$HOSTNAME.log \
+-Dyarn.log.file=hadoop-yarn-nodemanager-$HOSTNAME.log \
+-Xloggc:$YARN_LOG_DIR/hadoop-gc-nodemanager.log.`date +'%Y%m%d%H%M'` \
+-XX:ErrorFile=${YARN_LOG_DIR}/hadoop-nodemanager-hs_err_pid.log \
 $COMMON_DAEMON_OPTS"
 
 export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} \
 -Xms{%resourcemanager_heap%} -Xmx{%resourcemanager_heap%} -XX:MaxNewSize={%resourcemanager_young_heap%} -XX:NewSize={%resourcemanager_young_heap%} -XX:MaxMetaspaceSize=512M \
--Dhadoop.log.file=hadoop-yarn-resourcemanager-%H.log \
--Dyarn.log.file=hadoop-yarn-resourcemanager-%H.log \
+-Dhadoop.log.file=hadoop-yarn-resourcemanager-$HOSTNAME.log \
+-Dyarn.log.file=hadoop-yarn-resourcemanager-$HOSTNAME.log \
 -Xloggc:$YARN_LOG_DIR/hadoop-gc-resourcemanager.log.`date +'%Y%m%d%H%M'` \
 -XX:ErrorFile=${YARN_LOG_DIR}/hadoop-resourcemanager-hs_err_pid.log \
 -Dyarn.rm.appsummary.logger=INFO,RMSUMMARY \

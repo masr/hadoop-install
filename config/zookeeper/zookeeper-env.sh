@@ -9,7 +9,7 @@ export SERVER_JVMFLAGS="-Xms{% zookeeper_heap %} -Xmx{% zookeeper_heap %} -XX:Ma
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -Dzookeeper.root.logger=${ZOO_LOG4J_PROP:-INFO,ROLLINGFILE} \
 -Dzookeeper.log.dir={% hadoop_log_dir %}/zookeeper \
--Dzookeeper.log.file=zookeeper-%H.log"
+-Dzookeeper.log.file=zookeeper-$HOSTNAME.log"
 
 
 export JAVA=$JAVA_HOME/bin/java

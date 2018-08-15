@@ -77,6 +77,6 @@ export SPARK_HISTORY_OPTS="-Xms{%sparkhistoryserver_heap%} -Xmx{%sparkhistoryser
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -Dspark.root.logger=${SPARK_ROOT_LOGGER:-INFO,RFA} \
 -Dspark.log.dir={% hadoop_log_dir %}/spark \
--Dspark.log.file=spark-sparkhistoryserver-%H.log"
+-Dspark.log.file=spark-sparkhistoryserver-$HOSTNAME.log"
 
 export HDP_VERSION={% hdp_version %}
