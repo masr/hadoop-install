@@ -36,7 +36,8 @@
 
     - name: create zookeeper storage dir
       file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop
-      with_items: "{{zookeeper_storage_dir}}"
+      with_items:
+        - "{{zookeeper_storage_dir}}"
       when: '"zookeeper" in group_names'
 
     - name: create zookeeper myid file
