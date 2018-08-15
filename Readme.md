@@ -5,7 +5,7 @@ ansible-playbook -u stack -i cluster/amino/.ansible/zookeeper/hosts cluster/amin
 ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s
 ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s -e "sync_release=no"
 
-ansible -u stack -i cluster/amino/.ansible/hosts zookeeper_server -m shell -a "systemctl start zookeeper_server" -s
+ansible -u stack -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -s
 ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -s
 
 Active NN:
@@ -20,5 +20,5 @@ Standby NN:
 sudo to hdfs
 /apache/hadoop/bin/hdfs namenode -bootstrapStandby
 
-ansible -u stack -i cluster/amino/.ansible/hosts resource_manager -m shell -a "systemctl start resource_manager" -s
-ansible -u stack -i cluster/amino/.ansible/hosts resource_manager -m shell -a "systemctl start nodemanager" -s
+ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -s
+ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start nodemanager" -s

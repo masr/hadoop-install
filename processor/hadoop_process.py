@@ -17,18 +17,18 @@ class HadoopProcess(AbstractProcess):
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
 
-        zookeeper_servers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER_SERVER)
+        zookeepers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER)
         zookeeper_config = self.get_other_service_configuration(SERVICE.ZOOKEEPER)
-        zookeeper_port = zookeeper_config['zookeeper_server_port']
-        zookeeper_quorum = ','.join([host + ':' + str(zookeeper_port) for host in zookeeper_servers])
+        zookeeper_port = zookeeper_config['zookeeper_port']
+        zookeeper_quorum = ','.join([host + ':' + str(zookeeper_port) for host in zookeepers])
         basic_config['zookeeper_quorum'] = zookeeper_quorum
         default_nameservice = basic_config['default_nameservice']
         namenodes = self.topology.get_hosts_of_role(ROLE.NAMENODE)
         basic_config['namenode1'] = namenodes[0]
         basic_config['namenode2'] = namenodes[1]
-        resource_managers = self.topology.get_hosts_of_role(ROLE.RESOURCE_MANAGER)
-        basic_config['resource_manager1'] = resource_managers[0]
-        basic_config['resource_manager2'] = resource_managers[1]
+        resourcemanagers = self.topology.get_hosts_of_role(ROLE.RESOURCEMANAGER)
+        basic_config['resourcemanager1'] = resourcemanagers[0]
+        basic_config['resourcemanager2'] = resourcemanagers[1]
         journalnodes = self.topology.get_hosts_of_role(ROLE.JOURNALNODE)
         qjournal_string = 'qjournal://' + ';'.join(
             [host + ':' + str(basic_config['journalnode_rpc_port']) for host in journalnodes]

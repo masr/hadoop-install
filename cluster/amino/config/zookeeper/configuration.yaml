@@ -1,3 +1,3 @@
 #HDFS
 default:
-  zookeeper_storage_dir: /data/zookeeper/zookeeper_server
+  zookeeper_storage_dir: /data/zookeeper

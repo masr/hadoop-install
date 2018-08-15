@@ -1,10 +1,10 @@
 [Unit]
-Description=Hadoop Nodemanager
+Description=Hadoop ResourceManager
 After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-ExecStart={{ install_base_dir }}/hadoop/bin/yarn --config {{ install_base_dir }}/confs/hadoop/conf nodemanager
+ExecStart={{ install_base_dir }}/hadoop/bin/yarn --config {{ install_base_dir }}/confs/hadoop/conf resourcemanager
 #ExecStop=
 Type=simple
 Restart=always

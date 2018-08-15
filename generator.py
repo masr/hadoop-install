@@ -18,12 +18,6 @@ with open("cluster/" + cluster + "/config/topology.yaml") as topology_file:
     topology_data = yaml.load(topology_file.read(), Loader=yaml.Loader)
     topology = Topology(topology_data)
 
-# service_exists_dict = dict()
-# service_exists_dict[SERVICE.HADOOP] = 'namenodes' in topology_roles or 'resource_managers' in topology_roles
-# service_exists_dict[SERVICE.ZOOKEEPER] = 'zookeeper_servers' in topology_roles
-# service_exists_dict[SERVICE.HBASE] = 'hbase_masters' in topology_roles
-# service_exists_dict[SERVICE.HIVE] = 'hive_metastores' in topology_roles
-# service_exists_dict[SERVICE.SPARK] = 'spark_clis' in topology_roles
 SERVICE_TO_PROCESS = {
     SERVICE.JAVA: JavaProcess(cluster, topology),
     SERVICE.HADOOP: HadoopProcess(cluster, topology),

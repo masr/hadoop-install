@@ -6,8 +6,8 @@ spark.shuffle.service.enabled: "true"
 
 
 #For history server
-spark.yarn.historyServer.address: "{% spark_history_server %}:{% spark_history_server_port %}"
-spark.history.ui.port: "{% spark_history_server_port %}"
+spark.yarn.historyServer.address: "{% spark_history_server_vip %}:{% sparkhistoryserver_port %}"
+spark.history.ui.port: "{% sparkhistoryserver_port %}"
 
 spark.eventLog.enabled: "true"
 spark.eventLog.dir: hdfs://{% default_nameservice %}/spark-logs

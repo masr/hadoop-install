@@ -4,9 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-Environment=HADOOP_HOME={{ install_base_dir }}/hadoop HADOOP_CONF_DIR={{ install_base_dir }}/confs/hadoop/conf
-Environment=HADOOP_LOGFILE=hadoop-hdfs-datanode-%H.log HADOOP_ROOT_LOGGER=INFO,RFA HADOOP_SECURITY_LOGGER=INFO,RFAS HDFS_AUDIT_LOGGER=INFO,NullAppender
-ExecStart={{install_base_dir}}/hadoop/bin/hdfs --config {{ install_base_dir }}/confs/hadoop/conf datanode
+ExecStart={{ install_base_dir }}/hadoop/bin/hdfs --config {{ install_base_dir }}/confs/hadoop/conf datanode
 #ExecStop=
 Type=simple
 Restart=always

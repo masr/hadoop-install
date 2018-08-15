@@ -1,4 +1,4 @@
-clientPort: "{% zookeeper_server_port %}"
+clientPort: "{% zookeeper_port %}"
 syncLimit: 5
 autopurge.purgeInterval: 24
 maxClientCnxns: 7500

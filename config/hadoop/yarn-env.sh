@@ -1,3 +1,18 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # User for YARN daemons
 export HADOOP_YARN_USER=yarn
 
@@ -6,15 +21,77 @@ export YARN_CONF_DIR={%install_base_dir%}/confs/hadoop/conf
 
 # some Java parameters
 export JAVA_HOME={%install_base_dir%}/java
+if [ "$JAVA_HOME" != "" ]; then
+  #echo "run java in $JAVA_HOME"
+  JAVA_HOME=$JAVA_HOME
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+  echo "Error: JAVA_HOME is not set."
+  exit 1
+fi
 
 JAVA=$JAVA_HOME/bin/java
+JAVA_HEAP_MAX=-Xmx1000m
+
+# For setting YARN specific HEAP sizes please use this
+# Parameter and set appropriately
+# YARN_HEAPSIZE=1000
+
+# check envvars which might override default args
+if [ "$YARN_HEAPSIZE" != "" ]; then
+  JAVA_HEAP_MAX="-Xmx""$YARN_HEAPSIZE""m"
+fi
+
+# Resource Manager specific parameters
+
+# Specify the max Heapsize for the ResourceManager using a numerical value
+# in the scale of MB. For example, to specify an jvm option of -Xmx1000m, set
+# the value to 1000.
+# This value will be overridden by an Xmx setting specified in either YARN_OPTS
+# and/or YARN_RESOURCEMANAGER_OPTS.
+# If not specified, the default value will be picked from either YARN_HEAPMAX
+# or JAVA_HEAP_MAX with YARN_HEAPMAX as the preferred option of the two.
+#export YARN_RESOURCEMANAGER_HEAPSIZE=1000
+
+# Specify the max Heapsize for the timeline server using a numerical value
+# in the scale of MB. For example, to specify an jvm option of -Xmx1000m, set
+# the value to 1000.
+# This value will be overridden by an Xmx setting specified in either YARN_OPTS
+# and/or YARN_TIMELINESERVER_OPTS.
+# If not specified, the default value will be picked from either YARN_HEAPMAX
+# or JAVA_HEAP_MAX with YARN_HEAPMAX as the preferred option of the two.
+#export YARN_TIMELINESERVER_HEAPSIZE=1000
+
+# Specify the JVM options to be used when starting the ResourceManager.
+# These options will be appended to the options specified as YARN_OPTS
+# and therefore may override any similar flags set in YARN_OPTS
+#export YARN_RESOURCEMANAGER_OPTS=
+
+# Node Manager specific parameters
+
+# Specify the max Heapsize for the NodeManager using a numerical value
+# in the scale of MB. For example, to specify an jvm option of -Xmx1000m, set
+# the value to 1000.
+# This value will be overridden by an Xmx setting specified in either YARN_OPTS
+# and/or YARN_NODEMANAGER_OPTS.
+# If not specified, the default value will be picked from either YARN_HEAPMAX
+# or JAVA_HEAP_MAX with YARN_HEAPMAX as the preferred option of the two.
+#export YARN_NODEMANAGER_HEAPSIZE=1000
+
+# Specify the JVM options to be used when starting the NodeManager.
+# These options will be appended to the options specified as YARN_OPTS
+# and therefore may override any similar flags set in YARN_OPTS
+#export YARN_NODEMANAGER_OPTS=
 
 # so that filenames w/ spaces are handled correctly in loops below
 IFS=
 
-export YARN_PID_DIR={% hadoop_pid_dir %}
 export YARN_LOG_DIR={% hadoop_log_dir %}/yarn
-
+# default log directory & file
+if [ "$YARN_LOG_DIR" = "" ]; then
+  YARN_LOG_DIR="$HADOOP_YARN_HOME/logs"
+fi
 if [ "$YARN_LOGFILE" = "" ]; then
   YARN_LOGFILE='yarn.log'
 fi
@@ -24,23 +101,14 @@ if [ "$YARN_POLICYFILE" = "" ]; then
   YARN_POLICYFILE="hadoop-policy.xml"
 fi
 
-JAVA_HEAP_MAX=-Xmx1000m
-if [ "$YARN_HEAPSIZE" != "" ]; then
-  JAVA_HEAP_MAX="-Xmx""$YARN_HEAPSIZE""m"
-fi
-
-#export YARN_RESOURCEMANAGER_HEAPSIZE=1000
-#export YARN_TIMELINESERVER_HEAPSIZE=1000
-#export YARN_NODEMANAGER_HEAPSIZE=1000
-
 # restore ordinary behaviour
 unset IFS
 
 
-YARN_OPTS="$YARN_OPTS -Dhadoop.log.dir=$YARN_LOG_DIR"
-YARN_OPTS="$YARN_OPTS -Dyarn.log.dir=$YARN_LOG_DIR"
-YARN_OPTS="$YARN_OPTS -Dhadoop.log.file=$YARN_LOGFILE"
-YARN_OPTS="$YARN_OPTS -Dyarn.log.file=$YARN_LOGFILE"
+#YARN_OPTS="$YARN_OPTS -Dhadoop.log.dir=$YARN_LOG_DIR"
+#YARN_OPTS="$YARN_OPTS -Dyarn.log.dir=$YARN_LOG_DIR"
+#YARN_OPTS="$YARN_OPTS -Dhadoop.log.file=$YARN_LOGFILE"
+#YARN_OPTS="$YARN_OPTS -Dyarn.log.file=$YARN_LOGFILE"
 YARN_OPTS="$YARN_OPTS -Dyarn.home.dir=$YARN_COMMON_HOME"
 YARN_OPTS="$YARN_OPTS -Dyarn.id.str=$YARN_IDENT_STRING"
 YARN_OPTS="$YARN_OPTS -Dhadoop.root.logger=${YARN_ROOT_LOGGER:-INFO,console}"
@@ -50,16 +118,31 @@ if [ "x$JAVA_LIBRARY_PATH" != "x" ]; then
 fi
 YARN_OPTS="$YARN_OPTS -Dyarn.policy.file=$YARN_POLICYFILE"
 
-#YARN_OPTS="$YARN_OPTS -Dzookeeper.sasl.client.username=zookeeper -Djava.security.auth.login.config={%install_base_dir%}/confs/hadoop/conf/yarn_jaas.conf -Dzookeeper.sasl.client=true -Dzookeeper.sasl.clientconfig=Client"
-
-export YARN_NODEMANAGER_OPTS="${YARN_OPTS}  -Xms{%nodemanager_heap%} -Xmx{%nodemanager_heap%} -XX:MaxMetaspaceSize=512M"
-
-export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} -Xms{%resource_manager_heap%} -Xmx{%resource_manager_heap%} -XX:MaxNewSize={%resource_manager_young_heap%} -XX:NewSize={%resource_manager_young_heap%} -XX:MaxMetaspaceSize=512M \
--XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
+COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
--Xloggc:$YARN_LOG_DIR/hadoop-gc-rm.log.`date +'%Y%m%d%H%M'` \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
--XX:ErrorFile=${YARN_LOG_DIR}/hadoop-rm-hs_err_pid.log \
+-XX:MaxMetaspaceSize=512M \
+-Dhadoop.root.logger=${YARN_ROOT_LOGGER:-INFO,RFA} \
+-Dyarn.root.logger=${YARN_ROOT_LOGGER:-INFO,RFA} \
+-Dhadoop.log.dir=$YARN_LOG_DIR \
+-Dyarn.log.dir=$YARN_LOG_DIR \
+-Dyarn.home.dir=$YARN_COMMON_HOME \
+-Dyarn.id.str=$YARN_IDENT_STRING"
+
+export YARN_NODEMANAGER_OPTS="${YARN_OPTS} \
+-Xms{%nodemanager_heap%} -Xmx{%nodemanager_heap%} -XX:MaxNewSize={%nodemanager_young_heap%} -XX:NewSize={%nodemanager_young_heap%} \
+-Dhadoop.log.file=hadoop-yarn-nodemanager-%H.log \
+-Dyarn.log.file=hadoop-yarn-nodemanager-%H.log \
+$COMMON_DAEMON_OPTS"
+
+export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} \
+-Xms{%resourcemanager_heap%} -Xmx{%resourcemanager_heap%} -XX:MaxNewSize={%resourcemanager_young_heap%} -XX:NewSize={%resourcemanager_young_heap%} -XX:MaxMetaspaceSize=512M \
+-Dhadoop.log.file=hadoop-yarn-resourcemanager-%H.log \
+-Dyarn.log.file=hadoop-yarn-resourcemanager-%H.log \
+-Xloggc:$YARN_LOG_DIR/hadoop-gc-resourcemanager.log.`date +'%Y%m%d%H%M'` \
+-XX:ErrorFile=${YARN_LOG_DIR}/hadoop-resourcemanager-hs_err_pid.log \
 -Dyarn.rm.appsummary.logger=INFO,RMSUMMARY \
--Djute.maxbuffer=5242880"
+-Djute.maxbuffer=5242880 \
+$COMMON_DAEMON_OPTS"
+
 

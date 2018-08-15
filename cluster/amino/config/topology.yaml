@@ -4,10 +4,10 @@ inventory:
           - namenode
           - zkfc
           - journalnode
-          - resource_manager
-          - hbase_master
-          - hive_metastore
-          - zookeeper_server
+          - resourcemanager
+          - hbasemaster
+          - hivemetastore
+          - zookeeperserver
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1
@@ -16,18 +16,18 @@ inventory:
           - namenode
           - zkfc
           - journalnode
-          - resource_manager
-          - hbase_master
-          - hive_metastore
-          - zookeeper_server
-          - spark_history_server
+          - resourcemanager
+          - hbasemaster
+          - hivemetastore
+          - zookeeperserver
+          - sparkhistoryserver
         vars:
           zookeeper_myid: 2
         topology: /slc/smao_dev
     smao-dev-3-1999786.slc07.dev.ebayc3.com:
         roles:
           - journalnode
-          - zookeeper_server
+          - zookeeperserver
           - datanode
           - nodemanager
           - regionserver

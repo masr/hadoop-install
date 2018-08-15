@@ -17,11 +17,11 @@ class ZookeeperProcess(AbstractProcess):
 
         mapping = {}
         ################## zoo.cfg **********************************
-        zookeeper_servers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER_SERVER)
+        zookeepers = self.topology.get_hosts_of_role(ROLE.ZOOKEEPER)
         data = self.get_merged_service_configuration_by_group('zoo.yaml', group_name)
-        for zookeeper_server in zookeeper_servers:
-            vars_dict = self.topology.get_vars_from_host(zookeeper_server)
-            data["server." + str(vars_dict['zookeeper_myid'])] = zookeeper_server + ':2888:3888'
+        for zookeeper in zookeepers:
+            vars_dict = self.topology.get_vars_from_host(zookeeper)
+            data["server." + str(vars_dict['zookeeper_myid'])] = zookeeper + ':2888:3888'
 
         mapping['zoo.cfg'] = replace_values_in_dict(data, basic_config)
 

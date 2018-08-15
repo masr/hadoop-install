@@ -1,14 +1,14 @@
 - name: install zookeeper.service
-  template: src=files/zookeeper_server.service.j2 dest=/usr/lib/systemd/system/zookeeper_server.service group=root owner=root mode=0644
-  when: '"zookeeper_server" in group_names'
+  template: src=files/zookeeper.service.j2 dest=/usr/lib/systemd/system/zookeeper.service group=root owner=root mode=0644
+  when: '"zookeeper" in group_names'
 
 - name: load zookeeper service
   command: systemctl daemon-reload
-  when: '"zookeeper_server" in group_names'
+  when: '"zookeeper" in group_names'
 
 - name: enable zookeeper service
-  command: systemctl enable zookeeper_server
-  when: '"zookeeper_server" in group_names'
+  command: systemctl enable zookeeper
+  when: '"zookeeper" in group_names'
 
 
 - name: install datanode.service
@@ -31,13 +31,13 @@
   template: src="files/nodemanager.service.j2" dest=/usr/lib/systemd/system/nodemanager.service group=root owner=root mode=0644
   when: '"nodemanager" in group_names'
 
-- name: install resource_manager.service
-  template: src="files/resource_manager.service.j2" dest=/usr/lib/systemd/system/resource_manager.service group=root owner=root mode=0644
-  when: '"resource_manager" in group_names'
+- name: install resourcemanager.service
+  template: src="files/resourcemanager.service.j2" dest=/usr/lib/systemd/system/resourcemanager.service group=root owner=root mode=0644
+  when: '"resourcemanager" in group_names'
 
-- name: install spark_history_server.service
-  template: src="files/spark_history_server.service.j2" dest=/usr/lib/systemd/system/spark_history_server.service group=root owner=root mode=0644
-  when: '"spark_history_server" in group_names'
+- name: install sparkhistoryserver.service
+  template: src="files/sparkhistoryserver.service.j2" dest=/usr/lib/systemd/system/sparkhistoryserver.service group=root owner=root mode=0644
+  when: '"sparkhistoryserver" in group_names'
 
 - name: reload services
   command: systemctl daemon-reload
@@ -58,10 +58,10 @@
   command: systemctl enable nodemanager
   when: '"nodemanager" in group_names'
 
-- name: enable resource_manager service
-  command: systemctl enable resource_manager
-  when: '"resource_manager" in group_names'
+- name: enable resourcemanager service
+  command: systemctl enable resourcemanager
+  when: '"resourcemanager" in group_names'
 
-- name: enable spark_history_server service
-  command: systemctl enable spark_history_server
-  when: '"spark_history_server" in group_names'
+- name: enable sparkhistoryserver service
+  command: systemctl enable sparkhistoryserver
+  when: '"sparkhistoryserver" in group_names'
