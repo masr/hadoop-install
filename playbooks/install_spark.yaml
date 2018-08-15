@@ -34,5 +34,6 @@
       file: src={{ install_base_dir }}/confs/spark/conf path={{ install_base_dir }}/spark/conf state=link
 
     - name: install systemd service
-      include: install_systemd_service.yml
+      include: install_systemd_service.yml service_name=sparkhistoryserver
+
 

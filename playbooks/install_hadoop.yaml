@@ -94,4 +94,11 @@
       when: '"journalnode" in group_names'
 
     - name: install systemd service
-      include: install_systemd_service.yml
+      include: install_systemd_service.yml service_name={{ item }}
+      with_items:
+        - namenode
+        - zkfc
+        - journalnode
+        - datanode
+        - resourcemanager
+        - nodemanager
