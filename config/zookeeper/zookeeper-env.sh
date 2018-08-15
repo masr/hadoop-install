@@ -7,6 +7,7 @@ export SERVER_JVMFLAGS="-Xms{% zookeeper_heap %} -Xmx{% zookeeper_heap %} -XX:Ma
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${ZOO_LOG_DIR}/zookeeper.gc.`date +'%Y%m%d%H%M'` \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
+-XX:MaxMetaspaceSize=512M \
 -Dzookeeper.root.logger=${ZOO_LOG4J_PROP:-INFO,ROLLINGFILE} \
 -Dzookeeper.log.dir={% hadoop_log_dir %}/zookeeper \
 -Dzookeeper.log.file=zookeeper-$HOSTNAME.log"

@@ -75,6 +75,7 @@ export SPARK_HISTORY_OPTS="-Xms{%sparkhistoryserver_heap%} -Xmx{%sparkhistoryser
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.`date +'%Y%m%d%H%M'` \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
+-XX:MaxMetaspaceSize=512M \
 -Dspark.root.logger=${SPARK_ROOT_LOGGER:-INFO,RFA} \
 -Dspark.log.dir={% hadoop_log_dir %}/spark \
 -Dspark.log.file=spark-sparkhistoryserver-$HOSTNAME.log"
