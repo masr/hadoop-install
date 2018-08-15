@@ -1,5 +1,5 @@
 - name: create runtime dir for different services
-  file: path={{ install_base_dir }}/run/{{ service_user }} state=directory mode=0755 owner={{ item }} group=hadoop
+  file: path={{ install_base_dir }}/run/{{ service_user }} state=directory mode=0755 owner={{ service_user }} group=hadoop
 
 - name: create log dir for different services
-  file: path={{ hadoop_log_dir }}/{{ service_user }} state=directory mode=0775 owner={{ item }} group=hadoop
+  file: path={{ hadoop_log_dir }}/{{ service_user }} state=directory mode=0775 owner={{ service_user }} group=hadoop
