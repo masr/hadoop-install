@@ -7,3 +7,6 @@ default:
   journalnode_young_heap: 64m
   zkfc_heap: 256m
   zkfc_young_heap: 64m
+
+  hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
+  hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT

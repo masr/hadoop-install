@@ -3,3 +3,6 @@ default:
   zookeeper_storage_dir: /data/zookeeper
   zookeeper_heap: 512m
   zookeeper_young_heap: 64m
+
+  zookeeper_release_tarball: zookeeper-3.4.6.tar.gz
+  zookeeper_release_version: zookeeper-3.4.6
