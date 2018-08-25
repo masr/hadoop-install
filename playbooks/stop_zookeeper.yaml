@@ -1,0 +1,7 @@
+- name: Stop Zookeeper Service
+  hosts: "{{ variable_hosts | default('all') }}"
+  tasks:
+    - name: stop Zookeeper service
+      include: include/stop_service.yml service_name={{ item }}
+      with_items:
+        - zookeeper

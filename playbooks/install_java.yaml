@@ -5,7 +5,7 @@
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
     - name: before install preparation
-      include: before_install_service.yaml
+      include: include/before_install_service.yaml
 
     - name: sync java release
       unarchive: src=../releases/{{ java_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755

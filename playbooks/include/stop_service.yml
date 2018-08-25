@@ -1,0 +1,3 @@
+- name: stop {{ service_name }}
+  shell: systemctl stop {{ service_name }}
+  when: 'service_name in group_names'

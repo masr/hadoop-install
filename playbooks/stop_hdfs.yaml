@@ -1,0 +1,10 @@
+- name: Stop HDFS Service
+  hosts: "{{ variable_hosts | default('all') }}"
+  tasks:
+    - name: stop HDFS service
+      include: include/stop_service.yml service_name={{ item }}
+      with_items:
+        - namenode
+        - zkfc
+        - journalnode
+        - datanode
