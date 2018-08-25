@@ -17,21 +17,21 @@
     - name: set ulimit
       copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
 
-- name: create base installtion directory
-  file: path={{ item }} state=directory mode=0755 owner=root group=root
-  with_items:
-    - "{{ install_base_dir }}"
-    - "{{ hadoop_releases_dir }}"
-    - "{{ hadoop_confs_dir }}"
-    - "{{ hadoop_run_dir }}"
+    - name: create base installtion directory
+      file: path={{ item }} state=directory mode=0755 owner=root group=root
+      with_items:
+        - "{{ install_base_dir }}"
+        - "{{ hadoop_releases_dir }}"
+        - "{{ hadoop_confs_dir }}"
+        - "{{ hadoop_run_dir }}"
 
-- name: create hadoop pid dir
-  file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
-  with_items:
-    - "{{ hadoop_pid_dir }}"
+    - name: create hadoop pid dir
+      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+      with_items:
+        - "{{ hadoop_pid_dir }}"
 
-- name: create hadoop log dir
-  file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
-  with_items:
-    - "{{hadoop_log_dir}}"
-  ignore_errors: yes
+    - name: create hadoop log dir
+      file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
+      with_items:
+        - "{{hadoop_log_dir}}"
+      ignore_errors: yes
