@@ -66,7 +66,7 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 export HADOOP_NAMENODE_OPTS="-Xms{%namenode_heap%} -Xmx{%namenode_heap%} -XX:MaxNewSize={%namenode_young_heap%} -XX:NewSize={%namenode_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-namenode-$HOSTNAME.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} \
--Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,DRFAAUDIT} \
+-Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,RFAAUDIT} \
 -Dhadoop.hdfs.statechange.logger=${HDFS_STATECHANGE_LOGGER:-WARN,SCA} \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-namenode.log.`date +'%Y%m%d%H%M'` \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-namenode-hs_err_pid.log \

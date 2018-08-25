@@ -13,9 +13,9 @@ ansible-playbook -u ec2-user -i cluster/amino/.ansible/zookeeper/hosts cluster/a
 
 ansible-playbook -u ec2-user -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -b
 
-ansible-playbook -u ec2-user -i cluster/amino/.ansible/spark/hosts cluster/amino/.ansible/spark/install.yaml -b
-
 ansible-playbook -u ec2-user -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -b -e "sync_release=no"
+
+ansible-playbook -u ec2-user -i cluster/amino/.ansible/spark/hosts cluster/amino/.ansible/spark/install.yaml -b
 
 ansible -u ec2-user -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -b
 
