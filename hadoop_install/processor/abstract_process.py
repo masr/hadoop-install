@@ -21,7 +21,7 @@ class AbstractProcess:
         self.confs_base_dir = os.path.join('cluster', cluster_name, '.confs')
         self.service_ansible_base_dir = os.path.join(self.ansible_base_dir, self.service_name)
         self.service_confs_base_dir = os.path.join(self.confs_base_dir, self.service_name)
-        self.cluster_service_config_dir = os.path.join('..', 'cluster', cluster_name, 'config', self.service_name)
+        self.cluster_service_config_dir = os.path.join('cluster', cluster_name, 'config', self.service_name)
         self.hadoop_stack = self.get_hadoop_stack_name()
         self.common_dir = os.path.join('config', 'common')
         self.stack_dir = os.path.join('config', self.hadoop_stack)
