@@ -2,6 +2,7 @@
 
 import argparse
 import yaml
+import os
 from hadoop_install.processor.hadoop_process import HadoopProcess
 from hadoop_install.processor.java_process import JavaProcess
 from hadoop_install.processor.zookeeper_process import ZookeeperProcess
@@ -25,6 +26,8 @@ SERVICE_TO_PROCESS = {
     SERVICE.SPARK: SparkProcess(cluster, topology)
 }
 required_services = set()
+if not os.path.exists('cluster/' + cluster + '/.ansible'):
+    os.mkdir('cluster/' + cluster + '/.ansible')
 with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     for role_name, role in ROLE.__members__.items():
         tmp_file.write("[" + role.value + "]\n")
