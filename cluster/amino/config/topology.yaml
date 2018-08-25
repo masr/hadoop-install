@@ -9,7 +9,7 @@ inventory:
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1
-    smao-dev-2-1999780.slc07.dev.ebayc3.com:
+    smao-dev-2-2090152.slc07.dev.ebayc3.com:
         roles:
           - namenode
           - zkfc
