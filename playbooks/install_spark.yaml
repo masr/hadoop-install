@@ -5,7 +5,7 @@
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
     - name: before install preparation
-      include: include/before_install_service.yaml service_user=spark
+      import_playbook: include/before_install_service.yaml service_user=spark
 
     - name: sync spark release
       unarchive: src=../releases/{{ spark_release_tarball }} dest={{ hadoop_releases_dir }} owner=root group=root mode=0755
@@ -34,6 +34,6 @@
       file: src={{ hadoop_confs_dir }}/spark/conf path={{ install_base_dir }}/spark/conf state=link
 
     - name: install systemd service
-      include: include/install_systemd_service.yml service_name=sparkhistoryserver
+      import_playbook: include/install_systemd_service.yml service_name=sparkhistoryserver
 
 
