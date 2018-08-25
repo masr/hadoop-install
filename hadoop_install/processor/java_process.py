@@ -1,6 +1,5 @@
-from processor.abstract_process import AbstractProcess
-from constants import SERVICE
-from processor.utils import trans_dict_to_xml, replace_params
+from hadoop_install.constants import SERVICE
+from hadoop_install.processor.abstract_process import AbstractProcess
 
 
 class JavaProcess(AbstractProcess):

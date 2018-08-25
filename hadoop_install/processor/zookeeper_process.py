@@ -1,6 +1,6 @@
-from constants import SERVICE, ROLE
-from processor.abstract_process import AbstractProcess
-from processor.utils import replace_params, trans_dict_to_conf, replace_values_in_dict
+from hadoop_install.constants import SERVICE, ROLE
+from hadoop_install.processor.abstract_process import AbstractProcess
+from hadoop_install.utils import replace_params, trans_dict_to_conf, replace_values_in_dict
 
 
 class ZookeeperProcess(AbstractProcess):

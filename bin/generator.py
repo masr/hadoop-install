@@ -2,19 +2,19 @@
 
 import argparse
 import yaml
-from processor.hadoop_process import HadoopProcess
-from processor.java_process import JavaProcess
-from processor.zookeeper_process import ZookeeperProcess
-from processor.spark_process import SparkProcess
-from processor.topology import Topology
-from constants import SERVICE, ROLE
+from hadoop_install.processor.hadoop_process import HadoopProcess
+from hadoop_install.processor.java_process import JavaProcess
+from hadoop_install.processor.zookeeper_process import ZookeeperProcess
+from hadoop_install.processor.spark_process import SparkProcess
+from hadoop_install.topology import Topology
+from hadoop_install.constants import SERVICE, ROLE
 
 parser = argparse.ArgumentParser(description='Generate Configs')
 parser.add_argument('--cluster', help='cluster name', required=True)
 args = parser.parse_args()
 print("Generating config for cluster: " + args.cluster + "\n")
 cluster = args.cluster
-with open("cluster/" + cluster + "/config/topology.yaml") as topology_file:
+with open("../cluster/" + cluster + "/config/topology.yaml") as topology_file:
     topology_data = yaml.load(topology_file.read(), Loader=yaml.Loader)
     topology = Topology(topology_data)
 
@@ -25,7 +25,7 @@ SERVICE_TO_PROCESS = {
     SERVICE.SPARK: SparkProcess(cluster, topology)
 }
 required_services = set()
-with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
+with open('../cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     for role_name, role in ROLE.__members__.items():
         tmp_file.write("[" + role.value + "]\n")
         tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')

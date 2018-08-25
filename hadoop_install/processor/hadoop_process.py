@@ -1,6 +1,6 @@
-from processor.abstract_process import AbstractProcess
-from constants import SERVICE, ROLE
-from processor.utils import trans_dict_to_xml, replace_params, replace_values_in_dict
+from hadoop_install.processor.abstract_process import AbstractProcess
+from hadoop_install.constants import SERVICE, ROLE
+from hadoop_install.utils import trans_dict_to_xml, replace_params, replace_values_in_dict
 
 
 class HadoopProcess(AbstractProcess):

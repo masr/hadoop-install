@@ -1,4 +1,4 @@
-from constants import SERVICE_TO_ROLES, ROLE
+from hadoop_install.constants import SERVICE_TO_ROLES, ROLE
 
 
 class Topology:

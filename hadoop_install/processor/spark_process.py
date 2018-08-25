@@ -1,6 +1,6 @@
-from constants import SERVICE, ROLE
-from processor.abstract_process import AbstractProcess
-from processor.utils import replace_params, replace_values_in_dict, trans_dict_to_conf
+from hadoop_install.constants import SERVICE, ROLE
+from hadoop_install.processor.abstract_process import AbstractProcess
+from hadoop_install.utils import replace_params, replace_values_in_dict, trans_dict_to_conf
 
 
 class SparkProcess(AbstractProcess):
