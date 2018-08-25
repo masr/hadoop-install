@@ -5,7 +5,7 @@
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
     - name: sync java release
-      unarchive: src=../releases/{{ java_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=root mode=0755
+      unarchive: src=../releases/{{ java_release_tarball }} dest={{ hadoop_releases_dir }} owner=root group=root mode=0755
 
     - name: java soft link
       file: src=releases/{{ java_release_version }} path={{ install_base_dir }}/java state=link

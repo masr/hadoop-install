@@ -11,7 +11,7 @@
         - yarn
 
     - name: sync hadoop release
-      unarchive: src=../releases/{{ hadoop_release_tarball }} dest={{ install_base_dir }}/releases owner=root group=hadoop
+      unarchive: src=../releases/{{ hadoop_release_tarball }} dest={{ hadoop_releases_dir }} owner=root group=hadoop
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: sync spark shuffle network jar file
@@ -29,10 +29,10 @@
     - name: create hadoop confs dir
       file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
       with_items:
-        - "{{ install_base_dir }}/confs/hadoop/conf"
+        - "{{ hadoop_confs_dir }}/hadoop/conf"
 
     - name: sync hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - core-site.xml
         - hdfs-site.xml
@@ -45,18 +45,18 @@
         - yarn-include
 
     - name: sync topology.py
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0755 owner=root group=hadoop
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0755 owner=root group=hadoop
       with_items:
         - topology.py
 
     - name: sync hadoop exclude file
-      copy: content="" dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - hdfs-exclude
         - yarn-exclude
 
     - name: sync container-executor.cfg
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ install_base_dir }}/confs/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
       with_items:
         - container-executor.cfg
 
@@ -64,7 +64,7 @@
       file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent
 
     - name: create hadoop conf soft link
-      file: src={{ install_base_dir }}/confs/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link
+      file: src={{ hadoop_confs_dir }}/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link
 
 
     - name: create namenode dir

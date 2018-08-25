@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-ExecStart={{ install_base_dir }}/hadoop/bin/hdfs --config {{ install_base_dir }}/confs/hadoop/conf datanode
+ExecStart={{ install_base_dir }}/hadoop/bin/hdfs --config {{ hadoop_confs_dir }}/hadoop/conf datanode
 #ExecStop=
 Type=simple
 Restart=always

@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-ExecStart={{ install_base_dir }}/hadoop/bin/yarn --config {{ install_base_dir }}/confs/hadoop/conf nodemanager
+ExecStart={{ install_base_dir }}/hadoop/bin/yarn --config {{ hadoop_confs_dir }}/hadoop/conf nodemanager
 #ExecStop=
 Type=simple
 Restart=always
