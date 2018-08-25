@@ -1,7 +1,7 @@
-- name: Stop Spark Service
-  hosts: "{{ variable_hosts | default('all') }}"
+- name: Stop Spark History Server Service
+  hosts: sparkhistoryserver
   tasks:
-    - name: stop Spark service
+    - name: stop Spark History Server service
       include: include/stop_service.yml service_name={{ item }}
       with_items:
         - sparkhistoryserver

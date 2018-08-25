@@ -1,8 +1,15 @@
-- name: Stop YARN Service
-  hosts: "{{ variable_hosts | default('all') }}"
+- name: Stop Resource Manager Service
+  hosts: resourcemanager
   tasks:
-    - name: stop YARN service
+    - name: stop Resource Manager service
       include: include/stop_service.yml service_name={{ item }}
       with_items:
         - resourcemanager
+
+- name: Stop Node Manager Service
+  hosts: nodemanager
+  tasks:
+    - name: stop Node Manager service
+      include: include/stop_service.yml service_name={{ item }}
+      with_items:
         - nodemanager
