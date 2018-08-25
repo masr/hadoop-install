@@ -10,6 +10,7 @@ from hadoop_install.processor.spark_process import SparkProcess
 from hadoop_install.processor.nil_process import NilProcess
 from hadoop_install.topology import Topology
 from hadoop_install.constants import SERVICE, ROLE
+from hadoop_install.utils import check_and_create_dir
 
 parser = argparse.ArgumentParser(description='Generate Configs')
 parser.add_argument('--cluster', help='cluster name', required=True)
@@ -26,9 +27,8 @@ SERVICE_TO_PROCESS = {
     SERVICE.ZOOKEEPER: ZookeeperProcess(cluster, topology),
     SERVICE.SPARK: SparkProcess(cluster, topology)
 }
-required_services = set()
-if not os.path.exists('cluster/' + cluster + '/.ansible'):
-    os.mkdir('cluster/' + cluster + '/.ansible')
+
+check_and_create_dir('cluster/' + cluster + '/.ansible')
 with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     for role_name, role in ROLE.__members__.items():
         tmp_file.write("[" + role.value + "]\n")
