@@ -4,8 +4,7 @@
     - name: load vars
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
-    - name: before install preparation
-      include: include/before_install_service.yaml service_user={{ item }}
+    - include: include/before_install_service.yaml service_user={{ item }}
       with_items:
         - hdfs
         - yarn
