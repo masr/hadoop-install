@@ -2,19 +2,19 @@
 python generator.py  --cluster amino
 
 #Installation
-ansible-playbook -u stack -i cluster/amino/.ansible/hosts playbooks/prepare_node.yaml -s
+ansible-playbook -u stack -i cluster/amino/.ansible/hosts playbooks/prepare_node.yaml -b -e @cluster/amino/.ansible/vars.yaml
 
-ansible-playbook -u stack -i cluster/amino/.ansible/java/hosts cluster/amino/.ansible/java/install.yaml -s 
+ansible-playbook -u stack -i cluster/amino/.ansible/java/hosts cluster/amino/.ansible/java/install.yaml -b 
 
-ansible-playbook -u stack -i cluster/amino/.ansible/zookeeper/hosts cluster/amino/.ansible/zookeeper/install.yaml -s
+ansible-playbook -u stack -i cluster/amino/.ansible/zookeeper/hosts cluster/amino/.ansible/zookeeper/install.yaml -b
 
-ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s
+ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -b
 
-ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -s -e "sync_release=no"
+ansible-playbook -u stack -i cluster/amino/.ansible/hadoop/hosts cluster/amino/.ansible/hadoop/install.yaml -b -e "sync_release=no"
 
-ansible -u stack -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -s
+ansible -u stack -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -b
 
-ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -s
+ansible -u stack -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -b
 
 #Active NN:
 
@@ -41,10 +41,10 @@ sudo to root
 systemctl start zkfc
 
 # Start DN
-ansible -u stack -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -s
+ansible -u stack -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -b
 
 #Start RM
-ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -s
+ansible -u stack -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -b
 
 #Start NM
-ansible -u stack -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -s
+ansible -u stack -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -b
