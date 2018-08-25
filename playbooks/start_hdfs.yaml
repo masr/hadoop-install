@@ -1,0 +1,24 @@
+- name: Start Namenode Service
+  hosts: namenode
+  tasks:
+    - name: start namenode service
+      include: include/start_service.yml service_name={{ item }}
+      with_items:
+        - namenode
+        - zkfc
+
+- name: Start Journal Node Service
+  hosts: journalnode
+  tasks:
+    - name: start journalnode service
+      include: include/start_service.yml service_name={{ item }}
+      with_items:
+        - journalnode
+
+- name: Start Data Node Service
+  hosts: datanode
+  tasks:
+    - name: start datanode service
+      include: include/start_service.yml service_name={{ item }}
+      with_items:
+        - datanode

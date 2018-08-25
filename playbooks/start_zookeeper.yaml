@@ -1,0 +1,7 @@
+- name: Start Zookeeper Service
+  hosts: zookeeper
+  tasks:
+    - name: start Zookeeper service
+      include: include/start_service.yml service_name={{ item }}
+      with_items:
+        - zookeeper

@@ -1,0 +1,7 @@
+- name: Starts Spark History Server Service
+  hosts: sparkhistoryserver
+  tasks:
+    - name: start Spark History Server service
+      include: include/start_service.yml service_name={{ item }}
+      with_items:
+        - sparkhistoryserver
