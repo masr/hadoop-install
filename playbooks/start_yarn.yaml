@@ -1,5 +1,6 @@
 - name: Start Resource Manager Service
   hosts: resourcemanager
+  gather_facts: no
   tasks:
     - name: start Resource Manager service
       include: include/start_service.yml service_name={{ item }}
@@ -8,6 +9,7 @@
 
 - name: Start Node Manager Service
   hosts: nodemanager
+  gather_facts: no
   tasks:
     - name: start Node Manager service
       include: include/start_service.yml service_name={{ item }}

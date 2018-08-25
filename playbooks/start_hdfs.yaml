@@ -1,5 +1,6 @@
 - name: Start Namenode Service
   hosts: namenode
+  gather_facts: no
   tasks:
     - name: start namenode service
       include: include/start_service.yml service_name={{ item }}
@@ -9,6 +10,7 @@
 
 - name: Start Journal Node Service
   hosts: journalnode
+  gather_facts: no
   tasks:
     - name: start journalnode service
       include: include/start_service.yml service_name={{ item }}
@@ -17,6 +19,7 @@
 
 - name: Start Data Node Service
   hosts: datanode
+  gather_facts: no
   tasks:
     - name: start datanode service
       include: include/start_service.yml service_name={{ item }}

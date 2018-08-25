@@ -1,5 +1,6 @@
 - name: Stop Namenode Service
   hosts: namenode
+  gather_facts: no
   tasks:
     - name: stop namenode service
       include: include/stop_service.yml service_name={{ item }}
@@ -9,6 +10,7 @@
 
 - name: Stop Journal Node Service
   hosts: journalnode
+  gather_facts: no
   tasks:
     - name: stop journalnode service
       include: include/stop_service.yml service_name={{ item }}
@@ -17,6 +19,7 @@
 
 - name: Stop Data Node Service
   hosts: datanode
+  gather_facts: no
   tasks:
     - name: stop datanode service
       include: include/stop_service.yml service_name={{ item }}

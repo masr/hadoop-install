@@ -1,5 +1,6 @@
 - name: Stop Spark History Server Service
   hosts: sparkhistoryserver
+  gather_facts: no
   tasks:
     - name: stop Spark History Server service
       include: include/stop_service.yml service_name={{ item }}

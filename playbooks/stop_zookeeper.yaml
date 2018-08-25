@@ -1,5 +1,6 @@
 - name: Stop Zookeeper Service
   hosts: zookeeper
+  gather_facts: no
   tasks:
     - name: stop Zookeeper service
       include: include/stop_service.yml service_name={{ item }}
