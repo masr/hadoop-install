@@ -1,0 +1,3 @@
+default:
+  sparkhistoryserver_heap: 1024m
+  sparkhistoryserver_young_heap: 256m

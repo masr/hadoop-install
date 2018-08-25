@@ -1,5 +1,5 @@
 inventory:
-    smao-dev-1-1999775.slc07.dev.ebayc3.com:
+    ip-172-31-41-170.us-west-2.compute.internal:
         roles:
           - namenode
           - zkfc
@@ -9,7 +9,7 @@ inventory:
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1
-    smao-dev-2-2090152.slc07.dev.ebayc3.com:
+    ip-172-31-47-83.us-west-2.compute.internal:
         roles:
           - namenode
           - zkfc
@@ -20,7 +20,7 @@ inventory:
         vars:
           zookeeper_myid: 2
         topology: /slc/smao_dev
-    smao-dev-3-1999786.slc07.dev.ebayc3.com:
+    ip-172-31-39-91.us-west-2.compute.internal:
         roles:
           - journalnode
           - zookeeper
@@ -30,11 +30,12 @@ inventory:
           zookeeper_myid: 3
         config_groups:
           hadoop: normal
-    smao-dev-4-1999787.slc07.dev.ebayc3.com:
+    ip-172-31-44-127.us-west-2.compute.internal:
         roles:
           - datanode
           - hadoop_cli
           - zookeeper_cli
+          - hive_cli
         topology: /slc/smao_dev
         config_groups:
           hadoop: normal

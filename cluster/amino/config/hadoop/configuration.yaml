@@ -1,1 +1,9 @@
-#HDFS
+default:
+  namenode_heap: 512m
+  namenode_young_heap: 128m
+  datanode_heap: 512m
+  datanode_young_heap: 128m
+  journalnode_heap: 256m
+  journalnode_young_heap: 64m
+  zkfc_heap: 256m
+  zkfc_young_heap: 64m
