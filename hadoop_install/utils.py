@@ -2,6 +2,7 @@ import xml.dom.minidom
 import re
 import os
 import shutil
+import yaml
 
 
 def trans_dict_to_xml(data):
@@ -59,3 +60,13 @@ def clean_and_create_dir(dir_path):
         os.mkdir(dir_path)
     else:
         os.mkdir(dir_path)
+
+
+def get_configuration(config_file_path):
+    result = {}
+    if os.path.exists(config_file_path):
+        with open(config_file_path) as config_file:
+            result = yaml.load(config_file.read(), Loader=yaml.Loader)
+            if result is None:
+                result = {}
+    return result

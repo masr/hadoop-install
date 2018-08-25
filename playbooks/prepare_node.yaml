@@ -21,14 +21,14 @@
   file: path={{ item }} state=directory mode=0755 owner=root group=root
   with_items:
     - "{{ install_base_dir }}"
-    - "{{ install_base_dir }}/releases"
-    - "{{ install_base_dir }}/confs"
-    - "{{ install_base_dir }}/run"
+    - "{{ hadoop_releases_dir }}"
+    - "{{ hadoop_confs_dir }}"
+    - "{{ hadoop_run_dir }}"
 
 - name: create hadoop pid dir
   file: path={{ item }} state=directory mode=0775 owner=root group=hadoop
   with_items:
-    - "{{ install_base_dir }}/run/pids"
+    - "{{ hadoop_pid_dir }}"
 
 - name: create hadoop log dir
   file: path={{ item }} state=directory mode=0775 owner=root group=hadoop

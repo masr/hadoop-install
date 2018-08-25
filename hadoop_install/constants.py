@@ -3,6 +3,7 @@ from enum import Enum, unique
 
 @unique
 class SERVICE(Enum):
+    NIL = "nil"
     JAVA = "java"
     HADOOP = "hadoop"
     SPARK = "spark"
@@ -16,7 +17,6 @@ class SERVICE(Enum):
 
 @unique
 class ROLE(Enum):
-    COMMON = "common"
     ZOOKEEPER = "zookeeper"
     ZOOKEEPER_CLI = "zookeeper_cli"
     NAMENODE = "namenode"
@@ -36,7 +36,8 @@ class ROLE(Enum):
 
 
 SERVICE_TO_ROLES = {
-    SERVICE.JAVA: [ROLE.COMMON],
+    SERVICE.NIL: [],
+    SERVICE.JAVA: [],
     SERVICE.HADOOP: [ROLE.NAMENODE, ROLE.DATANODE, ROLE.JOURNALNODE, ROLE.ZKFC, ROLE.RESOURCEMANAGER, ROLE.NODEMANAGER,
                      ROLE.HADOOP_CLI],
     SERVICE.ZOOKEEPER: [ROLE.ZOOKEEPER, ROLE.ZOOKEEPER_CLI],

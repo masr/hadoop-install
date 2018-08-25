@@ -22,8 +22,8 @@ yarn.nodemanager.disk-health-checker.min-free-space-per-disk-mb: 1024
 yarn.nodemanager.sleep-delay-before-sigkill.ms: 1000
 
 
-yarn.resourcemanager.nodes.exclude-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-exclude"
-yarn.resourcemanager.nodes.include-path: "{% install_base_dir %}/confs/hadoop/conf/yarn-include"
+yarn.resourcemanager.nodes.exclude-path: "{% hadoop_confs_dir %}/hadoop/conf/yarn-exclude"
+yarn.resourcemanager.nodes.include-path: "{% hadoop_confs_dir %}/hadoop/conf/yarn-include"
 yarn.resourcemanager.am.max-attempts: 2
 yarn.resourcemanager.scheduler.class: org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
 yarn.resourcemanager.hostname: "{% resourcemanager1 %}"
@@ -42,7 +42,7 @@ yarn.scheduler.maximum-allocation-vcores: 32
 yarn.scheduler.minimum-allocation-vcores: 1
 yarn.scheduler.minimum-allocation-mb: 256
 yarn.scheduler.maximum-allocation-mb: 10240
-yarn.application.classpath: "{% install_base_dir %}/confs/hadoop/conf:{% install_base_dir %}/hadoop/share/hadoop/common/lib/*:{% install_base_dir %}/hadoop/share/hadoop/common/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/lib/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/lib/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/lib/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/*"
+yarn.application.classpath: "{% hadoop_confs_dir %}/hadoop/conf:{% install_base_dir %}/hadoop/share/hadoop/common/lib/*:{% install_base_dir %}/hadoop/share/hadoop/common/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/lib/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/lib/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/lib/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/*"
 
 yarn.client.failover-proxy-provider: org.apache.hadoop.yarn.client.ConfiguredRMFailoverProxyProvider
 

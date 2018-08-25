@@ -66,9 +66,9 @@
 export JAVA_HOME={% install_base_dir %}/java
 export SPARK_HOME={% install_base_dir %}/spark
 export HADOOP_HOME={% install_base_dir %}/hadoop
-export HADOOP_CONF_DIR={% install_base_dir %}/confs/hadoop/conf
-export SPARK_CONF_DIR={% install_base_dir %}/confs/spark/conf
-export SPARK_PID_DIR={% install_base_dir %}/run/pids
+export HADOOP_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
+export SPARK_CONF_DIR={% hadoop_confs_dir %}/spark/conf
+export SPARK_PID_DIR={% hadoop_pid_dir %}/run/pids
 export SPARK_DAEMON_MEMORY={% sparkhistoryserver_heap %}
 export SPARK_HISTORY_OPTS="-XX:MaxNewSize={%sparkhistoryserver_young_heap%} -XX:NewSize={%sparkhistoryserver_young_heap%} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \

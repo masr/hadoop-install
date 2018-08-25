@@ -7,6 +7,7 @@ from hadoop_install.processor.hadoop_process import HadoopProcess
 from hadoop_install.processor.java_process import JavaProcess
 from hadoop_install.processor.zookeeper_process import ZookeeperProcess
 from hadoop_install.processor.spark_process import SparkProcess
+from hadoop_install.processor.nil_process import NilProcess
 from hadoop_install.topology import Topology
 from hadoop_install.constants import SERVICE, ROLE
 
@@ -34,6 +35,12 @@ with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
         tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')
     tmp_file.write("[all]\n")
     tmp_file.write('\n'.join(topology.get_all_hosts()))
+
+nil_process = NilProcess(cluster, topology)
+vars = nil_process.get_merged_basic_configuration_by_group('default')
+with open('cluster/' + cluster + '/.ansible/vars.yaml', 'w') as tmp_file:
+    content = yaml.dump(vars, default_flow_style=False)
+    tmp_file.write(content)
 
 for _, service_type in SERVICE.__members__.items():
     hosts = topology.get_hosts_of_service(service_type)

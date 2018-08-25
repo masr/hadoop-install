@@ -1,4 +1,4 @@
-from hadoop_install.constants import SERVICE_TO_ROLES, ROLE
+from hadoop_install.constants import SERVICE_TO_ROLES, SERVICE
 
 
 class Topology:
@@ -8,14 +8,11 @@ class Topology:
 
     def get_hosts_of_role(self, role):
         hosts = []
-        if role == ROLE.COMMON:
-            hosts = self.inventory_hosts.keys()
-        else:
-            for host in self.inventory_hosts:
-                data = self.inventory_hosts[host]
-                if 'roles' in data:
-                    if role.value in data['roles']:
-                        hosts.append(host)
+        for host in self.inventory_hosts:
+            data = self.inventory_hosts[host]
+            if 'roles' in data:
+                if role.value in data['roles']:
+                    hosts.append(host)
         return sorted(hosts)
 
     def get_hosts_of_group(self, service_type, group_name):
@@ -38,6 +35,9 @@ class Topology:
         return sorted(hosts)
 
     def get_hosts_of_service(self, service_type):
+        if service_type == SERVICE.JAVA:
+            return sorted(self.inventory_hosts.keys())
+
         roles = SERVICE_TO_ROLES[service_type]
         host_set = set()
         for role in roles:

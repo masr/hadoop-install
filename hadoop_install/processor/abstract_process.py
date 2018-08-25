@@ -4,8 +4,7 @@ import yaml
 
 from hadoop_install.constants import SERVICE_TO_ROLES
 from hadoop_install.config_group import ConfigGroup
-from hadoop_install.utils import check_and_create_dir, clean_and_create_dir
-from hadoop_install.utils import replace_keys_in_dict
+from hadoop_install.utils import check_and_create_dir, clean_and_create_dir, replace_keys_in_dict, get_configuration
 
 
 class AbstractProcess:
@@ -30,24 +29,24 @@ class AbstractProcess:
         self.common_service_config_dir = os.path.join('config', 'common', self.service_name)
 
     def get_hadoop_stack_name(self):
-        result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
+        result = get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
         if 'hadoop_stack' not in result:
             return "common"
         else:
             return result['hadoop_stack']
 
     def get_merged_basic_configuration_by_group(self, group_name):
-        result = self.get_configuration(self.common_dir + '/configuration.yaml')
-        tmp_result = self.get_configuration(self.common_service_config_dir + '/configuration.yaml')
+        result = get_configuration(self.common_dir + '/configuration.yaml')
+        tmp_result = get_configuration(self.common_service_config_dir + '/configuration.yaml')
         result.update(tmp_result)
         if self.hadoop_stack != 'common':
-            tmp_result = self.get_configuration(self.stack_dir + '/configuration.yaml')
+            tmp_result = get_configuration(self.stack_dir + '/configuration.yaml')
             result.update(tmp_result)
-            tmp_result = self.get_configuration(self.stack_service_config_dir + '/configuration.yaml')
+            tmp_result = get_configuration(self.stack_service_config_dir + '/configuration.yaml')
             result.update(tmp_result)
-        tmp_result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
+        tmp_result = get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
         result.update(tmp_result)
-        tmp_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
+        tmp_result = get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
         if 'default' in tmp_result:
             result.update(tmp_result['default'])
         if group_name in tmp_result:
@@ -61,23 +60,14 @@ class AbstractProcess:
                 result.update(updates)
 
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
-        result = self.get_configuration(self.common_service_config_dir + "/" + file_name)
+        result = get_configuration(self.common_service_config_dir + "/" + file_name)
         if self.hadoop_stack != 'common':
-            stack_result = self.get_configuration(self.stack_service_config_dir + "/" + file_name)
+            stack_result = get_configuration(self.stack_service_config_dir + "/" + file_name)
             result.update(stack_result)
         result = replace_keys_in_dict(result, basic_config)
         config_group_dict = self.get_config_groups_of_a_file(file_name)
         merge_helper('default')
         merge_helper(group_name)
-        return result
-
-    def get_configuration(self, config_file_path):
-        result = {}
-        if os.path.exists(config_file_path):
-            with open(config_file_path) as config_file:
-                result = yaml.load(config_file.read(), Loader=yaml.Loader)
-                if result is None:
-                    result = {}
         return result
 
     def get_text_template(self, file_name):
@@ -170,10 +160,10 @@ class AbstractProcess:
 
     def get_other_service_configuration(self, service_type):
         service_name = service_type.value
-        result = self.get_configuration(self.common_dir + '/' + service_name + "/configuration.yaml")
-        tmp_result = self.get_configuration(self.stack_dir + '/' + service_name + "/configuration.yaml")
+        result = get_configuration(self.common_dir + '/' + service_name + "/configuration.yaml")
+        tmp_result = get_configuration(self.stack_dir + '/' + service_name + "/configuration.yaml")
         result.update(tmp_result)
-        cluster_result = self.get_configuration(os.path.join(self.cluster_base_dir, service_name, "configuration.yaml"))
+        cluster_result = get_configuration(os.path.join(self.cluster_base_dir, service_name, "configuration.yaml"))
         if 'default' in cluster_result:
             result.update(cluster_result['default'])
         return result

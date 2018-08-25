@@ -34,10 +34,10 @@ dfs.datanode.http.address: "0.0.0.0:{% datanode_http_port %}"
 dfs.datanode.du.reserved: 1073741824
 
 dfs.block.local-path-access.user: hdfs hadoop
-dfs.domain.socket.path: "{% install_base_dir %}/run/hdfs/domain_socket"
+dfs.domain.socket.path: "{% hadoop_run_dir %}/hdfs/domain_socket"
 
-dfs.hosts: "{% install_base_dir %}/confs/hadoop/conf/hdfs-include"
-dfs.hosts.exclude: "{% install_base_dir %}/confs/hadoop/conf/hdfs-exclude"
+dfs.hosts: "{% hadoop_confs_dir %}/hadoop/conf/hdfs-include"
+dfs.hosts.exclude: "{% hadoop_confs_dir %}/hadoop/conf/hdfs-exclude"
 
 dfs.client.read.shortcircuit: "true"
 dfs.cluster.administrators: hdfs
