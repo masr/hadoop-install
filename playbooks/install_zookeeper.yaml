@@ -12,7 +12,7 @@
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: create zookeeper soft link
-      file: src=releases/{{ zookeeper_release_version }} path={{ install_base_dir }}/zookeeper state=link
+      file: src={{ hadoop_releases_dir }}/{{ zookeeper_release_version }} path={{ install_base_dir }}/zookeeper state=link
 
 
     - name: create zookeeper confs dir
