@@ -90,7 +90,7 @@ $HADOOP_ZKFC_OPTS"
 
 export HADOOP_JOURNALNODE_OPTS="-Xms{%journalnode_heap%} -Xmx{%journalnode_heap%}  -XX:MaxNewSize={%journalnode_young_heap%} -XX:NewSize={%journalnode_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-journalnode-$HOSTNAME.log \
--Xloggc:${HADOOP_LOG_DIR}/hadoop-journalnode.log.`date +'%Y%m%d%H%M'` \
+-Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-journalnode.log.`date +'%Y%m%d%H%M'` \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-journalnode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_JOURNALNODE_OPTS"
