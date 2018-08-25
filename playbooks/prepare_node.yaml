@@ -17,7 +17,7 @@
     - name: set ulimit
       copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
 
-- name: create {{ install_base_dir }}
+- name: create base installtion directory
   file: path={{ item }} state=directory mode=0755 owner=root group=root
   with_items:
     - "{{ install_base_dir }}"
