@@ -1,8 +1,3 @@
-default_nameservice: my_cluster
-
-kerberos_enable: false
-https_enable: false
-
 namenode_heap: 4096m
 namenode_young_heap: 512m
 resourcemanager_heap: 2048m

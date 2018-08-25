@@ -1,2 +1,2 @@
 default_nameservice: amino
-hadoop_stack: standalone
+hadoop_stack: aws

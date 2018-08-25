@@ -23,12 +23,28 @@ class AbstractProcess:
         self.service_ansible_base_dir = os.path.join(self.ansible_base_dir, self.service_name)
         self.service_confs_base_dir = os.path.join(self.confs_base_dir, self.service_name)
         self.cluster_service_config_dir = os.path.join('cluster', cluster_name, 'config', self.service_name)
-        self.service_config_dir = os.path.join('config', self.service_name)
+        self.hadoop_stack = self.get_hadoop_stack_name()
+        self.common_dir = os.path.join('config', 'common')
+        self.stack_dir = os.path.join('config', self.hadoop_stack)
+        self.stack_service_config_dir = os.path.join('config', self.hadoop_stack, self.service_name)
+        self.common_service_config_dir = os.path.join('config', 'common', self.service_name)
+
+    def get_hadoop_stack_name(self):
+        result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
+        if 'hadoop_stack' not in result:
+            return "common"
+        else:
+            return result['hadoop_stack']
 
     def get_merged_basic_configuration_by_group(self, group_name):
-        result = self.get_configuration('config/configuration.yaml')
-        tmp_result = self.get_configuration(self.service_config_dir + "/configuration.yaml")
+        result = self.get_configuration(self.common_dir + '/configuration.yaml')
+        tmp_result = self.get_configuration(self.common_service_config_dir + '/configuration.yaml')
         result.update(tmp_result)
+        if self.hadoop_stack != 'common':
+            tmp_result = self.get_configuration(self.stack_dir + '/configuration.yaml')
+            result.update(tmp_result)
+            tmp_result = self.get_configuration(self.stack_service_config_dir + '/configuration.yaml')
+            result.update(tmp_result)
         tmp_result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
         result.update(tmp_result)
         tmp_result = self.get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
@@ -43,13 +59,12 @@ class AbstractProcess:
             if group in config_group_dict:
                 updates = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
                 result.update(updates)
-                deletes = [replace_params(item, basic_config) for item in config_group_dict[group].deletes]
-                for delete_key in deletes:
-                    if delete_key in result:
-                        del result[delete_key]
 
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
-        result = self.get_configuration(self.service_config_dir + "/" + file_name)
+        result = self.get_configuration(self.common_service_config_dir + "/" + file_name)
+        if self.hadoop_stack != 'common':
+            stack_result = self.get_configuration(self.stack_service_config_dir + "/" + file_name)
+            result.update(stack_result)
         result = replace_keys_in_dict(result, basic_config)
         config_group_dict = self.get_config_groups_of_a_file(file_name)
         merge_helper('default')
@@ -67,14 +82,19 @@ class AbstractProcess:
 
     def get_text_template(self, file_name):
         result = None
-        file_path1 = self.service_config_dir + "/" + file_name
-        if os.path.exists(file_path1):
-            with open(file_path1) as file1:
-                result = file1.read()
-        file_path2 = self.cluster_service_config_dir + "/" + file_name
-        if os.path.exists(file_path2):
-            with open(file_path2) as file2:
-                result = file2.read()
+        file_path = self.common_service_config_dir + "/" + file_name
+        if os.path.exists(file_path):
+            with open(file_path) as file:
+                result = file.read()
+        if self.hadoop_stack != 'common':
+            file_path = self.stack_service_config_dir + '/' + file_name
+            if os.path.exists(file_path):
+                with open(file_path) as file:
+                    result = file.read()
+        file_path = self.cluster_service_config_dir + "/" + file_name
+        if os.path.exists(file_path):
+            with open(file_path) as file:
+                result = file.read()
         return result
 
     def get_config_groups_of_a_file(self, file_name):
@@ -150,7 +170,9 @@ class AbstractProcess:
 
     def get_other_service_configuration(self, service_type):
         service_name = service_type.value
-        result = self.get_configuration('config/' + service_name + "/configuration.yaml")
+        result = self.get_configuration(self.common_dir + '/' + service_name + "/configuration.yaml")
+        tmp_result = self.get_configuration(self.stack_dir + '/' + service_name + "/configuration.yaml")
+        result.update(tmp_result)
         cluster_result = self.get_configuration(os.path.join(self.cluster_base_dir, service_name, "configuration.yaml"))
         if 'default' in cluster_result:
             result.update(cluster_result['default'])

@@ -1,8 +1,6 @@
 default:
-  updates:
     dfs.namenode.name.dir: /data/hdfs/namenode
     dfs.journalnode.edits.dir: /data/hdfs/journalnode
     dfs.datanode.failed.volumes.tolerated: 0
 normal:
-  updates:
     dfs.datanode.data.dir: /data/hdfs/datanode

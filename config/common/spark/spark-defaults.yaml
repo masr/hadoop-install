@@ -1,20 +1,19 @@
 spark.executor.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
 spark.driver.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
 
-spark.dynamicAllocation.enabled: "true"
 spark.shuffle.service.enabled: "true"
 
 
 #For history server
-spark.yarn.historyServer.address: "{% sparkhistoryserver_vip %}:{% sparkhistoryserver_port %}"
+spark.yarn.historyServer.address: "{% sparkhistoryserver1 %}:{% sparkhistoryserver_port %}"
 spark.history.ui.port: "{% sparkhistoryserver_port %}"
+spark.history.fs.logDirectory: hdfs://{% default_nameservice %}/spark-logs
+spark.history.fs.cleaner.enabled: "true"
+spark.history.fs.update.interval: 20s
+spark.history.fs.numReplayThreads: 10
 
 spark.eventLog.enabled: "true"
 spark.eventLog.dir: hdfs://{% default_nameservice %}/spark-logs
-spark.history.fs.logDirectory: hdfs://{% default_nameservice %}/spark-logs
-spark.history.fs.cleaner.enabled: true
-spark.history.fs.update.interval: 20s
-spark.history.fs.numReplayThreads: 10
 spark.yarn.access.namenodes: hdfs://{% default_nameservice %}
 spark.yarn.am.memory: 2048m
 spark.driver.memory: 2048m

@@ -1,0 +1,1 @@
+ha.zookeeper.quorum: "{%zookeeper_quorum%}"

@@ -1,0 +1,31 @@
+yarn.resourcemanager.cluster-id: "{% default_nameservice %}"
+yarn.resourcemanager.ha.rm-ids: rm1,rm2
+yarn.resourcemanager.zk-address: "{% zookeeper_quorum %}"
+yarn.resourcemanager.ha.enabled: "true"
+yarn.resourcemanager.store.class: org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore
+yarn.resourcemanager.zk-acl: world:anyone:rwcda
+yarn.resourcemanager.state-store.max-completed-applications: 500
+yarn.resourcemanager.max-completed-applications: 10000
+yarn.resourcemanager.ha.automatic-failover.zk-base-path: /yarn-leader-election-{% default_nameservice %}
+yarn.resourcemanager.zk-state-store.parent-path: /rmstore-{% default_nameservice %}
+yarn.resourcemanager.zk-timeout-ms: 30000
+yarn.resourcemanager.recovery.enabled: "true"
+yarn.resourcemanager.ha.automatic-failover.enabled: "true"
+yarn.resourcemanager.hostname.rm1: "{% resourcemanager1 %}"
+yarn.resourcemanager.hostname.rm2: "{% resourcemanager2 %}"
+yarn.resourcemanager.webapp.https.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_webapp_port %}"
+yarn.resourcemanager.webapp.https.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_webapp_port %}"
+yarn.resourcemanager.webapp.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_webapp_port %}"
+yarn.resourcemanager.webapp.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_webapp_port %}"
+yarn.resourcemanager.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_port %}"
+yarn.resourcemanager.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_port %}"
+yarn.resourcemanager.scheduler.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_scheduler_port %}"
+yarn.resourcemanager.scheduler.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_scheduler_port %}"
+yarn.resourcemanager.resource-tracker.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_resource_tracker_port %}"
+yarn.resourcemanager.resource-tracker.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_resource_tracker_port %}"
+yarn.resourcemanager.admin.address.rm1: "{% resourcemanager1 %}:{% resourcemanager_admin_port %}"
+yarn.resourcemanager.admin.address.rm2: "{% resourcemanager2 %}:{% resourcemanager_admin_port %}"
+
+yarn.log-aggregation.retain-seconds: 2592000
+
+yarn.client.failover-proxy-provider: org.apache.hadoop.yarn.client.ConfiguredRMFailoverProxyProvider
