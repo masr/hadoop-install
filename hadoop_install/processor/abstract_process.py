@@ -17,17 +17,17 @@ class AbstractProcess:
         self.topology = topology
         self.config_group_names = topology.get_config_groups(service_type)
 
-        self.cluster_base_dir = os.path.join('..', 'cluster', cluster_name)
-        self.ansible_base_dir = os.path.join('..', 'cluster', cluster_name, '.ansible')
-        self.confs_base_dir = os.path.join('..', 'cluster', cluster_name, '.confs')
+        self.cluster_base_dir = os.path.join('cluster', cluster_name)
+        self.ansible_base_dir = os.path.join('cluster', cluster_name, '.ansible')
+        self.confs_base_dir = os.path.join('cluster', cluster_name, '.confs')
         self.service_ansible_base_dir = os.path.join(self.ansible_base_dir, self.service_name)
         self.service_confs_base_dir = os.path.join(self.confs_base_dir, self.service_name)
         self.cluster_service_config_dir = os.path.join('..', 'cluster', cluster_name, 'config', self.service_name)
         self.hadoop_stack = self.get_hadoop_stack_name()
-        self.common_dir = os.path.join('..', 'config', 'common')
-        self.stack_dir = os.path.join('..', 'config', self.hadoop_stack)
-        self.stack_service_config_dir = os.path.join('..', 'config', self.hadoop_stack, self.service_name)
-        self.common_service_config_dir = os.path.join('..', 'config', 'common', self.service_name)
+        self.common_dir = os.path.join('config', 'common')
+        self.stack_dir = os.path.join('config', self.hadoop_stack)
+        self.stack_service_config_dir = os.path.join('config', self.hadoop_stack, self.service_name)
+        self.common_service_config_dir = os.path.join('config', 'common', self.service_name)
 
     def get_hadoop_stack_name(self):
         result = self.get_configuration(self.cluster_base_dir + "/config/configuration.yaml")

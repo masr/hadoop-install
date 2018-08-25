@@ -14,7 +14,7 @@ parser.add_argument('--cluster', help='cluster name', required=True)
 args = parser.parse_args()
 print("Generating config for cluster: " + args.cluster + "\n")
 cluster = args.cluster
-with open("../cluster/" + cluster + "/config/topology.yaml") as topology_file:
+with open("cluster/" + cluster + "/config/topology.yaml") as topology_file:
     topology_data = yaml.load(topology_file.read(), Loader=yaml.Loader)
     topology = Topology(topology_data)
 
@@ -25,7 +25,7 @@ SERVICE_TO_PROCESS = {
     SERVICE.SPARK: SparkProcess(cluster, topology)
 }
 required_services = set()
-with open('../cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
+with open('cluster/' + cluster + '/.ansible/hosts', "w") as tmp_file:
     for role_name, role in ROLE.__members__.items():
         tmp_file.write("[" + role.value + "]\n")
         tmp_file.write('\n'.join(topology.get_hosts_of_role(role)) + '\n\n')
