@@ -146,7 +146,7 @@ class AbstractProcess:
             includes.append(
                 {
                     'name': 'install ' + self.service_name + ' for group ' + group_name,
-                    'include': '../../../../playbooks/install_' + self.service_name + '.yaml',
+                    'import_playbook': '../../../../playbooks/install_' + self.service_name + '.yaml',
                     'vars': {
                         'variable_hosts': group_name,
                         'config_group_name': group_name,
