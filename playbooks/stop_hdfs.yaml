@@ -3,7 +3,9 @@
   gather_facts: no
   tasks:
     - name: stop namenode service
-      include: include/stop_service.yml service_name={{ item }}
+      import_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - namenode
         - zkfc
@@ -13,7 +15,9 @@
   gather_facts: no
   tasks:
     - name: stop journalnode service
-      include: include/stop_service.yml service_name={{ item }}
+      import_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - journalnode
 
@@ -22,6 +26,8 @@
   gather_facts: no
   tasks:
     - name: stop datanode service
-      include: include/stop_service.yml service_name={{ item }}
+      import_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - datanode

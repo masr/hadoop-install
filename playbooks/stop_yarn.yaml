@@ -3,7 +3,9 @@
   gather_facts: no
   tasks:
     - name: stop Resource Manager service
-      include: include/stop_service.yml service_name={{ item }}
+      import_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - resourcemanager
 
@@ -12,6 +14,8 @@
   gather_facts: no
   tasks:
     - name: stop Node Manager service
-      include: include/stop_service.yml service_name={{ item }}
+      import_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - nodemanager

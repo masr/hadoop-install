@@ -4,7 +4,9 @@
     - name: load vars
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
-    - include: include/before_install_service.yaml service_user={{ item }}
+    - import_tasks: include/before_install_service.yaml
+      vars:
+        service_user: "{{ item }}"
       with_items:
         - hdfs
         - yarn
@@ -102,7 +104,9 @@
       when: '"journalnode" in group_names'
 
     - name: install systemd service
-      include: include/install_systemd_service.yml service_name={{ item }}
+      import_tasks: include/install_systemd_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - namenode
         - zkfc

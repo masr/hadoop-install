@@ -3,6 +3,10 @@
   gather_facts: no
   tasks:
     - name: start Zookeeper service
-      include: include/start_service.yml service_name={{ item }}
+      import_tasks:
+
+      import_tasks/start_service.yml
+      vars:
+        service_name: "{{ item }}"
       with_items:
         - zookeeper
