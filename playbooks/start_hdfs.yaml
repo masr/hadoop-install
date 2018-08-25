@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - name: start namenode service
-      import_tasks: include/start_service.yml
+      include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
@@ -15,7 +15,7 @@
   gather_facts: no
   tasks:
     - name: start journalnode service
-      import_tasks: include/start_service.yml
+      include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
@@ -26,7 +26,7 @@
   gather_facts: no
   tasks:
     - name: start datanode service
-      import_tasks: include/start_service.yml
+      include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
