@@ -1,7 +1,10 @@
 #Generate files
 python generator.py  --cluster amino
 
+
 #Installation
+export ANSIBLE_HOST_KEY_CHECKING=False
+
 ansible-playbook -u stack -i cluster/amino/.ansible/hosts playbooks/prepare_node.yaml -b -e @cluster/amino/.ansible/vars.yaml
 
 ansible-playbook -u stack -i cluster/amino/.ansible/java/hosts cluster/amino/.ansible/java/install.yaml -b 
