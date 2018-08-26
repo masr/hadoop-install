@@ -122,8 +122,8 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
--Dhadoop.root.logger=${YARN_ROOT_LOGGER:-INFO,RFA} \
--Dyarn.root.logger=${YARN_ROOT_LOGGER:-INFO,RFA} \
+-Dhadoop.root.logger=${YARN_ROOT_LOGGER:-INFO,console} \
+-Dyarn.root.logger=${YARN_ROOT_LOGGER:-INFO,console} \
 -Dhadoop.log.dir=$YARN_LOG_DIR \
 -Dyarn.log.dir=$YARN_LOG_DIR \
 -Dyarn.home.dir=$YARN_COMMON_HOME \

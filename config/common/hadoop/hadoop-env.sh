@@ -61,7 +61,7 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
--Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,RFA}"
+-Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,console}"
 
 export HADOOP_NAMENODE_OPTS="-Xms{%namenode_heap%} -Xmx{%namenode_heap%} -XX:MaxNewSize={%namenode_young_heap%} -XX:NewSize={%namenode_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-namenode-$HOSTNAME.log \
