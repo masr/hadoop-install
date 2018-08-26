@@ -1,0 +1,2 @@
+default:
+  dfs.namenode.shared.edits.dir: ""

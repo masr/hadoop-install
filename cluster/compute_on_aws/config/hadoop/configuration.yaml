@@ -1,3 +1,4 @@
 #HDFS
-namenode1: ip-172-31-41-170.us-west-2.compute.internal
-namenode2: ip-172-31-47-83.us-west-2.compute.internal
+default:
+  namenode1: ip-172-31-41-170.us-west-2.compute.internal
+  namenode2: ip-172-31-47-83.us-west-2.compute.internal
