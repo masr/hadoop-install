@@ -1,4 +1,2 @@
 default:
   spark.yarn.historyServer.address: "0.0.0.0:{% sparkhistoryserver_port %}"
-  spark.yarn.am.memory: 256m
-  spark.driver.memory: 256m
