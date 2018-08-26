@@ -74,7 +74,7 @@ export SPARK_DAEMON_MEMORY={% sparkhistoryserver_heap %}
 export SPARK_HISTORY_OPTS="-XX:MaxNewSize={%sparkhistoryserver_young_heap%} -XX:NewSize={%sparkhistoryserver_young_heap%} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
--Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.`date +'%Y%m%d%H%M'` \
+-Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.log \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
 -Dspark.root.logger=${SPARK_ROOT_LOGGER:-INFO,console} \

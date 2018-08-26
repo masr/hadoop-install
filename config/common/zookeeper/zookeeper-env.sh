@@ -5,7 +5,7 @@ export ZOOPIDFILE={% hadoop_pid_dir %}/zookeeper.pid
 export SERVER_JVMFLAGS="-Xms{% zookeeper_heap %} -Xmx{% zookeeper_heap %} -XX:MaxNewSize={%zookeeper_young_heap%} -XX:NewSize={%zookeeper_young_heap%} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
--Xloggc:${ZOO_LOG_DIR}/zookeeper.gc.`date +'%Y%m%d%H%M'` \
+-Xloggc:${ZOO_LOG_DIR}/zookeeper.gc.log \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
 -Dzookeeper.root.logger=${ZOO_LOG4J_PROP:-INFO,console} \

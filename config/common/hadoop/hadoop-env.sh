@@ -68,7 +68,7 @@ export HADOOP_NAMENODE_OPTS="-Xms{%namenode_heap%} -Xmx{%namenode_heap%} -XX:Max
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} \
 -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,RFAAUDIT} \
 -Dhadoop.hdfs.statechange.logger=${HDFS_STATECHANGE_LOGGER:-WARN,SCA} \
--Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-namenode.log.`date +'%Y%m%d%H%M'` \
+-Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-namenode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-namenode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_NAMENODE_OPTS"
@@ -76,21 +76,21 @@ $HADOOP_NAMENODE_OPTS"
 export HADOOP_DATANODE_OPTS="-Xms{%datanode_heap%} -Xmx{%datanode_heap%}  -XX:MaxNewSize={%datanode_young_heap%} -XX:NewSize={%datanode_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-datanode-$HOSTNAME.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-ERROR,RFAS} \
--Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-datanode.log.`date +'%Y%m%d%H%M'` \
+-Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-datanode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-datanode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_DATANODE_OPTS"
 
 export HADOOP_ZKFC_OPTS="-Xms{%zkfc_heap%} -Xmx{%zkfc_heap%}  -XX:MaxNewSize={%zkfc_young_heap%} -XX:NewSize={%zkfc_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-zkfc-$HOSTNAME.log \
--Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-zkfc.log.`date +'%Y%m%d%H%M'` \
+-Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-zkfc.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-zkfc-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_ZKFC_OPTS"
 
 export HADOOP_JOURNALNODE_OPTS="-Xms{%journalnode_heap%} -Xmx{%journalnode_heap%}  -XX:MaxNewSize={%journalnode_young_heap%} -XX:NewSize={%journalnode_young_heap%} \
 -Dhadoop.log.file=hadoop-hdfs-journalnode-$HOSTNAME.log \
--Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-journalnode.log.`date +'%Y%m%d%H%M'` \
+-Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-journalnode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-journalnode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_JOURNALNODE_OPTS"
@@ -134,7 +134,7 @@ export HADOOP_SECURE_DN_LOG_DIR=${HADOOP_LOG_DIR}/${HADOOP_HDFS_USER}
 # NOTE: this should be set to a directory that can only be written to by
 #       the user that will run the hadoop daemons.  Otherwise there is the
 #       potential for a symlink attack.
-export HADOOP_PID_DIR={%hadoop_pid_dir%}
+export HADOOP_PID_DIR={% hadoop_pid_dir %}
 export HADOOP_SECURE_DN_PID_DIR=${HADOOP_PID_DIR}
 
 # A string representing this instance of hadoop. $USER by default.
