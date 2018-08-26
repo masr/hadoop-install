@@ -14,7 +14,7 @@ spark.history.fs.numReplayThreads: 10
 
 spark.eventLog.enabled: "true"
 spark.eventLog.dir: hdfs://{% default_nameservice %}/spark-logs
-spark.yarn.access.namenodes: hdfs://{% default_nameservice %}
+spark.yarn.access.hadoopFileSystems: hdfs://{% default_nameservice %}
 spark.yarn.am.memory: 2048m
 spark.driver.memory: 2048m
 
