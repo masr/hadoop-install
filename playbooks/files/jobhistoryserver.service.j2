@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
 Environment=HADOOP_MAPRED_LOGFILE=mapred-historyserver-%H.log HADOOP_MAPRED_ROOT_LOGGER=INFO,RFA HADOOP_JHS_LOGGER=INFO,JSA
-ExecStart={{ install_base_dir }}/hadoop/bin/mapred --config {{ hadoop_conf_dir }} historyserver
+ExecStart={{ install_base_dir }}/hadoop/bin/mapred --config {{ hadoop_confs_dir }}/hadoop/conf historyserver
 #ExecStop=
 Type=simple
 Restart=always
