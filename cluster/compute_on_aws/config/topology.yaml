@@ -1,11 +1,12 @@
 inventory:
-    smao-dev-5-1999788.slc07.dev.ebayc3.com:
+    ip-172-31-38-97.us-west-2.compute.internal:
         roles:
           - resourcemanager
+          - nodemanager
         topology: /slc/smao_dev
         config_groups:
           hadoop: normal
-    smao-dev-6-1999789.slc07.dev.ebayc3.com:
+    ip-172-31-32-63.us-west-2.compute.internal:
         roles:
           - nodemanager
           - spark_cli
