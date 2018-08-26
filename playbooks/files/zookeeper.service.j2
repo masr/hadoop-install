@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory={{ install_base_dir }}/zookeeper
 Environment=ZOO_LOG4J_PROP=INFO,ROLLINGFILE
-ExecStart={{ install_base_dir }}/zookeeper/bin/zkServer.sh start-foreground
+ExecStart=/bin/sh -c '{{ install_base_dir }}/zookeeper/bin/zkServer.sh start-foreground > {{ hadoop_log_dir }}/zookeeper/zookeeper.out 2>&1'
 #ExecStop=
 Type=simple
 Restart=always

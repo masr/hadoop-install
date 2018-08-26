@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
 Environment=HADOOP_ROOT_LOGGER=INFO,RFA YARN_ROOT_LOGGER=INFO,RFA
-ExecStart={{ install_base_dir }}/hadoop/bin/yarn --config {{ hadoop_confs_dir }}/hadoop/conf nodemanager
+ExecStart=/bin/sh -c '{{ install_base_dir }}/hadoop/bin/yarn --config {{ hadoop_confs_dir }}/hadoop/conf nodemanager > {{ hadoop_log_dir }}/yarn/nodemanager.out 2>&1'
 #ExecStop=
 Type=simple
 Restart=always
