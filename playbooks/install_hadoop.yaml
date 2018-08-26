@@ -56,6 +56,13 @@
         - capacity-scheduler.xml
       when: '"resourcemanager" in group_names or "nodemanager" in group_names'
 
+    - name: sync mapred hadoop confs
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      with_items:
+        - mapred-site.xml
+        - mapred-env.sh
+      when: '"jobhistoryserver" in group_names'
+
     - name: sync topology.py
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0755 owner=root group=hadoop
       with_items:
@@ -116,3 +123,4 @@
         - datanode
         - resourcemanager
         - nodemanager
+        - jobhistoryserver
