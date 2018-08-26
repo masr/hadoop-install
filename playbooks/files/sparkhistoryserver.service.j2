@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory={{ install_base_dir }}/spark
 Environment=SPARK_ROOT_LOGGER=INFO,RFA
-ExecStart={{ install_base_dir }}/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer > {{ hadoop_log_dir }}/spark/sparkhistoryserver.out 2>&1
+ExecStart=/bin/sh -c '{{ install_base_dir }}/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer > {{ hadoop_log_dir }}/spark/sparkhistoryserver.out 2>&1'
 #ExecStop=
 Type=simple
 Restart=always
