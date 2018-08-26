@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
+Environment=HADOOP_ROOT_LOGGER=INFO,RFA
 ExecStart={{ install_base_dir }}/hadoop/bin/hdfs --config {{ hadoop_confs_dir }}/hadoop/conf namenode
 #ExecStop=
 Type=simple
