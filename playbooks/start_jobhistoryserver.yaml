@@ -1,9 +1,9 @@
-- name: Start Zookeeper Service
-  hosts: zookeeper
+- name: Start Job History Server Service
+  hosts: jobhistoryserver
   gather_facts: no
   tasks:
     - include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
-        - zookeeper
+        - jobhistoryserver

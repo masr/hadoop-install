@@ -2,8 +2,7 @@
   hosts: sparkhistoryserver
   gather_facts: no
   tasks:
-    - name: start Spark History Server service
-      include_tasks: include/start_service.yml
+    - include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:

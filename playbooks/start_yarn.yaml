@@ -2,8 +2,7 @@
   hosts: resourcemanager
   gather_facts: no
   tasks:
-    - name: start Resource Manager service
-      include_tasks: include/start_service.yml
+    - include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
@@ -13,8 +12,7 @@
   hosts: nodemanager
   gather_facts: no
   tasks:
-    - name: start Node Manager service
-      include_tasks: include/start_service.yml
+    - include_tasks: include/start_service.yml
       vars:
         service_name: "{{ item }}"
       with_items:
