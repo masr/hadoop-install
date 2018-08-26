@@ -2,5 +2,6 @@ default:
     dfs.namenode.name.dir: /data/hdfs/namenode
     dfs.journalnode.edits.dir: /data/hdfs/journalnode
     dfs.datanode.failed.volumes.tolerated: 0
+    dfs.namenode.http-bind-host: 0.0.0.0
 normal:
     dfs.datanode.data.dir: /data/hdfs/datanode

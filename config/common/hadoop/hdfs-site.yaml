@@ -12,19 +12,19 @@ dfs.namenode.https-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% na
 dfs.namenode.https-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_http_port %}"
 dfs.namenode.http-address.{% default_nameservice %}.nn1: "{% namenode1 %}:{% namenode_http_port %}"
 dfs.namenode.http-address.{% default_nameservice %}.nn2: "{% namenode2 %}:{% namenode_http_port %}"
+dfs.namenode.handler.count: 32
+dfs.namenode.service.handler.count: 32
+dfs.namenode.safemode.threshold-pct: 1.0f
+dfs.namenode.name.dir: file://${hadoop.tmp.dir}/namenode
+dfs.namenode.edits.dir: ${dfs.namenode.name.dir}
 
 dfs.permissions.superusergroup: hadoop
 dfs.permissions.enabled: "true"
 dfs.replication: 3
 dfs.http.policy: "{% http_policy %}"
 
-dfs.namenode.handler.count: 32
-dfs.namenode.service.handler.count: 32
-dfs.namenode.safemode.threshold-pct: 1.0f
-dfs.namenode.name.dir: file://${hadoop.tmp.dir}/namenode
-dfs.namenode.edits.dir: ${dfs.namenode.name.dir}
-dfs.datanode.data.dir: file://${hadoop.tmp.dir}/datanode
 
+dfs.datanode.data.dir: file://${hadoop.tmp.dir}/datanode
 dfs.datanode.failed.volumes.tolerated: 2
 dfs.datanode.data.dir.perm: 700
 dfs.datanode.address: 0.0.0.0:{% datanode_port %}
