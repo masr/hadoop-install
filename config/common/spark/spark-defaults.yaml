@@ -1,6 +1,7 @@
 spark.executor.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
 spark.driver.extraLibraryPath: "{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib:{% install_base_dir %}/hadoop/lib/native"
 
+spark.dynamicAllocation.enabled: "true"
 spark.shuffle.service.enabled: "true"
 
 

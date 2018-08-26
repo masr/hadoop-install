@@ -1,5 +1,4 @@
 #For history server
 default:
-  spark.yarn.historyServer.address: "ec2-34-214-217-133.us-west-2.compute.amazonaws.com:{% sparkhistoryserver_port %}"
   spark.yarn.am.memory: 512m
   spark.driver.memory: 512m
