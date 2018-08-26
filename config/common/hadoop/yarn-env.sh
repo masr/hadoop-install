@@ -17,7 +17,7 @@
 export HADOOP_YARN_USER=yarn
 
 # resolve links - $0 may be a softlink
-export YARN_CONF_DIR={%install_base_dir%}/confs/hadoop/conf
+export YARN_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
 
 # some Java parameters
 export JAVA_HOME={%install_base_dir%}/java
@@ -122,7 +122,7 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
--Dhadoop.root.logger=${YARN_ROOT_LOGGER:-INFO,console} \
+-Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,console} \
 -Dyarn.root.logger=${YARN_ROOT_LOGGER:-INFO,console} \
 -Dhadoop.log.dir=$YARN_LOG_DIR \
 -Dyarn.log.dir=$YARN_LOG_DIR \

@@ -32,7 +32,7 @@ export JAVA_HOME={%install_base_dir%}/java
 
 export HADOOP_LOG_DIR={%hadoop_log_dir%}/$USER
 
-export HADOOP_CONF_DIR={%install_base_dir%}/confs/hadoop/conf
+export HADOOP_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
 
 # Extra Java CLASSPATH elements.  Automatically insert capacity-scheduler.
 for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do

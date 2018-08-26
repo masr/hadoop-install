@@ -52,6 +52,7 @@
       with_items:
         - yarn-site.xml
         - yarn-include
+        - capacity-scheduler.yaml
       when: '"resourcemanager" in group_names or "nodemanager" in group_names'
 
     - name: sync topology.py

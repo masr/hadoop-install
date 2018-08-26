@@ -1,5 +1,5 @@
 hadoop.tmp.dir: /tmp/hadoop-${user.name}
-net.topology.script.file.name: "{%install_base_dir%}/confs/hadoop/conf/topology.py"
+net.topology.script.file.name: "{% hadoop_confs_dir %}/hadoop/conf/topology.py"
 hadoop.security.authentication: simple
 fs.trash.interval: 1440
 fs.defaultFS: hdfs://{% default_nameservice %}
