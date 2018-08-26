@@ -18,6 +18,11 @@
     - name: set ulimit
       copy: src=files/limits.conf dest=/etc/security/limits.conf mode=0644 owner=root group=root
 
+    - name: set sysctl.conf
+      copy: src=files/sysctl.conf dest=/etc/sysctl.conf mode=0644 owner=root group=root
+      notify:
+        - refresh sysctl
+
     - name: create base installtion directory
       file: path={{ item }} state=directory mode=0755 owner=root group=root
       with_items:
@@ -36,3 +41,6 @@
       with_items:
         - "{{hadoop_log_dir}}"
       ignore_errors: yes
+  handlers:
+    - name: refresh sysctl
+      shell: /sbin/sysctl -p
