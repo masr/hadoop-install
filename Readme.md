@@ -50,6 +50,12 @@ systemctl start namenode
 # Start DN
 ansible -u ec2-user -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -b
 
+hadoop fs -mkdir /spark-logs
+hadoop fs -chown spark:hadoop /spark-logs
+
+hadoop fs -mkdir /yarn-logs
+hadoop fs -chown yarn:hadoop /yarn-logs
+
 #Start RM
 ansible -u ec2-user -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -b
 
