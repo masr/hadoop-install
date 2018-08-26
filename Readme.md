@@ -45,6 +45,8 @@ sudo to root
 
 systemctl start zkfc
 
+systemctl start namenode
+
 # Start DN
 ansible -u ec2-user -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -b
 

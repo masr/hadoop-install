@@ -20,7 +20,7 @@ inventory:
         vars:
           zookeeper_myid: 2
         topology: /slc/smao_dev
-    ip-172-31-39-91.us-west-2.compute.internal:
+    ip-172-31-46-89.us-west-2.compute.internal:
         roles:
           - journalnode
           - zookeeper
