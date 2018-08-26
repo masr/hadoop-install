@@ -1,2 +1,2 @@
 #For history server
-spark.yarn.historyServer.address: "0.0.0.0:{% sparkhistoryserver_port %}"
+spark.yarn.historyServer.address:

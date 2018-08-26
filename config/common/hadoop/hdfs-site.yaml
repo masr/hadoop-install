@@ -1,4 +1,3 @@
-fs.defaultFS: hdfs://{% default_nameservice %}
 dfs.nameservices: "{% default_nameservice %}"
 dfs.ha.namenodes.{% default_nameservice %}: nn1,nn2
 dfs.ha.fencing.methods: shell(/bin/true)
