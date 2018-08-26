@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-Environment=HADOOP_ROOT_LOGGER=INFO,RFA YARN_ROOT_LOGGER=INFO,RFA
+Environment=HADOOP_ROOT_LOGGER=INFO,RFA YARN_ROOT_LOGGER=INFO,RFA YARN_LOGFILE=hadoop-yarn-resourcemanager-$HOSTNAME.log
 ExecStart=/bin/sh -c '{{ install_base_dir }}/hadoop/bin/yarn --config {{ hadoop_confs_dir }}/hadoop/conf resourcemanager >> {{ hadoop_log_dir }}/yarn/resourcemanager.out 2>&1'
 #ExecStop=
 Type=simple
