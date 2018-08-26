@@ -35,6 +35,7 @@
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - core-site.xml
+        - hdfs-site.xml
         - hadoop-env.sh
         - yarn-env.sh
         - log4j.properties

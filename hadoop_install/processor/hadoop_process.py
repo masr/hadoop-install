@@ -63,11 +63,14 @@ class HadoopProcess(AbstractProcess):
             mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
             ################ yarn-include ####################################
             mapping['yarn-include'] = '\n'.join(self.topology.get_hosts_of_role(ROLE.NODEMANAGER))
-            if len(self.topology.get_hosts_of_role(ROLE.NAMENODE)) == 0 and \
-                    data['yarn.log-aggregation-enable'] == 'true':
+            if len(self.topology.get_hosts_of_role(ROLE.NAMENODE)) == 0:
                 ################## hdfs-site.xml **********************************
-                data = self.get_merged_service_configuration_by_group('hdfs-site.yaml', group_name)
-                mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
+                if data['yarn.log-aggregation-enable'] == 'true':
+                    data = self.get_merged_service_configuration_by_group('hdfs-site.yaml', group_name)
+                    mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
+                else:
+                    data = {}
+                    mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
 
         ################## capacity-scheduler.xml **********************************
         data = self.get_merged_service_configuration_by_group('capacity-scheduler.yaml', group_name)
