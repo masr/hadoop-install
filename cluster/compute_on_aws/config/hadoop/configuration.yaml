@@ -2,3 +2,6 @@
 default:
   namenode1: ip-172-31-41-170.us-west-2.compute.internal
   namenode2: ip-172-31-47-83.us-west-2.compute.internal
+
+  hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
+  hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT
