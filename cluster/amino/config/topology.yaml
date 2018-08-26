@@ -6,6 +6,7 @@ inventory:
           - journalnode
           - hivemetastore
           - zookeeper
+          - jobhistoryserver
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 1

@@ -10,6 +10,8 @@ journalnode_heap: 1024m
 journalnode_young_heap: 128m
 zkfc_heap: 512m
 zkfc_young_heap: 128m
+jobhistoryserver_heap: 2048m
+jobhistoryserver_young_heap: 256m
 
 namenode_http_port: 50070
 namenode_client_rpc_port: 8020
@@ -32,6 +34,10 @@ resourcemanager_admin_port: 8033
 nodemanager_webapp_port: 50060
 nodemanager_port: 45454
 nodemanager_localizer_port: 45455
+
+jobhistoryserver_port: 10020
+jobhistoryserver_webapp_port: 19888
+jobhistoryserver_admin_port: 10033
 
 hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
 hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT

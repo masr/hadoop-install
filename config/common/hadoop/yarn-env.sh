@@ -137,7 +137,7 @@ $COMMON_DAEMON_OPTS"
 
 export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} \
 -Xms{%resourcemanager_heap%} -Xmx{%resourcemanager_heap%} -XX:MaxNewSize={%resourcemanager_young_heap%} -XX:NewSize={%resourcemanager_young_heap%} -XX:MaxMetaspaceSize=512M \
--Xloggc:$YARN_LOG_DIR/hadoop-gc-resourcemanager.log \
+-Xloggc:${YARN_LOG_DIR}/hadoop-gc-resourcemanager.log \
 -XX:ErrorFile=${YARN_LOG_DIR}/hadoop-resourcemanager-hs_err_pid.log \
 -Dyarn.rm.appsummary.logger=INFO,RMSUMMARY \
 -Djute.maxbuffer=5242880 \

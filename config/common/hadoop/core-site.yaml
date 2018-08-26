@@ -4,3 +4,6 @@ hadoop.security.authentication: simple
 fs.trash.interval: 1440
 fs.defaultFS: hdfs://{% default_nameservice %}
 ha.zookeeper.parent-znode: /hadoop-ha
+ha.zookeeper.quorum: "{%zookeeper_quorum%}"
+hadoop.proxyuser.mapred.groups: "*"
+hadoop.proxyuser.mapred.hosts: "*"
