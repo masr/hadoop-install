@@ -17,6 +17,8 @@ ansible-playbook -u ec2-user -i cluster/amino/.ansible/hadoop/hosts cluster/amin
 
 ansible-playbook -u ec2-user -i cluster/amino/.ansible/spark/hosts cluster/amino/.ansible/spark/install.yaml -b
 
+ansible-playbook -u ec2-user -i cluster/amino/.ansible/hive/hosts cluster/amino/.ansible/hive/install.yaml -b
+
 ansible -u ec2-user -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -b
 
 ansible -u ec2-user -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -b

@@ -1,15 +1,17 @@
 #!/usr/bin/python
 
 import argparse
+
 import yaml
-import os
+
+from hadoop_install.constants import SERVICE, ROLE
 from hadoop_install.processor.hadoop_process import HadoopProcess
 from hadoop_install.processor.java_process import JavaProcess
-from hadoop_install.processor.zookeeper_process import ZookeeperProcess
-from hadoop_install.processor.spark_process import SparkProcess
 from hadoop_install.processor.nil_process import NilProcess
+from hadoop_install.processor.spark_process import SparkProcess
+from hadoop_install.processor.zookeeper_process import ZookeeperProcess
+from hadoop_install.processor.hive_process import HiveProcess
 from hadoop_install.topology import Topology
-from hadoop_install.constants import SERVICE, ROLE
 from hadoop_install.utils import check_and_create_dir
 
 parser = argparse.ArgumentParser(description='Generate Configs')
@@ -25,7 +27,8 @@ SERVICE_TO_PROCESS = {
     SERVICE.JAVA: JavaProcess(cluster, topology),
     SERVICE.HADOOP: HadoopProcess(cluster, topology),
     SERVICE.ZOOKEEPER: ZookeeperProcess(cluster, topology),
-    SERVICE.SPARK: SparkProcess(cluster, topology)
+    SERVICE.SPARK: SparkProcess(cluster, topology),
+    SERVICE.HIVE: HiveProcess(cluster, topology)
 }
 
 check_and_create_dir('cluster/' + cluster + '/.ansible')

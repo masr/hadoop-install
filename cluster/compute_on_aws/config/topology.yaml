@@ -11,6 +11,7 @@ inventory:
           - nodemanager
           - spark_cli
           - hadoop_cli
+          - hive_cli
         topology: /slc/smao_dev
         config_groups:
           hadoop: normal
