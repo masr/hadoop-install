@@ -36,7 +36,7 @@ nodemanager_port: 45454
 nodemanager_localizer_port: 45455
 
 jobhistoryserver_port: 10020
-jobhistoryserver_webapp_port: 19888
+jobhistoryserver_webapp_port: 51111
 jobhistoryserver_admin_port: 10033
 
 hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz

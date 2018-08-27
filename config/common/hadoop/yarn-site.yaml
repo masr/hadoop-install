@@ -38,7 +38,7 @@ yarn.resourcemanager.max-containers: 10000000
 
 yarn.log-aggregation-enable: "true"
 yarn.log-aggregation.retain-seconds: -1
-yarn.log.server.url: "{% jobhistoryserver1 %}:{% jobhistoryserver_webapp_port %}"
+yarn.log.server.url: "{% jobhistoryserver1 %}:{% jobhistoryserver_webapp_port %}/jobhistory/logs"
 
 yarn.scheduler.maximum-allocation-vcores: 32
 yarn.scheduler.minimum-allocation-vcores: 1
