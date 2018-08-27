@@ -19,7 +19,7 @@ export JAVA_HOME={% install_base_dir %}/java
 
 export HADOOP_MAPRED_LOG_DIR="{% hadoop_log_dir %}/mapred" # Where log files are stored.  $HADOOP_MAPRED_HOME/logs by default.
 
-export HADOOP_MAPRED_PID_DIR={% hadoop_pid_dir %} The pid files are stored. /tmp by default.
+export HADOOP_MAPRED_PID_DIR={% hadoop_pid_dir %}    # The pid files are stored. /tmp by default.
 
 export HADOOP_JOB_HISTORYSERVER_OPTS="-Xms{% jobhistoryserver_heap %} -Xmx{% jobhistoryserver_heap %} -XX:MaxNewSize={% jobhistoryserver_young_heap %} -XX:NewSize={% jobhistoryserver_young_heap %} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
