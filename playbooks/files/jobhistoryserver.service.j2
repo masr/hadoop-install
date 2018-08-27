@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
 Environment=HADOOP_MAPRED_ROOT_LOGGER=INFO,RFA HADOOP_JHS_LOGGER=INFO,JSA HADOOP_MAPRED_LOGFILE=hadoop-mapred-jobhistoryserver-%H.log
-ExecStart=/bin/sh -c '{{ install_base_dir }}/hadoop/bin/mapred --config {{ hadoop_confs_dir }}/hadoop/conf historyserver >> {{ hadoop_log_dir }}/mapred/jobhistoryserver.out 2>&1'
+ExecStart=/bin/sh -c 'source {{ hadoop_confs_dir}}/hadoop/conf/mapred-env.sh; {{ install_base_dir }}/hadoop/bin/mapred --config {{ hadoop_confs_dir }}/hadoop/conf historyserver >> {{ hadoop_log_dir }}/mapred/jobhistoryserver.out 2>&1'
 #ExecStop=
 Type=simple
 Restart=always
