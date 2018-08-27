@@ -18,7 +18,8 @@ class SparkProcess(AbstractProcess):
 
         if len(self.topology.get_hosts_of_role(ROLE.SPARKHISTORYSERVER)) != 0:
             spark_history_server = self.topology.get_hosts_of_role(ROLE.SPARKHISTORYSERVER)[0]
-            basic_config['sparkhistoryserver1'] = spark_history_server
+            if 'sparkhistoryserver1' not in basic_config:
+                basic_config['sparkhistoryserver1'] = spark_history_server
 
         ################## spark-env.sh **********************************
         data = self.get_text_template('spark-env.sh')

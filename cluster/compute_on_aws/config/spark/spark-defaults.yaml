@@ -1,4 +1,3 @@
-#For history server
 default:
   spark.yarn.am.memory: 512m
   spark.driver.memory: 512m
