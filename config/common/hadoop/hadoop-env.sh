@@ -60,11 +60,9 @@ export HADOOP_OPTS="$HADOOP_OPTS -Djava.net.preferIPv4Stack=true"
 COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
--XX:MaxMetaspaceSize=512M \
--Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,console}"
+-XX:MaxMetaspaceSize=512M"
 
 export HADOOP_NAMENODE_OPTS="-Xms{% namenode_heap %} -Xmx{% namenode_heap %} -XX:MaxNewSize={% namenode_young_heap %} -XX:NewSize={% namenode_young_heap %} \
--Dhadoop.log.file=hadoop-hdfs-namenode-${HOSTNAME}.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} \
 -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,RFAAUDIT} \
 -Dhadoop.hdfs.statechange.logger=${HDFS_STATECHANGE_LOGGER:-WARN,SCA} \
@@ -74,7 +72,6 @@ $COMMON_DAEMON_OPTS \
 $HADOOP_NAMENODE_OPTS"
 
 export HADOOP_DATANODE_OPTS="-Xms{% datanode_heap %} -Xmx{% datanode_heap %}  -XX:MaxNewSize={% datanode_young_heap %} -XX:NewSize={% datanode_young_heap %} \
--Dhadoop.log.file=hadoop-hdfs-datanode-${HOSTNAME}.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-ERROR,RFAS} \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-datanode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-datanode-hs_err_pid.log \
@@ -82,14 +79,12 @@ $COMMON_DAEMON_OPTS \
 $HADOOP_DATANODE_OPTS"
 
 export HADOOP_ZKFC_OPTS="-Xms{% zkfc_heap %} -Xmx{% zkfc_heap %}  -XX:MaxNewSize={% zkfc_young_heap %} -XX:NewSize={% zkfc_young_heap %} \
--Dhadoop.log.file=hadoop-hdfs-zkfc-${HOSTNAME}.log \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-zkfc.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-zkfc-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_ZKFC_OPTS"
 
 export HADOOP_JOURNALNODE_OPTS="-Xms{% journalnode_heap %} -Xmx{% journalnode_heap %}  -XX:MaxNewSize={% journalnode_young_heap %} -XX:NewSize={% journalnode_young_heap %} \
--Dhadoop.log.file=hadoop-hdfs-journalnode-${HOSTNAME}.log \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-journalnode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-journalnode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \

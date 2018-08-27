@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hadoop
-Environment=HADOOP_ROOT_LOGGER=INFO,RFA
+Environment=HADOOP_ROOT_LOGGER=INFO,RFA HADOOP_LOGFILE=hadoop-hdfs-namenode-%H.log
 ExecStart=/bin/sh -c '{{ install_base_dir }}/hadoop/bin/hdfs --config {{ hadoop_confs_dir }}/hadoop/conf namenode >> {{ hadoop_log_dir }}/hdfs/namenode.out 2>&1'
 #ExecStop=
 Type=simple

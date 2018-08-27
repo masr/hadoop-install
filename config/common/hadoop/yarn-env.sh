@@ -121,13 +121,7 @@ YARN_OPTS="$YARN_OPTS -Dyarn.policy.file=$YARN_POLICYFILE"
 COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
--XX:MaxMetaspaceSize=512M \
--Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,console} \
--Dyarn.root.logger=${YARN_ROOT_LOGGER:-INFO,console} \
--Dhadoop.log.dir=$YARN_LOG_DIR \
--Dyarn.log.dir=$YARN_LOG_DIR \
--Dyarn.home.dir=$YARN_COMMON_HOME \
--Dyarn.id.str=$YARN_IDENT_STRING"
+-XX:MaxMetaspaceSize=512M"
 
 export YARN_NODEMANAGER_OPTS="${YARN_OPTS} \
 -Xms{% nodemanager_heap %} -Xmx{% nodemanager_heap %} -XX:MaxNewSize={% nodemanager_young_heap %} -XX:NewSize={% nodemanager_young_heap %} \
