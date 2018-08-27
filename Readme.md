@@ -61,3 +61,10 @@ ansible -u ec2-user -i cluster/amino/.ansible/hosts resourcemanager -m shell -a 
 
 #Start NM
 ansible -u ec2-user -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -b
+
+
+
+
+
+
+
