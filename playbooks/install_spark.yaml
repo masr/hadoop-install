@@ -28,10 +28,10 @@
         - spark-defaults.conf
         - spark-env.sh
 
-    - name: delete original  spark_dir/conf
+    - name: delete original spark/conf
       file: path={{ install_base_dir }}/spark/conf state=absent
 
-    - name: create hadoop conf soft link
+    - name: create spark conf soft link
       file: src={{ hadoop_confs_dir }}/spark/conf path={{ install_base_dir }}/spark/conf state=link
 
     - import_tasks: include/install_systemd_service.yml

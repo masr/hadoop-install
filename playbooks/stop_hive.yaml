@@ -1,0 +1,9 @@
+- name: Stop Hive Metastore Service
+  hosts: hivemetastore
+  gather_facts: no
+  tasks:
+    - include_tasks: include/stop_service.yml
+      vars:
+        service_name: "{{ item }}"
+      with_items:
+        - hivemetastore

@@ -1,0 +1,41 @@
+- name: Install hive for config group {{ config_group_name }}
+  hosts: "{{ variable_hosts | default('all') }}"
+  tasks:
+    - name: load vars
+      include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
+
+    - import_tasks: include/before_install_service.yaml
+      vars:
+        service_user: hive
+
+    - name: sync hive release
+      unarchive: src=../releases/{{ hive_release_tarball }} dest={{ hadoop_releases_dir }} owner=root group=root mode=0755
+      when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
+
+    - name: create hive soft link
+      file: src={{ hadoop_releases_dir }}/{{ hive_release_version }} path={{ install_base_dir }}/hive state=link
+
+
+    - name: create hive confs dir
+      file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
+      with_items:
+        - "{{ hadoop_confs_dir }}/hive/conf"
+
+    - name: sync hive confs
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0644 owner=root group=hadoop
+      with_items:
+        - log4j.properties
+        - hive-site.xml
+        - hive-env.sh
+
+    - name: delete original  hive/conf
+      file: path={{ install_base_dir }}/hive/conf state=absent
+
+    - name: create hive conf soft link
+      file: src={{ hadoop_confs_dir }}/hive/conf path={{ install_base_dir }}/hive/conf state=link
+
+    - import_tasks: include/install_systemd_service.yml
+      vars:
+        service_name: hivemetastore
+
+

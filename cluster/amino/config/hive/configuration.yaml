@@ -1,0 +1,9 @@
+default:
+  hivemetastore_heap: 512m
+  hivemetastore_young_heap: 64m
+  mysql_hostname: hive.cw0ehluwxzgc.us-west-2.rds.amazonaws.com
+  mysql_username: hive
+  database_name: hive
+
+#  hive_release_tarball: "apache-hive-1.2.2-bin.tar.gz"
+#  hive_release_version: "apache-hive-1.2.2-bin"

@@ -78,7 +78,7 @@ export SPARK_HISTORY_OPTS="-XX:MaxNewSize={% sparkhistoryserver_young_heap %} -X
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
 -Dspark.root.logger=${SPARK_ROOT_LOGGER:-INFO,console} \
--Dspark.log.dir={% hadoop_log_dir %}/spark \
--Dspark.log.file=spark-sparkhistoryserver-$HOSTNAME.log"
+-Dspark.log.dir=${SPARK_LOG_DIR} \
+-Dspark.log.file=spark-sparkhistoryserver-${HOSTNAME}.log"
 
 export HDP_VERSION={% hdp_version %}

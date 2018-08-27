@@ -28,7 +28,7 @@
         - zookeeper-env.sh
         - log4j.properties
 
-    - name: delete original zookeeper_dir/conf
+    - name: delete original zookeeper/conf
       file: path={{ install_base_dir }}/zookeeper/conf state=absent
 
     - name: create zookeeper conf soft link

@@ -1,0 +1,20 @@
+[Unit]
+Description=Hive Metastore
+After=network.target
+
+[Service]
+WorkingDirectory={{ install_base_dir }}/hive
+Environment=HIVE_ROOT_LOGGER=INFO,RFA
+ExecStart=/bin/sh -c '{{ install_base_dir }}/hive/bin/hive --service metastore >> {{ hadoop_log_dir }}/hive/hivemetastore.out 2>&1'
+#ExecStop=
+Type=simple
+Restart=always
+RestartSec=10s
+User=hive
+OOMScoreAdjust=-1000
+LimitNOFILE=infinity
+LimitNPROC=infinity
+
+
+[Install]
+WantedBy=multi-user.target
