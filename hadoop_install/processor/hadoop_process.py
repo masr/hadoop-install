@@ -97,7 +97,7 @@ class HadoopProcess(AbstractProcess):
             if not has_yarn:
                 ################# yarn-site.xml ###################################
                 data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
-                delete_keys_by_prefix(data, "yarn.resourcemanager")
+                data = delete_keys_by_prefix(data, "yarn.resourcemanager")
                 mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
 
         ################## capacity-scheduler.xml #################################
