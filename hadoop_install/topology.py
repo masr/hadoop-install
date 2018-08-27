@@ -57,10 +57,14 @@ class Topology:
 
     def get_config_groups(self, service_type):
         service_name = service_type.value
-        result = set(['default'])
+        result = set()
         for host in self.inventory_hosts:
             host_inventory = self.inventory_hosts[host]
             if 'config_groups' in host_inventory:
                 if service_name in host_inventory['config_groups']:
                     result.add(host_inventory['config_groups'][service_name])
+                else:
+                    result.add("default")
+            else:
+                result.add("default")
         return list(result)
