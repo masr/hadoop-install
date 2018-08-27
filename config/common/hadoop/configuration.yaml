@@ -32,12 +32,12 @@ resourcemanager_resource_tracker_port: 8031
 resourcemanager_admin_port: 8033
 
 nodemanager_webapp_port: 50060
-nodemanager_port: 45454
-nodemanager_localizer_port: 45455
+nodemanager_port: 8042
+nodemanager_localizer_port: 18040
 
 jobhistoryserver_port: 10020
-jobhistoryserver_webapp_port: 51111
+jobhistoryserver_webapp_port: 19888
 jobhistoryserver_admin_port: 10033
 
-hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
-hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT
+hadoop_release_tarball: "{% required %}"
+hadoop_release_version: "{% required %}"

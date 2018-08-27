@@ -1,2 +1,2 @@
-java_release_tarball: jdk-8u181-linux-x64.tar.gz
-java_release_version: jdk1.8.0_181
+java_release_tarball: "{% required %}"
+java_release_version: "{% required %}"

@@ -1,6 +1,6 @@
-yarn.nodemanager.address: 0.0.0.0:{% nodemanager_port %}
-yarn.nodemanager.localizer.address: 0.0.0.0:{% nodemanager_localizer_port %}
-yarn.nodemanager.webapp.address: 0.0.0.0:{% nodemanager_webapp_port %}
+yarn.nodemanager.address: ${yarn.nodemanager.hostname}:{% nodemanager_port %}
+yarn.nodemanager.localizer.address: ${yarn.nodemanager.hostname}:{% nodemanager_localizer_port %}
+yarn.nodemanager.webapp.address: ${yarn.nodemanager.hostname}:{% nodemanager_webapp_port %}
 yarn.nodemanager.log-aggregation.compression-type: gz
 yarn.nodemanager.delete.debug-delay-sec: 3600
 yarn.nodemanager.vmem-check-enabled: "false"

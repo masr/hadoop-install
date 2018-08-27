@@ -1,8 +1,8 @@
 zookeeper_port: 2181
 zookeeper_storage_dir: /tmp/hadoop-zookeeper
 
-zookeeper_release_tarball: zookeeper-3.4.6.tar.gz
-zookeeper_release_version: zookeeper-3.4.6
+zookeeper_release_tarball: "{% required %}"
+zookeeper_release_version: "{% required %}"
 
 zookeeper_heap: 2048m
 zookeeper_young_heap: 256m
