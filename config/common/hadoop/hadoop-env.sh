@@ -22,7 +22,7 @@
 # remote nodes.
 
 # The java implementation to use.
-export JAVA_HOME={%install_base_dir%}/java
+export JAVA_HOME={% install_base_dir %}/java
 
 # The jsvc implementation to use. Jsvc is required to run secure datanodes
 # that bind to privileged ports to provide authentication of data transfer
@@ -30,7 +30,7 @@ export JAVA_HOME={%install_base_dir%}/java
 # data transfer protocol using non-privileged ports.
 #export JSVC_HOME=${JSVC_HOME}
 
-export HADOOP_LOG_DIR={%hadoop_log_dir%}/$USER
+export HADOOP_LOG_DIR={% hadoop_log_dir %}/$USER
 
 export HADOOP_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
 
@@ -63,8 +63,8 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 -XX:MaxMetaspaceSize=512M \
 -Dhadoop.root.logger=${HADOOP_ROOT_LOGGER:-INFO,console}"
 
-export HADOOP_NAMENODE_OPTS="-Xms{%namenode_heap%} -Xmx{%namenode_heap%} -XX:MaxNewSize={%namenode_young_heap%} -XX:NewSize={%namenode_young_heap%} \
--Dhadoop.log.file=hadoop-hdfs-namenode-$HOSTNAME.log \
+export HADOOP_NAMENODE_OPTS="-Xms{% namenode_heap %} -Xmx{% namenode_heap %} -XX:MaxNewSize={% namenode_young_heap %} -XX:NewSize={% namenode_young_heap %} \
+-Dhadoop.log.file=hadoop-hdfs-namenode-${HOSTNAME}.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} \
 -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,RFAAUDIT} \
 -Dhadoop.hdfs.statechange.logger=${HDFS_STATECHANGE_LOGGER:-WARN,SCA} \
@@ -73,23 +73,23 @@ export HADOOP_NAMENODE_OPTS="-Xms{%namenode_heap%} -Xmx{%namenode_heap%} -XX:Max
 $COMMON_DAEMON_OPTS \
 $HADOOP_NAMENODE_OPTS"
 
-export HADOOP_DATANODE_OPTS="-Xms{%datanode_heap%} -Xmx{%datanode_heap%}  -XX:MaxNewSize={%datanode_young_heap%} -XX:NewSize={%datanode_young_heap%} \
--Dhadoop.log.file=hadoop-hdfs-datanode-$HOSTNAME.log \
+export HADOOP_DATANODE_OPTS="-Xms{% datanode_heap %} -Xmx{% datanode_heap %}  -XX:MaxNewSize={% datanode_young_heap %} -XX:NewSize={% datanode_young_heap %} \
+-Dhadoop.log.file=hadoop-hdfs-datanode-${HOSTNAME}.log \
 -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-ERROR,RFAS} \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-datanode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-datanode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_DATANODE_OPTS"
 
-export HADOOP_ZKFC_OPTS="-Xms{%zkfc_heap%} -Xmx{%zkfc_heap%}  -XX:MaxNewSize={%zkfc_young_heap%} -XX:NewSize={%zkfc_young_heap%} \
--Dhadoop.log.file=hadoop-hdfs-zkfc-$HOSTNAME.log \
+export HADOOP_ZKFC_OPTS="-Xms{% zkfc_heap %} -Xmx{% zkfc_heap %}  -XX:MaxNewSize={% zkfc_young_heap %} -XX:NewSize={% zkfc_young_heap %} \
+-Dhadoop.log.file=hadoop-hdfs-zkfc-${HOSTNAME}.log \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-zkfc.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-zkfc-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \
 $HADOOP_ZKFC_OPTS"
 
-export HADOOP_JOURNALNODE_OPTS="-Xms{%journalnode_heap%} -Xmx{%journalnode_heap%}  -XX:MaxNewSize={%journalnode_young_heap%} -XX:NewSize={%journalnode_young_heap%} \
--Dhadoop.log.file=hadoop-hdfs-journalnode-$HOSTNAME.log \
+export HADOOP_JOURNALNODE_OPTS="-Xms{% journalnode_heap %} -Xmx{% journalnode_heap %}  -XX:MaxNewSize={% journalnode_young_heap %} -XX:NewSize={% journalnode_young_heap %} \
+-Dhadoop.log.file=hadoop-hdfs-journalnode-${HOSTNAME}.log \
 -Xloggc:${HADOOP_LOG_DIR}/hadoop-gc-journalnode.log \
 -XX:ErrorFile=${HADOOP_LOG_DIR}/hadoop-journalnode-hs_err_pid.log \
 $COMMON_DAEMON_OPTS \

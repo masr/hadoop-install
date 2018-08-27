@@ -13,13 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export JAVA_HOME={%install_base_dir%}/java
+export JAVA_HOME={% install_base_dir %}/java
 
 #export HADOOP_JOB_HISTORYSERVER_HEAPSIZE=1000
 
 export HADOOP_MAPRED_LOG_DIR="{% hadoop_log_dir %}/mapred" # Where log files are stored.  $HADOOP_MAPRED_HOME/logs by default.
 
+export HADOOP_MAPRED_LOGFILE=hadoop-mapred-jobhistoryserver-${HOSTNAME}.log
+
 export HADOOP_MAPRED_ROOT_LOGGER=${HADOOP_MAPRED_ROOT_LOGGER:-INFO,console}
+export HADOOP_JHS_LOGGER=${HADOOP_JHS_LOGGER:-INFO,console} # Hadoop JobSummary logger.
 
 export HADOOP_JOB_HISTORYSERVER_OPTS="-Xms{% jobhistoryserver_heap %} -Xmx{% jobhistoryserver_heap %} -XX:MaxNewSize={% jobhistoryserver_young_heap %} -XX:NewSize={% jobhistoryserver_young_heap %} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
@@ -27,12 +30,8 @@ export HADOOP_JOB_HISTORYSERVER_OPTS="-Xms{% jobhistoryserver_heap %} -Xmx{% job
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
 -Xloggc:${HADOOP_MAPRED_LOG_DIR}/hadoop-gc-jobhistoryserver.log \
--XX:ErrorFile=${HADOOP_MAPRED_LOG_DIR}/hadoop-jobhistoryserver-hs_err_pid.log \
--Dhadoop.log.file=hadoop-mapred-jobhistoryserver-$HOSTNAME.log \
--Dhadoop.log.dir=${HADOOP_MAPRED_LOG_DIR} \
--Dhadoop.root.logger=${HADOOP_MAPRED_ROOT_LOGGER}"
+-XX:ErrorFile=${HADOOP_MAPRED_LOG_DIR}/hadoop-jobhistoryserver-hs_err_pid.log"
 
-export HADOOP_JHS_LOGGER=${HADOOP_JHS_LOGGER:-INFO,console} # Hadoop JobSummary logger.
 export HADOOP_MAPRED_PID_DIR={% hadoop_pid_dir %} The pid files are stored. /tmp by default.
 #export HADOOP_MAPRED_IDENT_STRING= #A string representing this instance of hadoop. $USER by default
 #export HADOOP_MAPRED_NICENESS= #The scheduling priority for daemons. Defaults to 0.

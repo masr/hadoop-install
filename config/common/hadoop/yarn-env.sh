@@ -20,7 +20,7 @@ export HADOOP_YARN_USER=yarn
 export YARN_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
 
 # some Java parameters
-export JAVA_HOME={%install_base_dir%}/java
+export JAVA_HOME={% install_base_dir %}/java
 if [ "$JAVA_HOME" != "" ]; then
   #echo "run java in $JAVA_HOME"
   JAVA_HOME=$JAVA_HOME
@@ -130,13 +130,13 @@ COMMON_DAEMON_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOc
 -Dyarn.id.str=$YARN_IDENT_STRING"
 
 export YARN_NODEMANAGER_OPTS="${YARN_OPTS} \
--Xms{%nodemanager_heap%} -Xmx{%nodemanager_heap%} -XX:MaxNewSize={%nodemanager_young_heap%} -XX:NewSize={%nodemanager_young_heap%} \
--Xloggc:$YARN_LOG_DIR/hadoop-gc-nodemanager.log \
+-Xms{% nodemanager_heap %} -Xmx{% nodemanager_heap %} -XX:MaxNewSize={% nodemanager_young_heap %} -XX:NewSize={% nodemanager_young_heap %} \
+-Xloggc:${YARN_LOG_DIR}/hadoop-gc-nodemanager.log \
 -XX:ErrorFile=${YARN_LOG_DIR}/hadoop-nodemanager-hs_err_pid.log \
 $COMMON_DAEMON_OPTS"
 
 export YARN_RESOURCEMANAGER_OPTS="${YARN_OPTS} \
--Xms{%resourcemanager_heap%} -Xmx{%resourcemanager_heap%} -XX:MaxNewSize={%resourcemanager_young_heap%} -XX:NewSize={%resourcemanager_young_heap%} -XX:MaxMetaspaceSize=512M \
+-Xms{% resourcemanager_heap %} -Xmx{% resourcemanager_heap %} -XX:MaxNewSize={% resourcemanager_young_heap %} -XX:NewSize={% resourcemanager_young_heap %} -XX:MaxMetaspaceSize=512M \
 -Xloggc:${YARN_LOG_DIR}/hadoop-gc-resourcemanager.log \
 -XX:ErrorFile=${YARN_LOG_DIR}/hadoop-resourcemanager-hs_err_pid.log \
 -Dyarn.rm.appsummary.logger=INFO,RMSUMMARY \
