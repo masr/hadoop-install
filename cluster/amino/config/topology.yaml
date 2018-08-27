@@ -18,6 +18,7 @@ inventory:
           - hivemetastore
           - zookeeper
           - sparkhistoryserver
+          - hadoop_cli
         vars:
           zookeeper_myid: 2
         topology: /slc/smao_dev
