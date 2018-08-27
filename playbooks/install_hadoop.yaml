@@ -39,7 +39,7 @@
         - hdfs-site.xml
         - hadoop-env.sh
         - yarn-site.xml
-        - yarn-env.xml
+        - yarn-env.sh
         - log4j.properties
 
     - name: sync hdfs hadoop confs
