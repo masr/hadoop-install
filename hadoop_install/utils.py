@@ -37,6 +37,14 @@ def replace_values_in_dict(obj, params):
     return result
 
 
+def delete_keys_by_prefix(obj, prefix):
+    result = {}
+    for k, v in obj.items():
+        if not k.startswith(prefix):
+            result[k] = v
+    return result
+
+
 def replace_params(content, params):
     m = re.findall(r'({%\s*(.*?)\s*%})', content)
     if len(m) > 0:

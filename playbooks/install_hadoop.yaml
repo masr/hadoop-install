@@ -38,23 +38,27 @@
         - core-site.xml
         - hdfs-site.xml
         - hadoop-env.sh
-        - yarn-env.sh
         - log4j.properties
 
     - name: sync hdfs hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
-        - hdfs-site.xml
         - hdfs-include
-      when: '"namenode" in group_names or "zkfc" in group_names or "journalnode" in group_names or "datanode" in group_names'
+      when: '"namenode" in group_names'
+
+    - name: sync yarn hadoop confs
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      with_items:
+        - yarn-include
+        - capacity-scheduler.xml
+      when: '"resourcemanager" in group_names'
 
     - name: sync yarn hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - yarn-site.xml
-        - yarn-include
-        - capacity-scheduler.xml
-      when: '"resourcemanager" in group_names or "nodemanager" in group_names'
+        - yarn-env.sh
+      when: '"resourcemanager" in group_names or "nodemanager" in group_names or "jobhistoryserver" in group_names or "hadoop_cli" in group_names'
 
     - name: sync mapred hadoop confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
@@ -72,12 +76,19 @@
       copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - hdfs-exclude
+      when: '"namenode" in group_names'
+
+    - name: sync hadoop exclude file
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      with_items:
         - yarn-exclude
+      when: '"resourcemanager" in group_names'
 
     - name: sync container-executor.cfg
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
       with_items:
         - container-executor.cfg
+      when: '"nodemanager" in group_names'
 
     - name: delete original  hadoop_dir/etc/hadoop
       file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent

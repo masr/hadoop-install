@@ -1,6 +1,6 @@
 from hadoop_install.processor.abstract_process import AbstractProcess
 from hadoop_install.constants import SERVICE, ROLE
-from hadoop_install.utils import trans_dict_to_xml, replace_params, replace_values_in_dict
+from hadoop_install.utils import trans_dict_to_xml, replace_params, replace_values_in_dict, delete_keys_by_prefix
 
 
 class HadoopProcess(AbstractProcess):
@@ -32,6 +32,8 @@ class HadoopProcess(AbstractProcess):
             zookeeper_port = zookeeper_config['zookeeper_port']
             zookeeper_quorum = ','.join([host + ':' + str(zookeeper_port) for host in zookeepers])
             basic_config['zookeeper_quorum'] = zookeeper_quorum
+        else:
+            basic_config['zookeeper_quorum'] = ""
 
         if len(self.topology.get_hosts_of_role(ROLE.NAMENODE)) != 0:
             has_hdfs = True
@@ -40,6 +42,7 @@ class HadoopProcess(AbstractProcess):
                 [host + ':' + str(basic_config['journalnode_rpc_port']) for host in journalnodes]
             ) + '/' + default_nameservice
         else:
+            basic_config['qjournal_quorum'] = ""
             has_hdfs = False
 
         resourcemanagers = self.topology.get_hosts_of_role(ROLE.RESOURCEMANAGER)
@@ -60,6 +63,10 @@ class HadoopProcess(AbstractProcess):
             has_jobhistoryserver = False
 
         mapping = {}
+        mapping['hdfs-site.xml'] = {}
+        mapping['yarn-site.xml'] = {}
+        mapping['mapred-site.xml'] = {}
+
         ################## core-site.xml **********************************
         data = self.get_merged_service_configuration_by_group('core-site.yaml', group_name)
         mapping['core-site.xml'] = replace_values_in_dict(data, basic_config)
@@ -82,14 +89,16 @@ class HadoopProcess(AbstractProcess):
                 if data['yarn.log-aggregation-enable'] == 'true':
                     data = self.get_merged_service_configuration_by_group('hdfs-site.yaml', group_name)
                     mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
-                else:
-                    data = {}
-                    mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
 
         if has_jobhistoryserver:
             ################## mapred-site.xml #################################
             data = self.get_merged_service_configuration_by_group('mapred-site.yaml', group_name)
             mapping['mapred-site.xml'] = replace_values_in_dict(data, basic_config)
+            if not has_yarn:
+                ################# yarn-site.xml ###################################
+                data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
+                delete_keys_by_prefix(data, "yarn.resourcemanager")
+                mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
 
         ################## capacity-scheduler.xml #################################
         data = self.get_merged_service_configuration_by_group('capacity-scheduler.yaml', group_name)
