@@ -1,4 +1,4 @@
-import xml.dom.minidom
+from xml.dom import minidom
 import re
 import os
 import shutil
@@ -9,9 +9,10 @@ def trans_dict_to_xml(data):
     values = []
     for k in sorted(data.keys()):
         v = data.get(k)
+        v = v.replace("&", "&amp;")
         values.append("<property><name>{key}</name><value>{value}</value></property>".format(key=k, value=v))
     content = '<configuration>{}</configuration>'.format(''.join(values))
-    return xml.dom.minidom.parseString(content).toprettyxml()
+    return minidom.parseString(content).toprettyxml()
 
 
 def trans_dict_to_conf(data, seperator="="):
