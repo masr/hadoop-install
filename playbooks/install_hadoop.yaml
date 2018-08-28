@@ -44,18 +44,16 @@
         - {name: topology.py, mode: "0755"}
 
     - name: sync hdfs hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode=0644 owner=root group=hadoop force={{ item.force }}
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
-        - {name: hdfs-include, force: yes}
-        - {name: hdfs-exclude, force: no}
+        - hdfs-include
       when: '"namenode" in group_names'
 
     - name: sync yarn hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode=0644 owner=root group=hadoop force={{ item.force }}
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
-        - {name: yarn-include, force: yes}
-        - {name: yarn-exclude, force: no}
-        - {name: capacity-scheduler.xml, force: yes}
+        - yarn-include
+        - capacity-scheduler.xml
       when: '"resourcemanager" in group_names'
 
     - name: sync mapred hadoop confs
@@ -64,6 +62,18 @@
         - mapred-site.xml
         - mapred-env.sh
       when: '"jobhistoryserver" in group_names'
+
+    - name: sync hadoop exclude file
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      with_items:
+        - hdfs-exclude
+      when: '"namenode" in group_names'
+
+    - name: sync hadoop exclude file
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      with_items:
+        - yarn-exclude
+      when: '"resourcemanager" in group_names'
 
     - name: sync container-executor.cfg
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
