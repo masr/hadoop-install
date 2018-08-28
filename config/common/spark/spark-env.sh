@@ -81,6 +81,8 @@ export SPARK_HISTORY_OPTS="-XX:MaxNewSize={% sparkhistoryserver_young_heap %} -X
 -Dspark.log.dir=${SPARK_LOG_DIR} \
 -Dspark.log.file=spark-sparkhistoryserver-${HOSTNAME}.log"
 
-export LD_LIBRARY_PATH={{ install_base_dir }}/hadoop/lib/native:{{ install_base_dir }}/hadoop/lib/native/Linux-amd64-64/lib
+export LD_LIBRARY_PATH={% install_base_dir %}/hadoop/lib/native:{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib
 
 export HDP_VERSION={% hdp_version %}
+
+export SPARK_DIST_CLASSPATH=$({% install_base_dir %}/hadoop/bin/hadoop classpath):{% hadoop_confs_dir %}/hive/conf

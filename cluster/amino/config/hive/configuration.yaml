@@ -7,3 +7,8 @@ default:
 
   hive_release_tarball: "apache-hive-1.2.2-bin.tar.gz"
   hive_release_version: "apache-hive-1.2.2-bin"
+
+cli:
+  mysql_hostname:
+  mysql_username:
+  database_name:

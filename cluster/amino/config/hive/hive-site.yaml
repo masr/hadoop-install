@@ -1,0 +1,6 @@
+cli:
+  deletes:
+    - javax.jdo.option.ConnectionURL
+    - javax.jdo.option.ConnectionDriverName
+    - javax.jdo.option.ConnectionUserName
+    - hadoop.security.credential.provider.path

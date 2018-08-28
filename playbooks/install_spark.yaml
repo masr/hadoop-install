@@ -32,6 +32,10 @@
         - spark-defaults.conf
         - spark-env.sh
 
+    - name: copy hive-site.xml
+      copy: src={{ install_base_dir }}/hive/conf/hive-site.xml dest={{ hadoop_confs_dir }}/spark/conf/hive-site.xml mode=0644 owner=root group=hadoop  remote_src=yes
+      when: '"spark_cli" in group_names and "hive_cli" in group_names'
+
     - name: delete original spark/conf
       file: path={{ install_base_dir }}/spark/conf state=absent
       when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool))

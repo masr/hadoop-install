@@ -57,9 +57,10 @@ class AbstractProcess:
         if 'default' in tmp_result:
             # /cluster/amino/config/hadoop/configuration.yaml#default
             result.update(tmp_result['default'])
-        if group_name in tmp_result:
-            # /cluster/amino/config/hadoop/configuration.yaml#normal
-            result.update(tmp_result[group_name])
+        if group_name != 'default':
+            if group_name in tmp_result:
+                # /cluster/amino/config/hadoop/configuration.yaml#normal
+                result.update(tmp_result[group_name])
         result = replace_values_in_dict(result, result)
         return result
 
@@ -68,6 +69,9 @@ class AbstractProcess:
             if group in config_group_dict:
                 group_result = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
                 result.update(group_result)
+                for delete in config_group_dict[group].deletes:
+                    if delete in result:
+                        del result[delete]
 
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
         # /common/hadoop/hdfs-site.xml
@@ -82,8 +86,9 @@ class AbstractProcess:
         config_group_dict = self.get_config_groups_of_a_file(file_name)
         # /cluster/amino/config/hadoop/hdfs-site.xml#default
         merge_helper('default')
-        # /cluster/amino/config/hadoop/hdfs-site.xml#normal
-        merge_helper(group_name)
+        if group_name != 'default':
+            # /cluster/amino/config/hadoop/hdfs-site.xml#normal
+            merge_helper(group_name)
         return result
 
     def get_text_template(self, file_name):
