@@ -38,10 +38,10 @@
         - hive-site.xml
         - hive-env.sh
 
-    - name: sync hive confs
+    - name: sync mysql.jceks
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0700 owner=hive group=hadoop
       with_items:
-        - hive.jceks
+        - mysql.jceks
       when: '"hivemetastore" in group_names'
 
     - name: delete original  hive/conf

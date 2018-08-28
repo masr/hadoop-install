@@ -67,13 +67,13 @@
         - mapred-env.sh
       when: '"jobhistoryserver" in group_names'
 
-    - name: sync hadoop exclude file
+    - name: sync hdfs exclude file
       copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - hdfs-exclude
       when: '"namenode" in group_names'
 
-    - name: sync hadoop exclude file
+    - name: sync yarn exclude file
       copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - yarn-exclude

@@ -36,8 +36,8 @@ class HiveProcess(AbstractProcess):
         mapping['hive-site.xml'] = replace_values_in_dict(data, basic_config)
 
         if has_hivemetastore:
-            ################# hive.jceks ############################
-            mapping['hive.jceks'] = self.get_binary('hive.jceks')
+            ################# mysql.jceks ############################
+            mapping['mysql.jceks'] = self.get_binary('mysql.jceks')
 
         return mapping
 
