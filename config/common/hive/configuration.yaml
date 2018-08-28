@@ -2,7 +2,7 @@ hivemetastore_heap: 2048m
 hivemetastore_young_heap: 256m
 hivemetastore_port: 18080
 
-hive_mysql_password_credential_path: "{% hadoop_run_dir %}/hive/mysql.jceks"
+hive_mysql_password_credential_path: "{% hadoop_confs_dir %}/hive/conf/mysql.jceks"
 
 hive_release_tarball: "{% required %}"
 hive_release_version: "{% required %}"
