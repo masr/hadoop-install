@@ -18,7 +18,10 @@ class HiveProcess(AbstractProcess):
 
         hivemetastores = self.topology.get_hosts_of_role(ROLE.HIVEMETASTORE)
         if len(hivemetastores) != 0:
+            has_hivemetastore = False
             basic_config['hive_metastore_uris'] = ','.join(["thrift://" + h for h in hivemetastores])
+        else:
+            has_hivemetastore = False
 
         ################## hive-env.sh **********************************
         data = self.get_text_template('hive-env.sh')
@@ -32,8 +35,9 @@ class HiveProcess(AbstractProcess):
         data = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)
         mapping['hive-site.xml'] = replace_values_in_dict(data, basic_config)
 
-        ################# hive.jceks ############################
-        mapping['hive.jceks'] = self.get_binary('hive.jceks')
+        if has_hivemetastore:
+            ################# hive.jceks ############################
+            mapping['hive.jceks'] = self.get_binary('hive.jceks')
         return mapping
 
     def get_all_kv_from_config(self, group_name):
