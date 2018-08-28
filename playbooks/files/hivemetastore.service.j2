@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ install_base_dir }}/hive
-Environment=HIVE_ROOT_LOGGER=INFO,RFA
+Environment=HIVE_ROOT_LOGGER=INFO,RFA HIVE_CONF_DIR={{ hadoop_confs_dir }}/hive/conf
 ExecStart=/bin/sh -c '{{ install_base_dir }}/hive/bin/hive --service metastore >> {{ hadoop_log_dir }}/hive/hivemetastore.out 2>&1'
 #ExecStop=
 Type=simple
