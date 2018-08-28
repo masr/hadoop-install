@@ -19,7 +19,8 @@ class HiveProcess(AbstractProcess):
         hivemetastores = self.topology.get_hosts_of_role(ROLE.HIVEMETASTORE)
         if len(hivemetastores) != 0:
             has_hivemetastore = True
-            basic_config['hive_metastore_uris'] = ','.join(["thrift://" + h for h in hivemetastores])
+            basic_config['hive_metastore_uris'] = ','.join(
+                ["thrift://" + h + ":" + basic_config['hivemetastore_port'] for h in hivemetastores])
         else:
             has_hivemetastore = False
 
