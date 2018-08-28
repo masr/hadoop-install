@@ -86,3 +86,4 @@ hadoop credential create javax.jdo.option.ConnectionPassword -provider jceks://f
 cp /tmp/hive.jceks cluster/amino/config/hive/hive.jceks
 
 /apache/hive/bin/schematool -dbType mysql -initSchema
+

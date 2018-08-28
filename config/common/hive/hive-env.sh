@@ -60,6 +60,6 @@ export HIVE_METASTORE_HADOOP_OPTS="-Xms{% hivemetastore_heap %} -Xmx{% hivemetas
 -Xloggc:${HIVE_LOG_DIR}/hivemetastore.gc.log \
 -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M \
 -XX:MaxMetaspaceSize=512M \
--hive.root.logger=${HIVE_ROOT_LOGGER:-INFO,console} \
--hive.log.dir=${HIVE_LOG_DIR} \
--hive.log.file=hive-hivemetastore-${HOSTNAME}.log"
+-Dhive.root.logger=${HIVE_ROOT_LOGGER:-INFO,console} \
+-Dhive.log.dir=${HIVE_LOG_DIR} \
+-Dhive.log.file=hive-hivemetastore-${HOSTNAME}.log"
