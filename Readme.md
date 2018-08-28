@@ -84,3 +84,5 @@ ansible -u ec2-user -i cluster/amino/.ansible/hosts jobhistoryserver -m shell -a
 # Prepare for hive
 hadoop credential create javax.jdo.option.ConnectionPassword -provider jceks://file/tmp/hive.jceks
 cp /tmp/hive.jceks cluster/amino/config/hive/hive.jceks
+
+/apache/hive/bin/schematool -dbType mysql -initSchema

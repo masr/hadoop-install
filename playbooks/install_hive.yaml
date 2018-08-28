@@ -12,9 +12,15 @@
       unarchive: src=../releases/{{ hive_release_tarball }} dest={{ hadoop_releases_dir }} owner=root group=root mode=0755
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
+    - name: sync 3rd party jars
+      copy: src={{ item }} dest={{ install_base_dir }}/hive/lib/ owner=root group=hadoop
+      with_fileglob:
+        - "../releases/jars/mysql-connector-java-*.jar"
+      when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool)) and "hivemetastore" in group_names
+
+
     - name: create hive soft link
       file: src={{ hadoop_releases_dir }}/{{ hive_release_version }} path={{ install_base_dir }}/hive state=link
-
 
     - name: create hive confs dir
       file: path={{ item }} state=directory mode=0755 owner=root group=hadoop
