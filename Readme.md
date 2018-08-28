@@ -87,3 +87,11 @@ cp /tmp/hive.jceks cluster/amino/config/hive/hive.jceks
 
 /apache/hive/bin/schematool -dbType mysql -initSchema
 
+hadoop fs -mkdir /user/hive
+hadoop fs -chown hive:hadoop /user/hive
+hadoop fs -mkdir /user/hive/warehouse
+hadoop fs -chown hive:hadoop /user/hive/warehouse
+hadoop fs -chmod 777 /user/hive/warehouse
+
+# Start Hive Metastore
+ansible -u ec2-user -i cluster/amino/.ansible/hosts hivemetastore -m shell -a "systemctl start hivemetastore" -b
