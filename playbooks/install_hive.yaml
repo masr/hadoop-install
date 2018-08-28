@@ -27,7 +27,6 @@
         - log4j.properties
         - hive-site.xml
         - hive-env.sh
-        - hive.jceks
 
     - name: sync hive confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0700 owner=hive group=hadoop

@@ -35,13 +35,13 @@
     - name: sync hadoop confs
       copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode={{ item.mode }} owner=root group=hadoop
       with_items:
-        - {name: core-site.xml, mode: 0644}
-        - {name: hdfs-site.xml, mode: 0644}
-        - {name: hadoop-env.sh, mode: 0644}
-        - {name: yarn-site.xml, mode: 0644}
-        - {name: yarn-env.sh, mode: 0644}
-        - {name: log4j.properties, mode: 0644}
-        - {name: topology.py, mode: 0755}
+        - {name: core-site.xml, mode: "0644"}
+        - {name: hdfs-site.xml, mode: "0644"}
+        - {name: hadoop-env.sh, mode: "0644"}
+        - {name: yarn-site.xml, mode: "0644"}
+        - {name: yarn-env.sh, mode: "0644"}
+        - {name: log4j.properties, mode: "0644"}
+        - {name: topology.py, mode: "0755"}
 
     - name: sync hdfs hadoop confs
       copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode=0644 owner=root group=hadoop force={{ item.force }}
