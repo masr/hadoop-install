@@ -2,7 +2,7 @@ default:
   mysql_hostname:
   mysql_username:
   database_name:
-  hive_metastore_uris: thrift://ip-172-31-41-170.us-west-2.compute.internal,thrift://ip-172-31-47-83.us-west-2.compute.internal
+  hive_metastore_uris: thrift://ip-172-31-41-170.us-west-2.compute.internal:9083,thrift://ip-172-31-47-83.us-west-2.compute.internal:9083
 
   hive_release_tarball: "apache-hive-1.2.2-bin.tar.gz"
   hive_release_version: "apache-hive-1.2.2-bin"
