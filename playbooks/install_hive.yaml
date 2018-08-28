@@ -22,11 +22,12 @@
         - "{{ hadoop_confs_dir }}/hive/conf"
 
     - name: sync hive confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0644 owner=root group=hadoop
+      copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item.name }} mode={{ item.mode }} owner=root group=hadoop
       with_items:
-        - log4j.properties
-        - hive-site.xml
-        - hive-env.sh
+        - {name: log4j.properties, mode: 0644}
+        - {name: hive-site.xml, mode: 0644}
+        - {name: hive-env.sh, mode: 0644}
+        - {name: hive.jceks, mode: 0700}
 
     - name: delete original  hive/conf
       file: path={{ install_base_dir }}/hive/conf state=absent

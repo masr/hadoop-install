@@ -21,20 +21,37 @@ def trans_dict_to_conf(data, seperator="="):
     return content
 
 
-def replace_keys_in_dict(obj, params):
+def replace_keys_in_dict(_dict, params):
+    ## params should not contain any variable string
     result = {}
-    for k, v in obj.items():
+    for k, v in _dict.items():
         k = replace_params(str(k), params)
         result[k] = v
     return result
 
 
-def replace_values_in_dict(obj, params):
-    result = {}
-    for k, v in obj.items():
-        v = replace_params(str(v), params)
-        result[k] = v
-    return result
+def replace_values_in_dict(_dict, _params):
+    ## params may also contain varialble string. And variable may also comes from _dict itself.
+    result = _dict.copy()
+    params = _params.copy()
+    params.update(result)
+    while True:
+        original_variable_count = len([v for k, v in result.items() if has_variable_string(str(v))])
+        for k, v in _dict.items():
+            v = replace_params(str(v), params)
+            result[k] = v
+        params.update(result)
+        variables = [v for k, v in result.items() if has_variable_string(str(v))]
+        if len(variables) != 0 and len(variables) == original_variable_count:
+            content = ','.join(variables)
+            raise Exception("Cannot finalize variable in obj, please check loop definition: " + content)
+        if len(variables) == 0:
+            return result
+
+
+def has_variable_string(content):
+    m = re.findall(r'({%\s*(.*?)\s*%})', content)
+    return len(m) > 0
 
 
 def delete_keys_by_prefix(obj, prefix):
@@ -49,7 +66,13 @@ def replace_params(content, params):
     m = re.findall(r'({%\s*(.*?)\s*%})', content)
     if len(m) > 0:
         for i in m:
-            content = content.replace(i[0], str(params[i[1]]))
+            brace_key = i[0]
+            key = i[1]
+            m2 = re.findall(r'({%\s*(.*?)\s*%})', params[key])
+            if len(m2) > 0:
+                continue
+            else:
+                content = content.replace(brace_key, str(params[key]))
     return content
 
 

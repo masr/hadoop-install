@@ -5,5 +5,5 @@ default:
   mysql_username: hive
   database_name: hive
 
-#  hive_release_tarball: "apache-hive-1.2.2-bin.tar.gz"
-#  hive_release_version: "apache-hive-1.2.2-bin"
+  hive_release_tarball: "apache-hive-1.2.2-bin.tar.gz"
+  hive_release_version: "apache-hive-1.2.2-bin"

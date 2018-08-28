@@ -2,5 +2,8 @@ sparkhistoryserver_heap: 2048m
 sparkhistoryserver_young_heap: 256m
 sparkhistoryserver_port: 18080
 
+spark_history_fs_log_directory: hdfs://{% default_nameservice %}/spark-logs
+spark_eventLog_dir: "{% spark_history_fs_log_directory %}"
+
 spark_release_tarball: "{% required %}"
 spark_release_version: "{% required %}"

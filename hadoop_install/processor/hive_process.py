@@ -32,6 +32,8 @@ class HiveProcess(AbstractProcess):
         data = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)
         mapping['hive-site.xml'] = replace_values_in_dict(data, basic_config)
 
+        ################# hive.jceks ############################
+        mapping['hive.jceks'] = self.get_binary('hive.jceks')
         return mapping
 
     def get_all_kv_from_config(self, group_name):

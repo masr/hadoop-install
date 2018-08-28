@@ -58,15 +58,29 @@ hadoop fs -chown spark:hadoop /spark-logs
 hadoop fs -mkdir /yarn-logs
 hadoop fs -chown yarn:hadoop /yarn-logs
 
+#Prepare for YARN
+hadoop fs -mkdir /yarn-logs
+hadoop fs -chmod 777 /yarn-logs
+hadoop fs -chown yarn:hadoop /yarn-logs
+
 #Start RM
 ansible -u ec2-user -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -b
 
 #Start NM
 ansible -u ec2-user -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -b
 
+#Prepare for spark
+hadoop fs -mkdir /spark-logs
+hadoop fs -chmod 777 /spark-logs
+hadoop fs -chown spark:hadoop /spark-logs
+
+# Start Spark History Server
+ansible -u ec2-user -i cluster/amino/.ansible/hosts sparkhistoryserver -m shell -a "systemctl start sparkhistoryserver" -b
+
+# Start Job Jistory Server
+ansible -u ec2-user -i cluster/amino/.ansible/hosts jobhistoryserver -m shell -a "systemctl start jobhistoryserver" -b
 
 
-
-
-
-
+# Prepare for hive
+hadoop credential create javax.jdo.option.ConnectionPassword -provider jceks://file/tmp/hive.jceks
+cp /tmp/hive.jceks cluster/amino/config/hive/hive.jceks

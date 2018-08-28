@@ -4,8 +4,6 @@ inventory:
           - resourcemanager
           - nodemanager
         topology: /slc/smao_dev
-        config_groups:
-          hadoop: normal
     ip-172-31-32-63.us-west-2.compute.internal:
         roles:
           - nodemanager
@@ -13,5 +11,3 @@ inventory:
           - hadoop_cli
           - hive_cli
         topology: /slc/smao_dev
-        config_groups:
-          hadoop: normal

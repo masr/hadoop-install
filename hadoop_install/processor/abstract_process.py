@@ -4,7 +4,8 @@ import yaml
 
 from hadoop_install.constants import SERVICE_TO_ROLES
 from hadoop_install.config_group import ConfigGroup
-from hadoop_install.utils import check_and_create_dir, clean_and_create_dir, replace_keys_in_dict, get_configuration
+from hadoop_install.utils import check_and_create_dir, clean_and_create_dir, replace_keys_in_dict, \
+    replace_values_in_dict, get_configuration
 
 
 class AbstractProcess:
@@ -36,54 +37,72 @@ class AbstractProcess:
             return result['hadoop_stack']
 
     def get_merged_basic_configuration_by_group(self, group_name):
+        # /common/configuration.yaml
         result = get_configuration(self.common_dir + '/configuration.yaml')
+        # /common/hadoop/configuration.yaml
         tmp_result = get_configuration(self.common_service_config_dir + '/configuration.yaml')
         result.update(tmp_result)
         if self.hadoop_stack != 'common':
+            # /aws/configuration.yaml
             tmp_result = get_configuration(self.stack_dir + '/configuration.yaml')
             result.update(tmp_result)
+            # /aws/hadoop/configuration.yaml
             tmp_result = get_configuration(self.stack_service_config_dir + '/configuration.yaml')
             result.update(tmp_result)
+        # /cluster/amino/configuration.yaml
         tmp_result = get_configuration(self.cluster_base_dir + "/config/configuration.yaml")
         result.update(tmp_result)
+        # /cluster/amino/config/hadoop/configuration.yaml
         tmp_result = get_configuration(self.cluster_service_config_dir + "/configuration.yaml")
         if 'default' in tmp_result:
+            # /cluster/amino/config/hadoop/configuration.yaml#default
             result.update(tmp_result['default'])
         if group_name in tmp_result:
+            # /cluster/amino/config/hadoop/configuration.yaml#normal
             result.update(tmp_result[group_name])
+        result = replace_values_in_dict(result, result)
         return result
 
     def get_merged_service_configuration_by_group(self, file_name, group_name):
         def merge_helper(group):
             if group in config_group_dict:
-                updates = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
-                result.update(updates)
+                group_result = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
+                result.update(group_result)
 
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
+        # /common/hadoop/hdfs-site.xml
         result = get_configuration(self.common_service_config_dir + "/" + file_name)
-        if self.hadoop_stack != 'common':
-            stack_result = get_configuration(self.stack_service_config_dir + "/" + file_name)
-            result.update(stack_result)
         result = replace_keys_in_dict(result, basic_config)
+        if self.hadoop_stack != 'common':
+            # /aws/hadoop/hdfs-site.xml
+            stack_result = get_configuration(self.stack_service_config_dir + "/" + file_name)
+            stack_result = replace_keys_in_dict(stack_result, basic_config)
+            result.update(stack_result)
+        # /cluster/amino/config/hadoop/hdfs-site.xml
         config_group_dict = self.get_config_groups_of_a_file(file_name)
+        # /cluster/amino/config/hadoop/hdfs-site.xml#default
         merge_helper('default')
+        # /cluster/amino/config/hadoop/hdfs-site.xml#normal
         merge_helper(group_name)
         return result
 
     def get_text_template(self, file_name):
+        return self.get_binary(file_name).decode("utf-8")
+
+    def get_binary(self, file_name):
         result = None
         file_path = self.common_service_config_dir + "/" + file_name
         if os.path.exists(file_path):
-            with open(file_path) as file:
+            with open(file_path, "rb") as file:
                 result = file.read()
         if self.hadoop_stack != 'common':
             file_path = self.stack_service_config_dir + '/' + file_name
             if os.path.exists(file_path):
-                with open(file_path) as file:
+                with open(file_path, "rb") as file:
                     result = file.read()
         file_path = self.cluster_service_config_dir + "/" + file_name
         if os.path.exists(file_path):
-            with open(file_path) as file:
+            with open(file_path, "rb") as file:
                 result = file.read()
         return result
 
@@ -113,8 +132,12 @@ class AbstractProcess:
             target_path = self.service_confs_base_dir + "/" + group_name
             clean_and_create_dir(target_path)
             for file_name, content in content_dict.items():
-                with open(target_path + "/" + file_name, "w") as tmp_file:
-                    tmp_file.write(content)
+                if type(content) == str:
+                    with open(target_path + "/" + file_name, "w") as tmp_file:
+                        tmp_file.write(content)
+                else:
+                    with open(target_path + "/" + file_name, "wb") as tmp_file:
+                        tmp_file.write(content)
 
     def generate_ansible(self):
         check_and_create_dir(self.ansible_base_dir)

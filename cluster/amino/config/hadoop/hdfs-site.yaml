@@ -1,5 +1,0 @@
-default:
-    dfs.namenode.name.dir: /data/hdfs/namenode
-    dfs.journalnode.edits.dir: /data/hdfs/journalnode
-normal:
-    dfs.datanode.data.dir: /data/hdfs/datanode

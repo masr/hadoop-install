@@ -6,13 +6,13 @@ yarn.nodemanager.delete.debug-delay-sec: 3600
 yarn.nodemanager.vmem-check-enabled: "false"
 yarn.nodemanager.resource.memory-mb: 8192
 yarn.nodemanager.resource.cpu-vcores: 8
-yarn.nodemanager.remote-app-log-dir: hdfs://{% default_nameservice %}/yarn-logs
+yarn.nodemanager.remote-app-log-dir: "{% yarn_nodemanager_remote_app_log_dir %}"
 yarn.nodemanager.aux-services: spark_shuffle
 yarn.nodemanager.aux-services.spark_shuffle.class: org.apache.spark.network.yarn.YarnShuffleService
 yarn.nodemanager.linux-container-executor.group: hadoop
 yarn.nodemanager.remote-app-log-dir-suffix: logs
-yarn.nodemanager.log-dirs: ${hadoop.tmp.dir}/nodemanager-logs
-yarn.nodemanager.local-dirs: ${hadoop.tmp.dir}/nodemanager-locals
+yarn.nodemanager.log-dirs: "{% yarn_nodemanager_log_dirs %}"
+yarn.nodemanager.local-dirs: "{% yarn_nodemanager_local_dirs %}"
 yarn.nodemanager.health-checker.interval-ms: 60000
 yarn.nodemanager.health-checker.script.timeout-ms: 60000
 yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage: 99
