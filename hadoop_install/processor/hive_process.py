@@ -28,8 +28,8 @@ class HiveProcess(AbstractProcess):
         mapping['hive-env.sh'] = replace_params(data, basic_config)
 
         ################## log4j.properties **********************************
-        data = self.get_text_template('log4j.properties')
-        mapping['log4j.properties'] = replace_params(data, basic_config)
+        data = self.get_text_template('hive-log4j.properties')
+        mapping['hive-log4j.properties'] = replace_params(data, basic_config)
 
         ################# hive-site.xml ###########################
         data = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)

@@ -34,6 +34,7 @@
 
     - name: delete original zookeeper/conf
       file: path={{ install_base_dir }}/zookeeper/conf state=absent
+      when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool))
 
     - name: create zookeeper conf soft link
       file: src={{ hadoop_confs_dir }}/zookeeper/conf path={{ install_base_dir }}/zookeeper/conf state=link

@@ -34,7 +34,7 @@
     - name: sync hive confs
       copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
-        - log4j.properties
+        - hive-log4j.properties
         - hive-site.xml
         - hive-env.sh
 
@@ -46,6 +46,7 @@
 
     - name: delete original  hive/conf
       file: path={{ install_base_dir }}/hive/conf state=absent
+      when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool))
 
     - name: create hive conf soft link
       file: src={{ hadoop_confs_dir }}/hive/conf path={{ install_base_dir }}/hive/conf state=link

@@ -85,8 +85,10 @@
         - container-executor.cfg
       when: '"nodemanager" in group_names'
 
+
     - name: delete original  hadoop/etc/hadoop
       file: path={{ install_base_dir }}/hadoop/etc/hadoop state=absent
+      when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool))
 
     - name: create hadoop conf soft link
       file: src={{ hadoop_confs_dir }}/hadoop/conf path={{ install_base_dir }}/hadoop/etc/hadoop state=link

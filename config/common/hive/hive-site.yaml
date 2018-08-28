@@ -3,6 +3,6 @@ javax.jdo.option.ConnectionDriverName: com.mysql.jdbc.Driver
 javax.jdo.option.ConnectionUserName: "{% mysql_username %}"
 hive.metastore.uris: "{% hive_metastore_uris %}"
 hive.metastore.warehouse.dir: hdfs://{% default_nameservice %}/warehouse
-hive.metastore.port: 9083
+hive.metastore.port: {% hivemetastore_port %}
 hive.metastore.schema.verification: "true"
 hadoop.security.credential.provider.path: jceks://file{% hive_mysql_password_credential_path %}

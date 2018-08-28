@@ -1,6 +1,7 @@
 hivemetastore_heap: 2048m
 hivemetastore_young_heap: 256m
-hivemetastore_port: 18080
+
+hivemetastore_port: 9083
 
 hive_mysql_password_credential_path: "{% hadoop_confs_dir %}/hive/conf/mysql.jceks"
 

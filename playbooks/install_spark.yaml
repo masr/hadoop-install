@@ -34,6 +34,7 @@
 
     - name: delete original spark/conf
       file: path={{ install_base_dir }}/spark/conf state=absent
+      when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool))
 
     - name: create spark conf soft link
       file: src={{ hadoop_confs_dir }}/spark/conf path={{ install_base_dir }}/spark/conf state=link
