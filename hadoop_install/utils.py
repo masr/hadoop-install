@@ -9,7 +9,8 @@ def trans_dict_to_xml(data):
     values = []
     for k in sorted(data.keys()):
         v = data.get(k)
-        v = v.replace("&", "&amp;")
+        if type(v) == str:
+            v = v.replace("&", "&amp;")
         values.append("<property><name>{key}</name><value>{value}</value></property>".format(key=k, value=v))
     content = '<configuration>{}</configuration>'.format(''.join(values))
     return minidom.parseString(content).toprettyxml()
@@ -39,7 +40,8 @@ def replace_values_in_dict(_dict, _params):
     while True:
         original_variable_count = len([v for k, v in result.items() if has_variable_string(str(v))])
         for k, v in _dict.items():
-            v = replace_params(str(v), params)
+            if type(v) == str:
+                v = replace_params(v, params)
             result[k] = v
         params.update(result)
         variables = [v for k, v in result.items() if has_variable_string(str(v))]
@@ -69,11 +71,11 @@ def replace_params(content, params):
         for i in m:
             brace_key = i[0]
             key = i[1]
-            m2 = re.findall(r'({%\s*(.*?)\s*%})', params[key])
-            if len(m2) > 0:
-                continue
-            else:
-                content = content.replace(brace_key, str(params[key]))
+            if type(params[key]) == str:
+                m2 = re.findall(r'({%\s*(.*?)\s*%})', params[key])
+                if len(m2) > 0:
+                    continue
+            content = content.replace(brace_key, str(params[key]))
     return content
 
 

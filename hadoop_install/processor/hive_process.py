@@ -20,7 +20,7 @@ class HiveProcess(AbstractProcess):
         if len(hivemetastores) != 0:
             has_hivemetastore = True
             basic_config['hive_metastore_uris'] = ','.join(
-                ["thrift://" + h + ":" + basic_config['hivemetastore_port'] for h in hivemetastores])
+                ["thrift://" + h + ":" + str(basic_config['hivemetastore_port']) for h in hivemetastores])
         else:
             has_hivemetastore = False
 

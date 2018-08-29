@@ -21,7 +21,7 @@ class HadoopProcess(AbstractProcess):
         default_nameservice = basic_config['default_nameservice']
 
         https_enable = basic_config['https_enable']
-        if https_enable:
+        if https_enable == "true":
             basic_config['http_policy'] = 'HTTPS_ONLY'
         else:
             basic_config['http_policy'] = 'HTTP_ONLY'

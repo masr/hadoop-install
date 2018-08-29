@@ -10,5 +10,5 @@ hadoop_log_dir: /var/log/hadoop
 hdp_version: 2.6.5.13-1
 
 default_nameservice: my_cluster
-kerberos_enable: false
-https_enable: false
+kerberos_enable: "false"
+https_enable: "false"
