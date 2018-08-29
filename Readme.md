@@ -1,8 +1,23 @@
+#Requirement
+Python3 is required
+
+# Installation
+
+    pip install -r requirements.txt
+    
+# Topology
+    To change topology/role definition/config groups, please modify cluster/config/topology.yaml
+
 #Generate files
+
     ./bin/generator.sh  --cluster amino
 
+Generated configs is located in cluster/amino/.confs
+
+Generated ansible stuff is located in cluster/amino/.ansible
 
 #Installation
+
     export ANSIBLE_HOST_KEY_CHECKING=False
     ansible-playbook -u ec2-user -i cluster/amino/.ansible/hosts playbooks/prepare_node.yaml -b -e @cluster/amino/.ansible/vars.yaml
     ansible-playbook -u ec2-user -i cluster/amino/.ansible/java/hosts cluster/amino/.ansible/java/install.yaml -b 
@@ -32,6 +47,7 @@
     systemctl start namenode
 
 # Start DN
+
     ansible -u ec2-user -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -b
     hadoop fs -mkdir /spark-logs
     hadoop fs -chown spark:hadoop /spark-logs
