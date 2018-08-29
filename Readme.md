@@ -95,3 +95,18 @@ hadoop fs -chmod 777 /user/hive/warehouse
 
 # Start Hive Metastore
 ansible -u ec2-user -i cluster/amino/.ansible/hosts hivemetastore -m shell -a "systemctl start hivemetastore" -b
+
+# Run Spark on S3 
+export AWS_ACCESS_KEY_ID='xxxx'
+export AWS_SECRET_ACCESS_KEY='xxxx'
+/apache/spark/bin/spark-shell --num-executors 1 --executor-memory 1G
+
+val df=spark.read
+.format("text")
+.load("s3a://maosuhan-amino/test/*")
+.flatMap(row => row.getString(0).split(" "))
+.map(word => (word,1))
+.toDF("word", "freq")
+.createOrReplaceTempView("word")
+
+resultDF=spark.sql("select word,count(*) from word group by word")

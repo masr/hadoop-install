@@ -2,5 +2,5 @@ default:
   sparkhistoryserver_heap: 1024m
   sparkhistoryserver_young_heap: 256m
 
-  spark_release_tarball: spark-2.3.1-bin-spark.tgz
-  spark_release_version: spark-2.3.1-bin-spark
+  spark_release_tarball: spark-2.3.1-bin-2.7.3.tgz
+  spark_release_version: spark-2.3.1-bin-2.7.3
