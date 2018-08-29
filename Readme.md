@@ -1,4 +1,5 @@
-#Requirement
+# Requirement
+
 Python3 is required
 
 # Installation
@@ -6,9 +7,10 @@ Python3 is required
     pip install -r requirements.txt
     
 # Topology
-    To change topology/role definition/config groups, please modify cluster/config/topology.yaml
 
-#Generate files
+To change topology/role definition/config groups, please modify cluster/config/topology.yaml
+
+# Generate files
 
     ./bin/generator.sh  --cluster amino
 
@@ -16,7 +18,7 @@ Generated configs is located in cluster/amino/.confs
 
 Generated ansible stuff is located in cluster/amino/.ansible
 
-#Installation
+# Install Hadoop
 
     export ANSIBLE_HOST_KEY_CHECKING=False
     ansible-playbook -u ec2-user -i cluster/amino/.ansible/hosts playbooks/prepare_node.yaml -b -e @cluster/amino/.ansible/vars.yaml
@@ -29,7 +31,7 @@ Generated ansible stuff is located in cluster/amino/.ansible
     ansible -u ec2-user -i cluster/amino/.ansible/hosts zookeeper -m shell -a "systemctl start zookeeper" -b
     ansible -u ec2-user -i cluster/amino/.ansible/hosts journalnode -m shell -a "systemctl start journalnode" -b
 
-#Active NN:
+## Active NN:
 
     sudo to hdfs
     /apache/hadoop/bin/hdfs zkfc -formatZK
@@ -38,7 +40,7 @@ Generated ansible stuff is located in cluster/amino/.ansible
     systemctl start zkfc
     systemctl start namenode
 
-# Standby NN:
+## Standby NN:
 
     sudo to hdfs
     /apache/hadoop/bin/hdfs namenode -bootstrapStandby
@@ -46,7 +48,7 @@ Generated ansible stuff is located in cluster/amino/.ansible
     systemctl start zkfc
     systemctl start namenode
 
-# Start DN
+## Start DN
 
     ansible -u ec2-user -i cluster/amino/.ansible/hosts datanode -m shell -a "systemctl start datanode" -b
     hadoop fs -mkdir /spark-logs
@@ -54,30 +56,30 @@ Generated ansible stuff is located in cluster/amino/.ansible
     hadoop fs -mkdir /yarn-logs
     hadoop fs -chown yarn:hadoop /yarn-logs
 
-#Prepare for YARN
+## Prepare for YARN
     hadoop fs -mkdir /yarn-logs
     hadoop fs -chmod 777 /yarn-logs
     hadoop fs -chown yarn:hadoop /yarn-logs
 
-#Start RM
+## Start RM
     ansible -u ec2-user -i cluster/amino/.ansible/hosts resourcemanager -m shell -a "systemctl start resourcemanager" -b
 
-#Start NM
+## Start NM
     ansible -u ec2-user -i cluster/amino/.ansible/hosts nodemanager -m shell -a "systemctl start nodemanager" -b
 
-#Prepare for spark
+## Prepare for spark
     hadoop fs -mkdir /spark-logs
     hadoop fs -chmod 777 /spark-logs
     hadoop fs -chown spark:hadoop /spark-logs
 
-# Start Spark History Server
+## Start Spark History Server
     ansible -u ec2-user -i cluster/amino/.ansible/hosts sparkhistoryserver -m shell -a "systemctl start sparkhistoryserver" -b
 
-# Start Job Jistory Server
+## Start Job Jistory Server
     ansible -u ec2-user -i cluster/amino/.ansible/hosts jobhistoryserver -m shell -a "systemctl start jobhistoryserver" -b
 
 
-# Prepare for hive
+## Prepare for hive
     hadoop credential create javax.jdo.option.ConnectionPassword -provider jceks://file/tmp/hive.jceks
     cp /tmp/hive.jceks cluster/amino/config/hive/hive.jceks
 
@@ -89,10 +91,10 @@ Generated ansible stuff is located in cluster/amino/.ansible
     hadoop fs -chown hive:hadoop /user/hive/warehouse
     hadoop fs -chmod 777 /user/hive/warehouse
 
-# Start Hive Metastore
+## Start Hive Metastore
     ansible -u ec2-user -i cluster/amino/.ansible/hosts hivemetastore -m shell -a "systemctl start hivemetastore" -b
 
-# Run Spark on S3 
+## Run Spark on S3 
 
     export AWS_ACCESS_KEY_ID='xxxx'
     export AWS_SECRET_ACCESS_KEY='xxxx'
