@@ -1,5 +1,9 @@
 sync_release=$1
 
+./bin/generator.sh --cluster amino
+./bin/generator.sh --cluster compute_on_aws
+
+
 ansible-playbook -u ec2-user -i cluster/amino/.ansible/java/hosts cluster/amino/.ansible/java/install.yaml -b -e "sync_release=$sync_release"
 ansible-playbook -u ec2-user -i cluster/compute_on_aws/.ansible/java/hosts cluster/compute_on_aws/.ansible/java/install.yaml -b -e "sync_release=$sync_release"
 
