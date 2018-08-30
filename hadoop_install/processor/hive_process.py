@@ -33,6 +33,13 @@ class HiveProcess(AbstractProcess):
         ################# hive-site.xml ###########################
         mapping['hive-site.xml'] = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)
 
+        data = self.get_text_template('AWS_ACCESS_KEY_ID')
+        if data is not None:
+            mapping['AWS_ACCESS_KEY_ID'] = data
+        data = self.get_text_template('AWS_SECRET_ACCESS_KEY')
+        if data is not None:
+            mapping['AWS_SECRET_ACCESS_KEY'] = data
+
         if has_hivemetastore:
             ################# mysql.jceks ############################
             mapping['mysql.jceks'] = self.get_binary('mysql.jceks')

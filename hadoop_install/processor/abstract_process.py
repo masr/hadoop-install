@@ -88,7 +88,11 @@ class AbstractProcess:
         return result
 
     def get_text_template(self, file_name):
-        return self.get_binary(file_name).decode("utf-8")
+        data = self.get_binary(file_name)
+        if data is not None:
+            return self.get_binary(file_name).decode("utf-8")
+        else:
+            return None
 
     def get_binary(self, file_name):
         result = None
