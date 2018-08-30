@@ -125,7 +125,7 @@ class AbstractProcess:
     def generate_configs(self):
         group_content_dict = {}
         for group_name in self.config_group_names:
-            group_content_dict[group_name] = self.get_all_parsed_configs(group_name)
+            group_content_dict[group_name], _ = self.get_all_parsed_configs(group_name)
         check_and_create_dir(self.confs_base_dir)
         clean_and_create_dir(self.service_confs_base_dir)
 
@@ -157,15 +157,15 @@ class AbstractProcess:
         includes = []
         clean_and_create_dir(self.service_ansible_base_dir + "/vars")
         for group_name in self.config_group_names:
-            params = self.get_merged_basic_configuration_by_group(group_name)
-            params.update(self.get_all_kv_from_config(group_name))
+            (_, basic_config) = self.get_all_parsed_configs(group_name)
+            basic_config.update(self.get_all_kv_from_config(group_name))
             with open(self.service_ansible_base_dir + "/vars/" + group_name + ".yaml", "w") as tmp_file:
-                params[
+                basic_config[
                     'group_conf_dir'] = '../' + self.service_confs_base_dir + '/' + group_name
-                params['host_params'] = {}
+                basic_config['host_params'] = {}
                 for host in self.topology.get_hosts_of_service(self.service_type):
-                    params['host_params'][host] = self.topology.get_vars_from_host(host)
-                content = yaml.dump(params, default_flow_style=False)
+                    basic_config['host_params'][host] = self.topology.get_vars_from_host(host)
+                content = yaml.dump(basic_config, default_flow_style=False)
                 tmp_file.write(content)
             includes.append(
                 {
@@ -193,7 +193,8 @@ class AbstractProcess:
         return result
 
     def get_all_parsed_configs(self, group_name):
-        return {}
+        # Return type is tuple, the first ele is dict of different of config files, the second one is enhanced basic configuration.
+        return {}, {}
 
     def get_all_kv_from_config(self, group_name):
         return {}

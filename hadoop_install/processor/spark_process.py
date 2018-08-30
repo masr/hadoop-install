@@ -8,9 +8,9 @@ class SparkProcess(AbstractProcess):
         AbstractProcess.__init__(self, cluster_name, SERVICE.SPARK, topology)
 
     def get_all_parsed_configs(self, group_name):
-        mapping = self.parse_configs(group_name)
+        mapping, basic_config = self.parse_configs(group_name)
         mapping['spark-defaults.conf'] = trans_dict_to_conf(mapping['spark-defaults.conf'], ' ')
-        return mapping
+        return mapping, basic_config
 
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
@@ -28,9 +28,10 @@ class SparkProcess(AbstractProcess):
         mapping['log4j.properties'] = self.get_text_template('log4j.properties')
 
         ################# spark-defaults.conf ###########################
-        mapping['spark-defaults.conf'] = self.get_merged_service_configuration_by_group('spark-defaults.yaml', group_name)
+        mapping['spark-defaults.conf'] = self.get_merged_service_configuration_by_group('spark-defaults.yaml',
+                                                                                        group_name)
 
-        return mapping
+        return mapping, basic_config
 
     def get_all_kv_from_config(self, group_name):
         return {}

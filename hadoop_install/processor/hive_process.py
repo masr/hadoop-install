@@ -8,9 +8,9 @@ class HiveProcess(AbstractProcess):
         AbstractProcess.__init__(self, cluster_name, SERVICE.HIVE, topology)
 
     def get_all_parsed_configs(self, group_name):
-        mapping = self.parse_configs(group_name)
+        mapping, basic_config = self.parse_configs(group_name)
         mapping['hive-site.xml'] = trans_dict_to_xml(mapping['hive-site.xml'])
-        return mapping
+        return mapping, basic_config
 
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
@@ -37,7 +37,7 @@ class HiveProcess(AbstractProcess):
             ################# mysql.jceks ############################
             mapping['mysql.jceks'] = self.get_binary('mysql.jceks')
 
-        return mapping
+        return mapping, basic_config
 
     def get_all_kv_from_config(self, group_name):
         return {}

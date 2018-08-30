@@ -8,9 +8,9 @@ class ZookeeperProcess(AbstractProcess):
         AbstractProcess.__init__(self, cluster_name, SERVICE.ZOOKEEPER, topology)
 
     def get_all_parsed_configs(self, group_name):
-        mapping = self.parse_configs(group_name)
+        mapping, basic_config = self.parse_configs(group_name)
         mapping['zoo.cfg'] = trans_dict_to_conf(mapping['zoo.cfg'])
-        return mapping
+        return mapping, basic_config
 
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
@@ -31,7 +31,7 @@ class ZookeeperProcess(AbstractProcess):
         ################# log4j.properties ###########################
         mapping['log4j.properties'] = self.get_text_template('log4j.properties')
 
-        return mapping
+        return mapping, basic_config
 
     def get_all_kv_from_config(self, group_name):
         return {}

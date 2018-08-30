@@ -1,6 +1,6 @@
-from hadoop_install.processor.abstract_process import AbstractProcess
 from hadoop_install.constants import SERVICE, ROLE
-from hadoop_install.utils import trans_dict_to_xml, replace_params, replace_values_in_dict, delete_keys_by_prefix
+from hadoop_install.processor.abstract_process import AbstractProcess
+from hadoop_install.utils import trans_dict_to_xml, delete_keys_by_prefix
 
 
 class HadoopProcess(AbstractProcess):
@@ -8,12 +8,12 @@ class HadoopProcess(AbstractProcess):
         AbstractProcess.__init__(self, cluster_name, SERVICE.HADOOP, topology)
 
     def get_all_parsed_configs(self, group_name):
-        mapping = self.parse_configs(group_name)
+        mapping, basic_config = self.parse_configs(group_name)
 
         for i in ['core-site.xml', 'hdfs-site.xml', 'yarn-site.xml', 'mapred-site.xml', 'capacity-scheduler.xml']:
             if i in mapping:
                 mapping[i] = trans_dict_to_xml(mapping[i])
-        return mapping
+        return mapping, basic_config
 
     def parse_configs(self, group_name):
         basic_config = self.get_merged_basic_configuration_by_group(group_name)
@@ -125,7 +125,7 @@ class HadoopProcess(AbstractProcess):
         ################ topology.py ###########################
         mapping['topology.py'] = self.get_text_template('topology.py')
 
-        return mapping
+        return mapping, basic_config
 
     def get_all_kv_from_config(self, group_name):
         return {}
