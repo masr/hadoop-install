@@ -44,11 +44,11 @@
       file: path={{ item }} state=directory mode=0755 owner=zookeeper group=hadoop
       with_items:
         - "{{zookeeper_data_dir}}"
-      when: '"zookeeper" in group_names'
+      when: "zookeeper" in group_names
 
     - name: create zookeeper myid file
       copy: content="{{ hostvars[inventory_hostname]['host_params'][inventory_hostname]['zookeeper_myid'] }}" mode=0644 owner=zookeeper group=hadoop dest={{zookeeper_data_dir}}/myid
-      when: '"zookeeper" in group_names'
+      when: "zookeeper" in group_names
 
     - name: install systemd service
       include_tasks: include/install_systemd_service.yml
