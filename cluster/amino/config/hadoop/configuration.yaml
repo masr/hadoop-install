@@ -15,8 +15,7 @@ default:
 
   dfs_namenode_name_dir:
     - /data/hdfs/namenode
-  dfs_journalnode_edits_dir:
-    - /data/hdfs/journalnode
+  dfs_journalnode_edits_dir: /data/hdfs/journalnode
   dfs_datanode_data_dir:
     - /data/hdfs/datanode
 
