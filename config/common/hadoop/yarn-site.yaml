@@ -1,18 +1,18 @@
-yarn.nodemanager.address: ${yarn.nodemanager.hostname}:{% nodemanager_port %}
-yarn.nodemanager.localizer.address: ${yarn.nodemanager.hostname}:{% nodemanager_localizer_port %}
-yarn.nodemanager.webapp.address: ${yarn.nodemanager.hostname}:{% nodemanager_webapp_port %}
+yarn.nodemanager.address: ${yarn.nodemanager.hostname}:{{ nodemanager_port }}
+yarn.nodemanager.localizer.address: ${yarn.nodemanager.hostname}:{{ nodemanager_localizer_port }}
+yarn.nodemanager.webapp.address: ${yarn.nodemanager.hostname}:{{ nodemanager_webapp_port }}
 yarn.nodemanager.log-aggregation.compression-type: gz
 yarn.nodemanager.delete.debug-delay-sec: 3600
 yarn.nodemanager.vmem-check-enabled: "false"
 yarn.nodemanager.resource.memory-mb: 8192
 yarn.nodemanager.resource.cpu-vcores: 8
-yarn.nodemanager.remote-app-log-dir: "{% yarn_nodemanager_remote_app_log_dir %}"
+yarn.nodemanager.remote-app-log-dir: "{{ yarn_nodemanager_remote_app_log_dir }}"
 yarn.nodemanager.aux-services: spark_shuffle
 yarn.nodemanager.aux-services.spark_shuffle.class: org.apache.spark.network.yarn.YarnShuffleService
 yarn.nodemanager.linux-container-executor.group: hadoop
 yarn.nodemanager.remote-app-log-dir-suffix: logs
-yarn.nodemanager.log-dirs: "{% yarn_nodemanager_log_dirs %}"
-yarn.nodemanager.local-dirs: "{% yarn_nodemanager_local_dirs %}"
+#yarn.nodemanager.log-dirs: "{{ yarn_nodemanager_log_dirs }}"
+#yarn.nodemanager.local-dirs: "{{ yarn_nodemanager_local_dirs }}"
 yarn.nodemanager.health-checker.interval-ms: 60000
 yarn.nodemanager.health-checker.script.timeout-ms: 60000
 yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage: 99
@@ -22,30 +22,30 @@ yarn.nodemanager.disk-health-checker.min-free-space-per-disk-mb: 1024
 yarn.nodemanager.sleep-delay-before-sigkill.ms: 1000
 
 
-yarn.resourcemanager.nodes.exclude-path: "{% hadoop_confs_dir %}/hadoop/conf/yarn-exclude"
-yarn.resourcemanager.nodes.include-path: "{% hadoop_confs_dir %}/hadoop/conf/yarn-include"
+yarn.resourcemanager.nodes.exclude-path: "{{ hadoop_confs_dir }}/hadoop/conf/yarn-exclude"
+yarn.resourcemanager.nodes.include-path: "{{ hadoop_confs_dir }}/hadoop/conf/yarn-include"
 yarn.resourcemanager.am.max-attempts: 2
 yarn.resourcemanager.scheduler.class: org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
-yarn.resourcemanager.hostname: "{% resourcemanager1 %}"
-yarn.resourcemanager.webapp.https.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_webapp_port %}"
-yarn.resourcemanager.webapp.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_webapp_port %}"
-yarn.resourcemanager.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_port %}"
-yarn.resourcemanager.scheduler.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_scheduler_port %}"
-yarn.resourcemanager.resource-tracker.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_resource_tracker_port %}"
-yarn.resourcemanager.admin.address: "${yarn.resourcemanager.hostname}:{% resourcemanager_admin_port %}"
+yarn.resourcemanager.hostname: "{{ resourcemanager1 }}"
+yarn.resourcemanager.webapp.https.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_webapp_port }}"
+yarn.resourcemanager.webapp.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_webapp_port }}"
+yarn.resourcemanager.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_port }}"
+yarn.resourcemanager.scheduler.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_scheduler_port }}"
+yarn.resourcemanager.resource-tracker.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_resource_tracker_port }}"
+yarn.resourcemanager.admin.address: "${yarn.resourcemanager.hostname}:{{ resourcemanager_admin_port }}"
 yarn.resourcemanager.nodemanagers.heartbeat-interval-ms: 5000
 yarn.resourcemanager.max-containers: 10000000
 
 yarn.log-aggregation-enable: "true"
 yarn.log-aggregation.retain-seconds: -1
-yarn.log.server.url: "{% jobhistoryserver1 %}:{% jobhistoryserver_webapp_port %}/jobhistory/logs"
+yarn.log.server.url: "{{ jobhistoryserver1 }}:{{ jobhistoryserver_webapp_port }}/jobhistory/logs"
 
 yarn.scheduler.maximum-allocation-vcores: 32
 yarn.scheduler.minimum-allocation-vcores: 1
 yarn.scheduler.minimum-allocation-mb: 256
 yarn.scheduler.maximum-allocation-mb: 10240
-yarn.application.classpath: "{% hadoop_confs_dir %}/hadoop/conf:{% install_base_dir %}/hadoop/share/hadoop/common/lib/*:{% install_base_dir %}/hadoop/share/hadoop/common/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/lib/*:{% install_base_dir %}/hadoop/share/hadoop/hdfs/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/lib/*:{% install_base_dir %}/hadoop/share/hadoop/yarn/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/lib/*:{% install_base_dir %}/hadoop/share/hadoop/mapreduce/*"
+yarn.application.classpath: "{{ hadoop_confs_dir }}/hadoop/conf:{{ install_base_dir }}/hadoop/share/hadoop/common/lib/*:{{ install_base_dir }}/hadoop/share/hadoop/common/*:{{ install_base_dir }}/hadoop/share/hadoop/hdfs/lib/*:{{ install_base_dir }}/hadoop/share/hadoop/hdfs/*:{{ install_base_dir }}/hadoop/share/hadoop/yarn/lib/*:{{ install_base_dir }}/hadoop/share/hadoop/yarn/*:{{ install_base_dir }}/hadoop/share/hadoop/mapreduce/lib/*:{{ install_base_dir }}/hadoop/share/hadoop/mapreduce/*"
 
 yarn.client.failover-proxy-provider: org.apache.hadoop.yarn.client.ConfiguredRMFailoverProxyProvider
 
-yarn.http.policy: "{% http_policy %}"
+yarn.http.policy: "{{ http_policy }}"

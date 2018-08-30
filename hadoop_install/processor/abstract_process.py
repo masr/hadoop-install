@@ -4,8 +4,7 @@ import yaml
 
 from hadoop_install.constants import SERVICE_TO_ROLES
 from hadoop_install.config_group import ConfigGroup
-from hadoop_install.utils import check_and_create_dir, clean_and_create_dir, replace_keys_in_dict, \
-    replace_values_in_dict, get_configuration
+from hadoop_install.utils import check_and_create_dir, clean_and_create_dir, replace_values_in_dict, get_configuration
 
 
 class AbstractProcess:
@@ -67,20 +66,17 @@ class AbstractProcess:
     def get_merged_service_configuration_by_group(self, file_name, group_name):
         def merge_helper(group):
             if group in config_group_dict:
-                group_result = replace_keys_in_dict(config_group_dict[group].updates, basic_config)
+                group_result = config_group_dict[group].updates
                 result.update(group_result)
                 for delete in config_group_dict[group].deletes:
                     if delete in result:
                         del result[delete]
 
-        basic_config = self.get_merged_basic_configuration_by_group(group_name)
         # /common/hadoop/hdfs-site.xml
         result = get_configuration(self.common_service_config_dir + "/" + file_name)
-        result = replace_keys_in_dict(result, basic_config)
         if self.hadoop_stack != 'common':
             # /aws/hadoop/hdfs-site.xml
             stack_result = get_configuration(self.stack_service_config_dir + "/" + file_name)
-            stack_result = replace_keys_in_dict(stack_result, basic_config)
             result.update(stack_result)
         # /cluster/amino/config/hadoop/hdfs-site.xml
         config_group_dict = self.get_config_groups_of_a_file(file_name)

@@ -40,14 +40,18 @@ jobhistoryserver_webapp_port: 19888
 jobhistoryserver_admin_port: 10033
 
 hadoop_tmp_dir: /tmp/hadoop-${user.name}
-dfs_namenode_name_dir: file://${hadoop.tmp.dir}/namenode
-dfs_datanode_data_dir: file://${hadoop.tmp.dir}/datanode
+dfs_namenode_name_dir:
+  - file://${hadoop.tmp.dir}/namenode
+dfs_datanode_data_dir:
+  - file://${hadoop.tmp.dir}/datanode
 dfs_domain_socket_path: "{% hadoop_run_dir %}/hdfs/domain_socket"
 dfs_journalnode_edits_dir: file://${hadoop.tmp.dir}/journalnode
 
 yarn_nodemanager_remote_app_log_dir: hdfs://{% default_nameservice %}/yarn-logs
-yarn_nodemanager_log_dirs: ${hadoop.tmp.dir}/nodemanager-logs
-yarn_nodemanager_local_dirs: ${hadoop.tmp.dir}/nodemanager-locals
+yarn_nodemanager_log_dirs:
+  - ${hadoop.tmp.dir}/nodemanager-logs
+yarn_nodemanager_local_dirs:
+  - ${hadoop.tmp.dir}/nodemanager-locals
 
 hadoop_release_tarball: "{% required %}"
 hadoop_release_version: "{% required %}"

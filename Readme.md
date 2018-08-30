@@ -100,12 +100,18 @@ Generated ansible stuff is located in cluster/amino/.ansible
     export AWS_SECRET_ACCESS_KEY='xxxx'
     /apache/spark/bin/spark-shell --num-executors 1 --executor-memory 1G
 
-    val df=spark.read
-    .format("text")
-    .load("s3a://maosuhan-amino/test/*")
-    .flatMap(row => row.getString(0).split(" "))
-    .map(word => (word,1))
-    .toDF("word", "freq")
-    .createOrReplaceTempView("word")
+    spark.read.
+    format("text").
+    load("s3a://maosuhan-amino/test/*").
+    flatMap(row => row.getString(0).split(" ")).
+    map(word => (word,1)).
+    toDF("word", "freq").
+    createOrReplaceTempView("word")
     
-    resultDF=spark.sql("select word,count(*) from word group by word")
+    val df=spark.sql("select word,count(*) as cnt from word group by word")
+    
+    df.collect()
+    
+    df.write.
+    format("parquet").
+    save("s3a://maosuhan-amino/test_output")

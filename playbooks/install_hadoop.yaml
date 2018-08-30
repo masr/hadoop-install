@@ -37,7 +37,7 @@
         - "{{ hadoop_confs_dir }}/hadoop/conf"
 
     - name: sync hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode={{ item.mode }} owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item.name }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item.name }} mode={{ item.mode }} owner=root group=hadoop
       with_items:
         - {name: core-site.xml, mode: "0644"}
         - {name: hdfs-site.xml, mode: "0644"}
@@ -48,39 +48,39 @@
         - {name: topology.py, mode: "0755"}
 
     - name: sync hdfs hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - hdfs-include
       when: '"namenode" in group_names'
 
     - name: sync yarn hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - yarn-include
         - capacity-scheduler.xml
       when: '"resourcemanager" in group_names'
 
     - name: sync mapred hadoop confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - mapred-site.xml
         - mapred-env.sh
       when: '"jobhistoryserver" in group_names'
 
     - name: sync hdfs exclude file
-      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      template: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - hdfs-exclude
       when: '"namenode" in group_names'
 
     - name: sync yarn exclude file
-      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      template: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - yarn-exclude
       when: '"resourcemanager" in group_names'
 
     - name: sync container-executor.cfg
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0400 owner=root group=hadoop
       with_items:
         - container-executor.cfg
       when: '"nodemanager" in group_names'
@@ -106,12 +106,12 @@
 
     - name: create nodemanager log dirs
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: "{{yarn_nodemanager_log_dirs}}"
+      with_items: "{{yarn_nodemanager_log_dir}}"
       when: '"nodemanager" in group_names'
 
     - name: create nodemanager local dir
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: "{{yarn_nodemanager_local_dirs}}"
+      with_items: "{{yarn_nodemanager_local_dir}}"
       when: '"nodemanager" in group_names'
 
     - name: create journalnode dir

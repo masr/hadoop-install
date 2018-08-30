@@ -25,16 +25,13 @@ class HiveProcess(AbstractProcess):
             has_hivemetastore = False
 
         ################## hive-env.sh **********************************
-        data = self.get_text_template('hive-env.sh')
-        mapping['hive-env.sh'] = replace_params(data, basic_config)
+        mapping['hive-env.sh'] = self.get_text_template('hive-env.sh')
 
         ################## log4j.properties **********************************
-        data = self.get_text_template('hive-log4j.properties')
-        mapping['hive-log4j.properties'] = replace_params(data, basic_config)
+        mapping['hive-log4j.properties'] = self.get_text_template('hive-log4j.properties')
 
         ################# hive-site.xml ###########################
-        data = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)
-        mapping['hive-site.xml'] = replace_values_in_dict(data, basic_config)
+        mapping['hive-site.xml'] = self.get_merged_service_configuration_by_group('hive-site.yaml', group_name)
 
         if has_hivemetastore:
             ################# mysql.jceks ############################

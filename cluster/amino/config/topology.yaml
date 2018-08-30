@@ -30,8 +30,6 @@ inventory:
         topology: /slc/smao_dev
         vars:
           zookeeper_myid: 3
-        config_groups:
-          hadoop: slave
     ip-172-31-44-127.us-west-2.compute.internal:
         roles:
           - datanode
@@ -40,5 +38,4 @@ inventory:
           - hive_cli
         topology: /slc/smao_dev
         config_groups:
-          hadoop: slave
           hive: cli

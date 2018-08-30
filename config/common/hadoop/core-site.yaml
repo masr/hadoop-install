@@ -1,10 +1,10 @@
-hadoop.tmp.dir: "{% hadoop_tmp_dir %}"
-net.topology.script.file.name: "{% hadoop_confs_dir %}/hadoop/conf/topology.py"
+hadoop.tmp.dir: "{{ hadoop_tmp_dir }}"
+net.topology.script.file.name: "{{ hadoop_confs_dir }}/hadoop/conf/topology.py"
 hadoop.security.authentication: simple
 fs.trash.interval: 1440
-fs.defaultFS: hdfs://{% default_nameservice %}
+fs.defaultFS: hdfs://{{ default_nameservice }}
 ha.zookeeper.parent-znode: /hadoop-ha
-ha.zookeeper.quorum: "{% zookeeper_quorum %}"
+ha.zookeeper.quorum: "{{ zookeeper_quorum }}"
 hadoop.proxyuser.mapred.groups: "*"
 hadoop.proxyuser.mapred.hosts: "*"
 hadoop.proxyuser.hive.groups: "*"

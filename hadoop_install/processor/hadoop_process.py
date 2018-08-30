@@ -68,86 +68,64 @@ class HadoopProcess(AbstractProcess):
         mapping['mapred-site.xml'] = {}
 
         ################## core-site.xml **********************************
-        data = self.get_merged_service_configuration_by_group('core-site.yaml', group_name)
-        mapping['core-site.xml'] = replace_values_in_dict(data, basic_config)
+        mapping['core-site.xml'] = self.get_merged_service_configuration_by_group('core-site.yaml', group_name)
 
         if has_hdfs:
             ################## hdfs-site.xml **********************************
             data = self.get_merged_service_configuration_by_group('hdfs-site.yaml', group_name)
-            mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
+            data['dfs.namenode.name.dir'] = ','.join(basic_config['dfs_namenode_name_dir'])
+            data['dfs.datanode.data.dir'] = ','.join(basic_config['dfs_datanode_data_dir'])
+            mapping['hdfs-site.xml'] = data
             ################ hdfs-include ####################################
             mapping['hdfs-include'] = '\n'.join(self.topology.get_hosts_of_role(ROLE.DATANODE))
 
         if has_yarn:
             ################## yarn-site.xml #################################
             data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
-            mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
+            data['yarn.nodemanager.log-dirs'] = ','.join(basic_config['yarn_nodemanager_log_dirs'])
+            data['yarn.nodemanager.local-dirs'] = ','.join(basic_config['yarn_nodemanager_local_dirs'])
+            mapping['yarn-site.xml'] = data
+
             ################ yarn-include ####################################
             mapping['yarn-include'] = '\n'.join(self.topology.get_hosts_of_role(ROLE.NODEMANAGER))
             if not has_hdfs:
                 ################## hdfs-site.xml #################################
-                if data['yarn.log-aggregation-enable'] == 'true':
-                    data = self.get_merged_service_configuration_by_group('hdfs-site.yaml', group_name)
-                    mapping['hdfs-site.xml'] = replace_values_in_dict(data, basic_config)
+                if mapping['yarn-site.xml']['yarn.log-aggregation-enable'] == 'true':
+                    mapping['hdfs-site.xml'] = self.get_merged_service_configuration_by_group('hdfs-site.yaml',
+                                                                                              group_name)
 
         if has_jobhistoryserver:
             ################## mapred-site.xml #################################
-            data = self.get_merged_service_configuration_by_group('mapred-site.yaml', group_name)
-            mapping['mapred-site.xml'] = replace_values_in_dict(data, basic_config)
+            mapping['mapred-site.xml'] = self.get_merged_service_configuration_by_group('mapred-site.yaml', group_name)
             if not has_yarn:
                 ################# yarn-site.xml ###################################
                 data = self.get_merged_service_configuration_by_group('yarn-site.yaml', group_name)
                 data = delete_keys_by_prefix(data, "yarn.resourcemanager")
-                mapping['yarn-site.xml'] = replace_values_in_dict(data, basic_config)
+                mapping['yarn-site.xml'] = data
 
         ################## capacity-scheduler.xml #################################
-        data = self.get_merged_service_configuration_by_group('capacity-scheduler.yaml', group_name)
-        mapping['capacity-scheduler.xml'] = replace_values_in_dict(data, basic_config)
+        mapping['capacity-scheduler.xml'] = self.get_merged_service_configuration_by_group('capacity-scheduler.yaml',
+                                                                                           group_name)
 
         ################## hadoop-env.sh **********************************
-        data = self.get_text_template('hadoop-env.sh')
-        mapping['hadoop-env.sh'] = replace_params(data, basic_config)
+        mapping['hadoop-env.sh'] = self.get_text_template('hadoop-env.sh')
 
         ################## yarn-env.sh **********************************
-        data = self.get_text_template('yarn-env.sh')
-        mapping['yarn-env.sh'] = replace_params(data, basic_config)
+        mapping['yarn-env.sh'] = self.get_text_template('yarn-env.sh')
 
         ################## mapred-env.sh **********************************
-        data = self.get_text_template('mapred-env.sh')
-        mapping['mapred-env.sh'] = replace_params(data, basic_config)
+        mapping['mapred-env.sh'] = self.get_text_template('mapred-env.sh')
 
         ################# log4j.properties ###########################
-        data = self.get_text_template('log4j.properties')
-        mapping['log4j.properties'] = replace_params(data, basic_config)
+        mapping['log4j.properties'] = self.get_text_template('log4j.properties')
 
         ################# container-executor.cfg ###########################
-        data = self.get_text_template('container-executor.cfg')
-        mapping['container-executor.cfg'] = replace_params(data, basic_config)
+        mapping['container-executor.cfg'] = self.get_text_template('container-executor.cfg')
 
         ################ topology.py ###########################
-        data = self.get_text_template('topology.py')
-        mapping['topology.py'] = replace_params(data, basic_config)
+        mapping['topology.py'] = self.get_text_template('topology.py')
 
         return mapping
 
     def get_all_kv_from_config(self, group_name):
-        mapping = self.parse_configs(group_name)
-        config = mapping['core-site.xml'].copy()
-        result = {}
-        if 'hdfs-site.xml' in mapping:
-            config.update(mapping['hdfs-site.xml'])
-            if 'dfs.datanode.data.dir' in config:
-                result['dfs_datanode_data_dir'] = config['dfs.datanode.data.dir'].split(',')
-            if 'dfs.namenode.name.dir' in config:
-                result['dfs_namenode_name_dir'] = config['dfs.namenode.name.dir'].split(',')
-            if 'dfs.journalnode.edits.dir' in config:
-                result['dfs_journalnode_edits_dir'] = config['dfs.journalnode.edits.dir']
-
-        if 'yarn-site.xml' in mapping:
-            config.update(mapping['yarn-site.xml'])
-            if 'yarn.nodemanager.log-dirs' in config:
-                result['yarn_nodemanager_log_dirs'] = config['yarn.nodemanager.log-dirs'].split(',')
-            if 'yarn.nodemanager.local-dirs' in config:
-                result['yarn_nodemanager_local_dirs'] = config['yarn.nodemanager.local-dirs'].split(',')
-
-        return result
+        return {}

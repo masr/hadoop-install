@@ -8,8 +8,10 @@ default:
   nodemanager_heap: 256m
   nodemanager_young_heap: 64m
 
-  yarn_nodemanager_log_dirs: /data/yarn/nodemanager/log
-  yarn_nodemanager_local_dirs: /data/yarn/nodemanager/local
+  yarn_nodemanager_log_dirs:
+    - /data/yarn/nodemanager/log
+  yarn_nodemanager_local_dirs:
+    - /data/yarn/nodemanager/local
 
   hadoop_release_tarball: hadoop-2.7.3.2.6.5.0-SNAPSHOT.tar.gz
   hadoop_release_version: hadoop-2.7.3.2.6.5.0-SNAPSHOT

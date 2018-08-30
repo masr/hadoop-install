@@ -1,7 +1,7 @@
-mapreduce.jobhistory.address: "{% jobhistoryserver1 %}:{% jobhistoryserver_port %}"
-mapreduce.jobhistory.webapp.address: "{% jobhistoryserver1 %}:{% jobhistoryserver_webapp_port %}"
+mapreduce.jobhistory.address: "{{ jobhistoryserver1 }}:{{ jobhistoryserver_port }}"
+mapreduce.jobhistory.webapp.address: "{{ jobhistoryserver1 }}:{{ jobhistoryserver_webapp_port }}"
 mapreduce.jobhistory.cleaner.enable: "true"
 mapreduce.jobhistory.max-age-ms: 604800000
 mapreduce.jobhistory.client.thread-count: 10
-mapreduce.jobhistory.admin.address: "{% jobhistoryserver1 %}:{% jobhistoryserver_admin_port %}"
-mapreduce.jobhistory.http.policy: "{% http_policy %}"
+mapreduce.jobhistory.admin.address: "{{ jobhistoryserver1 }}:{{ jobhistoryserver_admin_port }}"
+mapreduce.jobhistory.http.policy: "{{ http_policy }}"

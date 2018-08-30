@@ -63,15 +63,15 @@
 # - SPARK_PID_DIR       Where the pid file is stored. (Default: /tmp)
 # - SPARK_IDENT_STRING  A string representing this instance of spark. (Default: $USER)
 # - SPARK_NICENESS      The scheduling priority for daemons. (Default: 0)
-export SPARK_LOG_DIR={% hadoop_log_dir %}/spark
-export JAVA_HOME={% install_base_dir %}/java
-export SPARK_HOME={% install_base_dir %}/spark
-export HADOOP_HOME={% install_base_dir %}/hadoop
-export HADOOP_CONF_DIR={% hadoop_confs_dir %}/hadoop/conf
-export SPARK_CONF_DIR={% hadoop_confs_dir %}/spark/conf
-export SPARK_PID_DIR={% hadoop_pid_dir %}
-export SPARK_DAEMON_MEMORY={% sparkhistoryserver_heap %}
-export SPARK_HISTORY_OPTS="-XX:MaxNewSize={% sparkhistoryserver_young_heap %} -XX:NewSize={% sparkhistoryserver_young_heap %} \
+export SPARK_LOG_DIR={{ hadoop_log_dir }}/spark
+export JAVA_HOME={{ install_base_dir }}/java
+export SPARK_HOME={{ install_base_dir }}/spark
+export HADOOP_HOME={{ install_base_dir }}/hadoop
+export HADOOP_CONF_DIR={{ hadoop_confs_dir }}/hadoop/conf
+export SPARK_CONF_DIR={{ hadoop_confs_dir }}/spark/conf
+export SPARK_PID_DIR={{ hadoop_pid_dir }}
+export SPARK_DAEMON_MEMORY={{ sparkhistoryserver_heap }}
+export SPARK_HISTORY_OPTS="-XX:MaxNewSize={{ sparkhistoryserver_young_heap }} -XX:NewSize={{ sparkhistoryserver_young_heap }} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${SPARK_LOG_DIR}/sparkhistoryserver.gc.log \
@@ -81,8 +81,8 @@ export SPARK_HISTORY_OPTS="-XX:MaxNewSize={% sparkhistoryserver_young_heap %} -X
 -Dspark.log.dir=${SPARK_LOG_DIR} \
 -Dspark.log.file=spark-sparkhistoryserver-${HOSTNAME}.log"
 
-export LD_LIBRARY_PATH={% install_base_dir %}/hadoop/lib/native:{% install_base_dir %}/hadoop/lib/native/Linux-amd64-64/lib
+export LD_LIBRARY_PATH={{ install_base_dir }}/hadoop/lib/native:{{ install_base_dir }}/hadoop/lib/native/Linux-amd64-64/lib
 
-export HDP_VERSION={% hdp_version %}
+export HDP_VERSION={{ hdp_version }}
 
-export SPARK_DIST_CLASSPATH=$({% install_base_dir %}/hadoop/bin/hadoop classpath):{% hadoop_confs_dir %}/hive/conf
+export SPARK_DIST_CLASSPATH=$({{ install_base_dir }}/hadoop/bin/hadoop classpath):{{ hadoop_confs_dir }}/hive/conf

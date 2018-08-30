@@ -1,8 +1,8 @@
-clientPort: "{% zookeeper_port %}"
+clientPort: "{{ zookeeper_port }}"
 syncLimit: 5
 autopurge.purgeInterval: 24
 maxClientCnxns: 7500
-dataDir: "{% zookeeper_storage_dir %}"
+dataDir: "{{ zookeeper_data_dir }}"
 initLimit: 10
 tickTime: 2000
 autopurge.snapRetainCount: 30

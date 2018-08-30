@@ -22,16 +22,13 @@ class SparkProcess(AbstractProcess):
                 basic_config['sparkhistoryserver1'] = spark_history_server
 
         ################## spark-env.sh **********************************
-        data = self.get_text_template('spark-env.sh')
-        mapping['spark-env.sh'] = replace_params(data, basic_config)
+        mapping['spark-env.sh'] = self.get_text_template('spark-env.sh')
 
         ################## log4j.properties **********************************
-        data = self.get_text_template('log4j.properties')
-        mapping['log4j.properties'] = replace_params(data, basic_config)
+        mapping['log4j.properties'] = self.get_text_template('log4j.properties')
 
         ################# spark-defaults.conf ###########################
-        data = self.get_merged_service_configuration_by_group('spark-defaults.yaml', group_name)
-        mapping['spark-defaults.conf'] = replace_values_in_dict(data, basic_config)
+        mapping['spark-defaults.conf'] = self.get_merged_service_configuration_by_group('spark-defaults.yaml', group_name)
 
         return mapping
 

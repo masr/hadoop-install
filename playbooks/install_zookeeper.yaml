@@ -26,7 +26,7 @@
         - "{{ hadoop_confs_dir }}/zookeeper/conf"
 
     - name: sync zookeeper confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/zookeeper/conf/{{ item }} mode=0644 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/zookeeper/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - zoo.cfg
         - zookeeper-env.sh

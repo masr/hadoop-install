@@ -17,7 +17,7 @@
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: sync 3rd party jars
-      copy: src={{ item }} dest={{ install_base_dir }}/hive/lib/ owner=root group=hadoop
+      template: src={{ item }} dest={{ install_base_dir }}/hive/lib/ owner=root group=hadoop
       with_fileglob:
         - "../releases/jars/mysql-connector-java-*.jar"
       when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool)) and "hivemetastore" in group_names
@@ -32,7 +32,7 @@
         - "{{ hadoop_confs_dir }}/hive/conf"
 
     - name: sync hive confs
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0644 owner=root group=hadoop
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0644 owner=root group=hadoop
       with_items:
         - hive-log4j.properties
         - hive-site.xml

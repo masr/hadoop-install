@@ -23,15 +23,13 @@ class ZookeeperProcess(AbstractProcess):
             vars_dict = self.topology.get_vars_from_host(zookeeper)
             data["server." + str(vars_dict['zookeeper_myid'])] = zookeeper + ':2888:3888'
 
-        mapping['zoo.cfg'] = replace_values_in_dict(data, basic_config)
+        mapping['zoo.cfg'] = data
 
         ################## zookeeper-env.sh **********************************
-        data = self.get_text_template('zookeeper-env.sh')
-        mapping['zookeeper-env.sh'] = replace_params(data, basic_config)
+        mapping['zookeeper-env.sh'] = self.get_text_template('zookeeper-env.sh')
 
         ################# log4j.properties ###########################
-        data = self.get_text_template('log4j.properties')
-        mapping['log4j.properties'] = replace_params(data, basic_config)
+        mapping['log4j.properties'] = self.get_text_template('log4j.properties')
 
         return mapping
 

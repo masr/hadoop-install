@@ -45,16 +45,16 @@
 
 
 # Set HADOOP_HOME to point to a specific hadoop install directory
-HADOOP_HOME={% install_base_dir %}/hadoop
+HADOOP_HOME={{ install_base_dir }}/hadoop
 
 # Hive Configuration Directory can be controlled by:
 # export HIVE_CONF_DIR=
 
 # Folder containing extra ibraries required for hive compilation/execution can be controlled by:
 # export HIVE_AUX_JARS_PATH=
-HIVE_LOG_DIR={% hadoop_log_dir %}/hive
+HIVE_LOG_DIR={{ hadoop_log_dir }}/hive
 
-export HIVE_METASTORE_HADOOP_OPTS="-Xms{% hivemetastore_heap %} -Xmx{% hivemetastore_heap %} -XX:MaxNewSize={% hivemetastore_young_heap %} -XX:NewSize={% hivemetastore_young_heap %} \
+export HIVE_METASTORE_HADOOP_OPTS="-Xms{{ hivemetastore_heap }} -Xmx{{ hivemetastore_heap }} -XX:MaxNewSize={{ hivemetastore_young_heap }} -XX:NewSize={{ hivemetastore_young_heap }} \
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSCompactAtFullCollection \
 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime \
 -Xloggc:${HIVE_LOG_DIR}/hivemetastore.gc.log \

@@ -1,5 +1,5 @@
 zookeeper_port: 2181
-zookeeper_storage_dir: /tmp/hadoop-zookeeper
+zookeeper_data_dir: /tmp/hadoop-zookeeper
 
 zookeeper_release_tarball: "{% required %}"
 zookeeper_release_version: "{% required %}"

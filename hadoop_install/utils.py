@@ -23,13 +23,13 @@ def trans_dict_to_conf(data, seperator="="):
     return content
 
 
-def replace_keys_in_dict(_dict, params):
-    ## params should not contain any variable string
-    result = {}
-    for k, v in _dict.items():
-        k = replace_params(str(k), params)
-        result[k] = v
-    return result
+# def replace_keys_in_dict(_dict, params):
+#     ## params should not contain any variable string
+#     result = {}
+#     for k, v in _dict.items():
+#         k = replace_params(str(k), params)
+#         result[k] = v
+#     return result
 
 
 def replace_values_in_dict(_dict, _params):
