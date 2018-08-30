@@ -4,7 +4,7 @@
     - name: load vars
       include_vars: file="{{ vars_file | default('vars/default.yaml') }}"
 
-    - name: delete hive release
+    - name: delete java release
       file: path={{ hadoop_releases_dir }}/{{ java_release_version }} state=absent
 
     - name: sync java release
