@@ -68,13 +68,13 @@
       when: '"jobhistoryserver" in group_names'
 
     - name: sync hdfs exclude file
-      template: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - hdfs-exclude
       when: '"namenode" in group_names'
 
     - name: sync yarn exclude file
-      template: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
+      copy: content="" dest={{ hadoop_confs_dir }}/hadoop/conf/{{ item }} mode=0644 owner=root group=hadoop force=no
       with_items:
         - yarn-exclude
       when: '"resourcemanager" in group_names'
