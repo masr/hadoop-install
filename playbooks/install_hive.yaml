@@ -17,7 +17,7 @@
       when: (sync_release is not defined) or (sync_release is defined and sync_release|bool)
 
     - name: sync 3rd party jars
-      template: src={{ item }} dest={{ install_base_dir }}/hive/lib/ owner=root group=hadoop
+      copy: src={{ item }} dest={{ install_base_dir }}/hive/lib/ owner=root group=hadoop
       with_fileglob:
         - "../releases/jars/mysql-connector-java-*.jar"
       when: ((sync_release is not defined) or (sync_release is defined and sync_release|bool)) and "hivemetastore" in group_names
