@@ -106,12 +106,12 @@
 
     - name: create nodemanager log dirs
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: "{{yarn_nodemanager_log_dir}}"
+      with_items: "{{yarn_nodemanager_log_dirs}}"
       when: '"nodemanager" in group_names'
 
     - name: create nodemanager local dir
       file: path={{ item }} state=directory mode=0755 owner=yarn group=hadoop
-      with_items: "{{yarn_nodemanager_local_dir}}"
+      with_items: "{{yarn_nodemanager_local_dirs}}"
       when: '"nodemanager" in group_names'
 
     - name: create journalnode dir
