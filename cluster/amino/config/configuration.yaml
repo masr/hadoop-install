@@ -1,2 +1,3 @@
 default_nameservice: amino
 hadoop_stack: standalone
+s3_supported: "true"

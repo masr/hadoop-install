@@ -12,3 +12,5 @@ hdp_version: 2.6.5.13-1
 default_nameservice: my_cluster
 kerberos_enable: "false"
 https_enable: "false"
+
+s3_supported: "false"

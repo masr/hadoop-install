@@ -48,10 +48,20 @@
 HADOOP_HOME={{ install_base_dir }}/hadoop
 
 # Hive Configuration Directory can be controlled by:
-# export HIVE_CONF_DIR=
+export HIVE_CONF_DIR={{ hadoop_confs_dir }}/hive/conf
 
 # Folder containing extra ibraries required for hive compilation/execution can be controlled by:
-# export HIVE_AUX_JARS_PATH=
+export HIVE_AUX_JARS_PATH={{ install_base_dir }}/share/hadoop/common/lib/aws-java-sdk-*.jar
+
+{% if s3_supported == "true" %}
+if [-f ${HIVE_CONF_DIR}/AWS_ACCESS_KEY_ID];then
+  export AWS_ACCESS_KEY_ID=$(cat ${HIVE_CONF_DIR}/AWS_ACCESS_KEY_ID)
+fi
+if [-f ${HIVE_CONF_DIR}/AWS_SECRET_ACCESS_KEY];then
+  export AWS_SECRET_ACCESS_KEY=$(cat ${HIVE_CONF_DIR}/AWS_SECRET_ACCESS_KEY)
+fi
+{% endif %}
+
 HIVE_LOG_DIR={{ hadoop_log_dir }}/hive
 
 export HIVE_METASTORE_HADOOP_OPTS="-Xms{{ hivemetastore_heap }} -Xmx{{ hivemetastore_heap }} -XX:MaxNewSize={{ hivemetastore_young_heap }} -XX:NewSize={{ hivemetastore_young_heap }} \

@@ -38,8 +38,15 @@
         - hive-site.xml
         - hive-env.sh
 
+    - name: sync hive confs
+      template: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0600 owner=hive group=hadoop
+      with_items:
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+      when: 's3_supported == "true"'
+
     - name: sync mysql.jceks
-      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0700 owner=hive group=hadoop
+      copy: src={{ group_conf_dir }}/{{ item }} dest={{ hadoop_confs_dir }}/hive/conf/{{ item }} mode=0600 owner=hive group=hadoop
       with_items:
         - mysql.jceks
       when: '"hivemetastore" in group_names'
